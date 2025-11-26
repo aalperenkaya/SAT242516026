@@ -1,0 +1,27 @@
+﻿# Satır sonlarını otomatik düzelt
+* text=auto
+
+# C# dosyaları UTF-8 olarak işlenir
+*.cs text eol=lf
+
+# JSON, XML, config dosyaları
+*.json text
+*.xml text
+*.config text
+
+# Resimler binary olsun (diff'e girmez)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+
+# Font ve medya dosyaları
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.mp3 binary
+*.mp4 binary
+
+# GitHub dil istatistikleri doğru görünsün
+*.cs linguist-language=C#
