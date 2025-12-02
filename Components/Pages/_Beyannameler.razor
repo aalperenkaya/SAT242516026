@@ -1,4 +1,7 @@
 ﻿@page "/beyannameler"
+@using System
+@using System.Collections.Generic
+@using System.Linq
 @using SAT242516026.Data
 @using SAT242516026.Models.DbContexts
 @using Microsoft.EntityFrameworkCore
@@ -11,13 +14,47 @@
     <div class="alert alert-info">@Message</div>
 }
 
-<!-- Sayaçlar -->
 <div class="row g-3 mb-4">
-    <div class="col-md-2"><div class="card"><div class="card-body"><div class="fw-bold">Mükellef</div><div>@counts.Mukellef</div></div></div></div>
-    <div class="col-md-2"><div class="card"><div class="card-body"><div class="fw-bold">Beyanname Tipi</div><div>@counts.BeyannameTipi</div></div></div></div>
-    <div class="col-md-2"><div class="card"><div class="card-body"><div class="fw-bold">Beyanname</div><div>@counts.Beyanname</div></div></div></div>
-    <div class="col-md-2"><div class="card"><div class="card-body"><div class="fw-bold">Tahakkuk</div><div>@counts.Tahakkuk</div></div></div></div>
-    <div class="col-md-2"><div class="card"><div class="card-body"><div class="fw-bold">Ödeme</div><div>@counts.Odeme</div></div></div></div>
+    <div class="col-md-2">
+        <div class="card">
+            <div class="card-body">
+                <div class="fw-bold">Mükellef</div>
+                <div>@counts.Mukellef</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card">
+            <div class="card-body">
+                <div class="fw-bold">Beyanname Tipi</div>
+                <div>@counts.BeyannameTipi</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card">
+            <div class="card-body">
+                <div class="fw-bold">Beyanname</div>
+                <div>@counts.Beyanname</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card">
+            <div class="card-body">
+                <div class="fw-bold">Tahakkuk</div>
+                <div>@counts.Tahakkuk</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card">
+            <div class="card-body">
+                <div class="fw-bold">Ödeme</div>
+                <div>@counts.Odeme</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="d-flex gap-2 mb-4">
@@ -25,7 +62,6 @@
     <button class="btn btn-outline-secondary" @onclick="Refresh">Yenile</button>
 </div>
 
-<!-- MÜKELLEF EKLE -->
 <div class="card mb-4">
     <div class="card-header fw-bold">Mükellef Ekle</div>
     <div class="card-body">
@@ -38,18 +74,24 @@
         </div>
         <hr />
         <table class="table table-sm table-striped">
-            <thead><tr><th>Id</th><th>Ad</th><th>VergiNo</th><th>Tip</th><th>Telefon</th></tr></thead>
+            <thead><tr><th>Id</th><th>Ad</th><th>VergiNo</th><th>Tip</th><th>Telefon</th><th></th></tr></thead>
             <tbody>
                 @foreach (var m in mukellefler)
                 {
-                    <tr><td>@m.Id</td><td>@m.Ad</td><td>@m.VergiNo</td><td>@m.Tip</td><td>@m.Telefon</td></tr>
+                    <tr>
+                        <td>@m.Id</td>
+                        <td>@m.Ad</td>
+                        <td>@m.VergiNo</td>
+                        <td>@m.Tip</td>
+                        <td>@m.Telefon</td>
+                        <td class="text-end"><button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteMukellef(m.Id)">Sil</button></td>
+                    </tr>
                 }
             </tbody>
         </table>
     </div>
 </div>
 
-<!-- BEYANNAME TİPİ EKLE -->
 <div class="card mb-4">
     <div class="card-header fw-bold">Beyanname Tipi Ekle</div>
     <div class="card-body">
@@ -59,18 +101,21 @@
         </div>
         <hr />
         <table class="table table-sm table-striped">
-            <thead><tr><th>Id</th><th>Ad</th></tr></thead>
+            <thead><tr><th>Id</th><th>Ad</th><th></th></tr></thead>
             <tbody>
                 @foreach (var t in beyannameTipleri)
                 {
-                    <tr><td>@t.Id</td><td>@t.Ad</td></tr>
+                    <tr>
+                        <td>@t.Id</td>
+                        <td>@t.Ad</td>
+                        <td class="text-end"><button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteBeyannameTipi(t.Id)">Sil</button></td>
+                    </tr>
                 }
             </tbody>
         </table>
     </div>
 </div>
 
-<!-- BEYANNAME EKLE -->
 <div class="card mb-4">
     <div class="card-header fw-bold">Beyanname Ekle</div>
     <div class="card-body">
@@ -104,7 +149,7 @@
         </div>
         <hr />
         <table class="table table-sm table-striped">
-            <thead><tr><th>Id</th><th>Mükellef</th><th>Tip</th><th>Yıl</th><th>Dönem</th><th>Durum</th></tr></thead>
+            <thead><tr><th>Id</th><th>Mükellef</th><th>Tip</th><th>Yıl</th><th>Dönem</th><th>Durum</th><th></th></tr></thead>
             <tbody>
                 @foreach (var b in beyannameler)
                 {
@@ -115,6 +160,7 @@
                         <td>@b.Yil</td>
                         <td>@b.Donem</td>
                         <td>@b.Durum</td>
+                        <td class="text-end"><button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteBeyanname(b.Id)">Sil</button></td>
                     </tr>
                 }
             </tbody>
@@ -122,7 +168,6 @@
     </div>
 </div>
 
-<!-- TAHAKKUK EKLE -->
 <div class="card mb-4">
     <div class="card-header fw-bold">Tahakkuk Ekle</div>
     <div class="card-body">
@@ -143,18 +188,23 @@
         </div>
         <hr />
         <table class="table table-sm table-striped">
-            <thead><tr><th>Id</th><th>BeyannameId</th><th>Tutar</th><th>Tarih</th></tr></thead>
+            <thead><tr><th>Id</th><th>BeyannameId</th><th>Tutar</th><th>Tarih</th><th></th></tr></thead>
             <tbody>
                 @foreach (var t in tahakkuklar)
                 {
-                    <tr><td>@t.Id</td><td>@t.BeyannameId</td><td>@t.Tutar.ToString("C")</td><td>@t.Tarih?.ToString("yyyy-MM-dd")</td></tr>
+                    <tr>
+                        <td>@t.Id</td>
+                        <td>@t.BeyannameId</td>
+                        <td>@t.Tutar.ToString("C")</td>
+                        <td>@t.Tarih?.ToString("yyyy-MM-dd")</td>
+                        <td class="text-end"><button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteTahakkuk(t.Id)">Sil</button></td>
+                    </tr>
                 }
             </tbody>
         </table>
     </div>
 </div>
 
-<!-- ÖDEME EKLE -->
 <div class="card mb-5">
     <div class="card-header fw-bold">Ödeme Ekle</div>
     <div class="card-body">
@@ -175,11 +225,17 @@
         </div>
         <hr />
         <table class="table table-sm table-striped">
-            <thead><tr><th>Id</th><th>TahakkukId</th><th>Tutar</th><th>Ödeme Tarihi</th></tr></thead>
+            <thead><tr><th>Id</th><th>TahakkukId</th><th>Tutar</th><th>Ödeme Tarihi</th><th></th></tr></thead>
             <tbody>
                 @foreach (var o in odemeler)
                 {
-                    <tr><td>@o.Id</td><td>@o.TahakkukId</td><td>@o.Tutar.ToString("C")</td><td>@o.OdemeTarihi?.ToString("yyyy-MM-dd")</td></tr>
+                    <tr>
+                        <td>@o.Id</td>
+                        <td>@o.TahakkukId</td>
+                        <td>@o.Tutar.ToString("C")</td>
+                        <td>@o.OdemeTarihi?.ToString("yyyy-MM-dd")</td>
+                        <td class="text-end"><button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteOdeme(o.Id)">Sil</button></td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -189,21 +245,18 @@
 @code {
     string? Message;
 
-    // listeler
     List<Mukellef> mukellefler = new();
     List<BeyannameTipi> beyannameTipleri = new();
     List<Beyanname> beyannameler = new();
     List<Tahakkuk> tahakkuklar = new();
     List<Odeme> odemeler = new();
 
-    // formlar
     Mukellef mk = new();
     BeyannameTipi bt = new();
     Beyanname bn = new() { Yil = DateTime.Now.Year };
     Tahakkuk th = new() { Tutar = 0m };
     Odeme od = new() { Tutar = 0m };
 
-    // sayaçlar
     (int Mukellef, int BeyannameTipi, int Beyanname, int Tahakkuk, int Odeme) counts;
 
     protected override async Task OnInitializedAsync() => await Refresh();
@@ -330,6 +383,56 @@
         await Db.SaveChangesAsync();
         od = new() { Tutar = 0m };
         Message = "Ödeme eklendi.";
+        await Refresh();
+    }
+
+    private async Task DeleteMukellef(int id)
+    {
+        var entity = await Db.Mukellef.FindAsync(id);
+        if (entity is null) { Message = "Mükellef bulunamadı."; return; }
+        Db.Mukellef.Remove(entity);
+        await Db.SaveChangesAsync();
+        Message = "Mükellef silindi.";
+        await Refresh();
+    }
+
+    private async Task DeleteBeyannameTipi(int id)
+    {
+        var entity = await Db.BeyannameTipi.FindAsync(id);
+        if (entity is null) { Message = "Beyanname Tipi bulunamadı."; return; }
+        Db.BeyannameTipi.Remove(entity);
+        await Db.SaveChangesAsync();
+        Message = "Beyanname Tipi silindi.";
+        await Refresh();
+    }
+
+    private async Task DeleteBeyanname(int id)
+    {
+        var entity = await Db.Beyanname.FindAsync(id);
+        if (entity is null) { Message = "Beyanname bulunamadı."; return; }
+        Db.Beyanname.Remove(entity);
+        await Db.SaveChangesAsync();
+        Message = "Beyanname silindi.";
+        await Refresh();
+    }
+
+    private async Task DeleteTahakkuk(int id)
+    {
+        var entity = await Db.Tahakkuk.FindAsync(id);
+        if (entity is null) { Message = "Tahakkuk bulunamadı."; return; }
+        Db.Tahakkuk.Remove(entity);
+        await Db.SaveChangesAsync();
+        Message = "Tahakkuk silindi.";
+        await Refresh();
+    }
+
+    private async Task DeleteOdeme(int id)
+    {
+        var entity = await Db.Odeme.FindAsync(id);
+        if (entity is null) { Message = "Ödeme bulunamadı."; return; }
+        Db.Odeme.Remove(entity);
+        await Db.SaveChangesAsync();
+        Message = "Ödeme silindi.";
         await Refresh();
     }
 }

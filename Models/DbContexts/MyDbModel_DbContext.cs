@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SAT242516026.Data; // Entity sınıfları Data klasöründe olduğu için
+using SAT242516026.Data;
 
 namespace SAT242516026.Models.DbContexts
 {
@@ -8,7 +8,6 @@ namespace SAT242516026.Models.DbContexts
         public MyDbModel_Context(DbContextOptions<MyDbModel_Context> options)
             : base(options) { }
 
-        // DbSets
         public DbSet<Kullanici> Kullanici { get; set; } = null!;
         public DbSet<Mukellef> Mukellef { get; set; } = null!;
         public DbSet<BeyannameTipi> BeyannameTipi { get; set; } = null!;
@@ -20,9 +19,6 @@ namespace SAT242516026.Models.DbContexts
         {
             base.OnModelCreating(modelBuilder);
 
-            // ────────────────────────────────
-            // dbo.Kullanici
-            // ────────────────────────────────
             modelBuilder.Entity<Kullanici>(e =>
             {
                 e.ToTable("Kullanici", "dbo");
@@ -34,9 +30,6 @@ namespace SAT242516026.Models.DbContexts
                 e.Property(x => x.Email).HasMaxLength(200).IsUnicode(true);
             });
 
-            // ────────────────────────────────
-            // dbo.Mukellef
-            // ────────────────────────────────
             modelBuilder.Entity<Mukellef>(e =>
             {
                 e.ToTable("Mukellef", "dbo");
@@ -49,9 +42,6 @@ namespace SAT242516026.Models.DbContexts
                 e.Property(x => x.Telefon).HasMaxLength(30).IsUnicode(true);
             });
 
-            // ────────────────────────────────
-            // dbo.BeyannameTipi
-            // ────────────────────────────────
             modelBuilder.Entity<BeyannameTipi>(e =>
             {
                 e.ToTable("BeyannameTipi", "dbo");
@@ -64,9 +54,6 @@ namespace SAT242516026.Models.DbContexts
                     .IsUnicode(true);
             });
 
-            // ────────────────────────────────
-            // dbo.Beyanname
-            // ────────────────────────────────
             modelBuilder.Entity<Beyanname>(e =>
             {
                 e.ToTable("Beyanname", "dbo");
@@ -93,9 +80,6 @@ namespace SAT242516026.Models.DbContexts
                     .OnDelete(DeleteBehavior.NoAction);
             });
 
-            // ────────────────────────────────
-            // dbo.Tahakkuk
-            // ────────────────────────────────
             modelBuilder.Entity<Tahakkuk>(e =>
             {
                 e.ToTable("Tahakkuk", "dbo");
@@ -112,12 +96,10 @@ namespace SAT242516026.Models.DbContexts
                     .OnDelete(DeleteBehavior.NoAction);
             });
 
-            // ────────────────────────────────
-            // dbo.Odeme
-            // ────────────────────────────────
             modelBuilder.Entity<Odeme>(e =>
             {
                 e.ToTable("Odeme", "dbo");
+                e.ToTable(tb => tb.HasTrigger("TR_Odeme_UpdateBeyannameDurum"));
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
 
