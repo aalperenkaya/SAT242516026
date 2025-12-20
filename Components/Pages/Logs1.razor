@@ -1,0 +1,88 @@
+﻿@page "/logs-1"
+@inject Logging.LogService LogService
+
+<div class="page-scroll">
+
+    <h3 class="mb-3">Logs</h3>
+
+    <!-- FILE LOGS -->
+    <div class="card mb-4">
+        <div class="card-header fw-bold">
+            File Logs
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Time</th>
+                            <th>Level</th>
+                            <th>Category</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var log in fileLogs)
+                        {
+                            <tr>
+                                <td>@log.Timestamp</td>
+                                <td>@log.Level</td>
+                                <td>@log.Category</td>
+                                <td>@log.Message</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- DATABASE LOGS -->
+    <div class="card mb-4">
+        <div class="card-header fw-bold">
+            Database Logs
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Time</th>
+                            <th>Level</th>
+                            <th>Category</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var log in dbLogs)
+                        {
+                            <tr>
+                                <td>@log.Timestamp</td>
+                                <td>@log.Level</td>
+                                <td>@log.Category</td>
+                                <td>@log.Message</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@code {
+    private List<Logging.LogEntry> fileLogs = [];
+    private List<Logging.LogEntry> dbLogs = [];
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            fileLogs = await LogService.GetFileLogsAsync();
+            dbLogs = await LogService.GetDbLogsAsync();
+            StateHasChanged();
+        }
+    }
+}
+

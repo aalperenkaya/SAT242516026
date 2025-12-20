@@ -1,0 +1,167 @@
+20.12.2025 23:30:09 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+20.12.2025 23:30:09 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+20.12.2025 23:30:09 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+20.12.2025 23:30:09 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+20.12.2025 23:30:09 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+20.12.2025 23:30:10 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-20 23:30:10
+20.12.2025 23:30:42 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-20 23:30:42
+20.12.2025 23:30:45 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [m].[Id], [m].[Ad], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+ORDER BY [m].[Id] DESC
+20.12.2025 23:30:45 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [b].[Id], [b].[Ad]
+FROM [dbo].[BeyannameTipi] AS [b]
+ORDER BY [b].[Id] DESC
+20.12.2025 23:30:45 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameTipiId], [t].[Donem], [t].[Durum], [t].[GondermeTarihi], [t].[MukellefId], [t].[SonGondermeTarihi], [t].[Yil], [m].[Id], [m].[Ad], [m].[Telefon], [m].[Tip], [m].[VergiNo], [b0].[Id], [b0].[Ad]
+FROM (
+    SELECT TOP(@__p_0) [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+20.12.2025 23:30:46 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [m].[Id], [m].[Ad], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+ORDER BY [m].[Id] DESC
+20.12.2025 23:31:00 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-20 23:31:00
+20.12.2025 23:40:06 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-20 23:40:06
+20.12.2025 23:41:49 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+20.12.2025 23:41:49 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+20.12.2025 23:41:49 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+20.12.2025 23:41:49 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+20.12.2025 23:41:49 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+20.12.2025 23:41:50 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-20 23:41:50
+20.12.2025 23:43:34 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+20.12.2025 23:43:34 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+20.12.2025 23:43:34 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+20.12.2025 23:43:34 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+20.12.2025 23:43:34 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+20.12.2025 23:43:36 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-20 23:43:36
+20.12.2025 23:45:43 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+20.12.2025 23:45:44 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+20.12.2025 23:45:44 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+20.12.2025 23:45:44 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+20.12.2025 23:45:44 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+20.12.2025 23:45:45 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-20 23:45:45
+21.12.2025 00:57:00 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+21.12.2025 00:57:00 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+21.12.2025 00:57:00 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+21.12.2025 00:57:00 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+21.12.2025 00:57:00 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+21.12.2025 00:57:02 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-21 00:57:02
+21.12.2025 00:57:29 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+21.12.2025 00:57:29 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+21.12.2025 00:57:29 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+21.12.2025 00:57:29 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+21.12.2025 00:57:29 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+21.12.2025 00:57:30 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-21 00:57:30
+21.12.2025 01:37:25 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+21.12.2025 01:37:25 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+21.12.2025 01:37:25 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+21.12.2025 01:37:25 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+21.12.2025 01:37:25 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+21.12.2025 01:37:26 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-21 01:37:26
+21.12.2025 01:37:31 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (6ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [t].[Id], [t].[BeyannameId], [t].[Tarih], [t].[Tutar]
+FROM [dbo].[Tahakkuk] AS [t]
+ORDER BY [t].[Id] DESC
+21.12.2025 01:37:31 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [o].[Id], [o].[OdemeTarihi], [o].[TahakkukId], [o].[Tutar]
+FROM [dbo].[Odeme] AS [o]
+ORDER BY [o].[Id] DESC
+21.12.2025 01:37:32 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameTipiId], [t].[Donem], [t].[Durum], [t].[GondermeTarihi], [t].[MukellefId], [t].[SonGondermeTarihi], [t].[Yil], [m].[Id], [m].[Ad], [m].[Telefon], [m].[Tip], [m].[VergiNo], [b0].[Id], [b0].[Ad]
+FROM (
+    SELECT TOP(@__p_0) [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+21.12.2025 01:37:32 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [t].[Id], [t].[BeyannameId], [t].[Tarih], [t].[Tutar]
+FROM [dbo].[Tahakkuk] AS [t]
+ORDER BY [t].[Id] DESC
+21.12.2025 01:37:33 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [m].[Id], [m].[Ad], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+ORDER BY [m].[Id] DESC
+21.12.2025 01:37:34 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [m].[Id], [m].[Ad], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+ORDER BY [m].[Id] DESC
+21.12.2025 01:37:34 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [b].[Id], [b].[Ad]
+FROM [dbo].[BeyannameTipi] AS [b]
+ORDER BY [b].[Id] DESC
+21.12.2025 01:37:34 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameTipiId], [t].[Donem], [t].[Durum], [t].[GondermeTarihi], [t].[MukellefId], [t].[SonGondermeTarihi], [t].[Yil], [m].[Id], [m].[Ad], [m].[Telefon], [m].[Tip], [m].[VergiNo], [b0].[Id], [b0].[Ad]
+FROM (
+    SELECT TOP(@__p_0) [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+21.12.2025 01:37:34 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-21 01:37:34
+21.12.2025 01:37:36 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [m].[Id], [m].[Ad], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+ORDER BY [m].[Id] DESC
+21.12.2025 01:37:36 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [b].[Id], [b].[Ad]
+FROM [dbo].[BeyannameTipi] AS [b]
+ORDER BY [b].[Id] DESC
+21.12.2025 01:37:36 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameTipiId], [t].[Donem], [t].[Durum], [t].[GondermeTarihi], [t].[MukellefId], [t].[SonGondermeTarihi], [t].[Yil], [m].[Id], [m].[Ad], [m].[Telefon], [m].[Tip], [m].[VergiNo], [b0].[Id], [b0].[Ad]
+FROM (
+    SELECT TOP(@__p_0) [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+21.12.2025 01:37:38 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [m].[Id], [m].[Ad], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+ORDER BY [m].[Id] DESC
+21.12.2025 01:37:38 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [b].[Id], [b].[Ad]
+FROM [dbo].[BeyannameTipi] AS [b]
+ORDER BY [b].[Id] DESC
+21.12.2025 01:37:38 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameTipiId], [t].[Donem], [t].[Durum], [t].[GondermeTarihi], [t].[MukellefId], [t].[SonGondermeTarihi], [t].[Yil], [m].[Id], [m].[Ad], [m].[Telefon], [m].[Tip], [m].[VergiNo], [b0].[Id], [b0].[Ad]
+FROM (
+    SELECT TOP(@__p_0) [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+21.12.2025 01:37:38 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [m].[Id], [m].[Ad], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+ORDER BY [m].[Id] DESC
+21.12.2025 01:37:38 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [b].[Id], [b].[Ad]
+FROM [dbo].[BeyannameTipi] AS [b]
+ORDER BY [b].[Id] DESC
+21.12.2025 01:37:38 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameTipiId], [t].[Donem], [t].[Durum], [t].[GondermeTarihi], [t].[MukellefId], [t].[SonGondermeTarihi], [t].[Yil], [m].[Id], [m].[Ad], [m].[Telefon], [m].[Tip], [m].[VergiNo], [b0].[Id], [b0].[Ad]
+FROM (
+    SELECT TOP(@__p_0) [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+21.12.2025 01:37:40 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-21 01:37:40

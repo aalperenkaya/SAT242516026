@@ -4,10 +4,10 @@ public class Mukellef
 {
     public int Id { get; set; }
 
-    public string Ad { get; set; } = null!;        // nvarchar(150) NOT NULL
-    public string? VergiNo { get; set; }           // nvarchar(20)
-    public string? Tip { get; set; }               // nvarchar(20)
-    public string? Telefon { get; set; }           // nvarchar(30)
+    public string Ad { get; set; } = null!;        
+    public string? VergiNo { get; set; }        
+    public string? Tip { get; set; }               
+    public string? Telefon { get; set; }           
 
     public ICollection<Beyanname> Beyannameler { get; set; } = new List<Beyanname>();
 }

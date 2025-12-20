@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.Components.Routing
+@inject ILogger<Home> Logger
 
 <PageTitle>Home</PageTitle>
 
@@ -12,3 +13,14 @@
     </NavLink>.
 </p>
 
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            Logger.LogInformation($"Log Home Test : {now}");
+            StateHasChanged();
+        }
+    }
+}
