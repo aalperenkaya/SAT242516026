@@ -1,72 +1,111 @@
 ﻿@implements IDisposable
-
+@using Microsoft.AspNetCore.Components.Routing
 @inject NavigationManager NavigationManager
 
-<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">SAT242516026</a>
+<div class="sidebar-shell">
+    <div class="sidebar-brand">
+        <div class="brand-left">
+            <span class="brand-badge">SAT</span>
+            <div class="brand-text">
+                <div class="brand-title">SAT242516026</div>
+                <div class="brand-sub">@_localizer["AppTitle"]</div>
+            </div>
+        </div>
     </div>
-</div>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+    <input type="checkbox" title="@_localizer["Menu"]" class="navbar-toggler" />
 
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
+    <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler')?.click()">
+        <nav class="flex-column nav-modern">
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
+            <div class="nav-section">@_localizer["Menu"]</div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="bi bi-house-door-fill me-2" aria-hidden="true"></span>
+                    @_localizer["Home"]
+                </NavLink>
+            </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="auth">
-                <span class="bi bi-lock-nav-menu" aria-hidden="true"></span> Auth Required
-            </NavLink>
-        </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="beyannameler">
+                    <span class="bi bi-file-earmark-text-fill me-2" aria-hidden="true"></span>
+                    @_localizer["Beyannameler"]
+                </NavLink>
+            </div>
 
-        <AuthorizeView>
-            <Authorized>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Manage">
-                        <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <form action="Account/Logout" method="post">
-                        <AntiforgeryToken />
-                        <input type="hidden" name="ReturnUrl" value="@currentUrl" />
-                        <button type="submit" class="nav-link">
-                            <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
-                        </button>
-                    </form>
-                </div>
-            </Authorized>
-            <NotAuthorized>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Register">
-                        <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Register
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Login">
-                        <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Login
-                    </NavLink>
-                </div>
-            </NotAuthorized>
-        </AuthorizeView>
-    </nav>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="mukellefler">
+                    <span class="bi bi-people-fill me-2" aria-hidden="true"></span>
+                    @_localizer["Mukellefler"]
+                </NavLink>
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="tahakkuklar">
+                    <span class="bi bi-receipt-cutoff me-2" aria-hidden="true"></span>
+                    @_localizer["Tahakkuklar"]
+                </NavLink>
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="odemeler">
+                    <span class="bi bi-credit-card-fill me-2" aria-hidden="true"></span>
+                    @_localizer["Odemeler"]
+                </NavLink>
+            </div>
+
+            <div class="nav-divider"></div>
+
+            <AuthorizeView>
+                <Authorized>
+                    <div class="nav-section">@_localizer["Account"]</div>
+
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="Account/Manage">
+                            <span class="bi bi-person-circle me-2" aria-hidden="true"></span>
+                            @context.User.Identity?.Name
+                        </NavLink>
+                    </div>
+
+                    <div class="nav-item px-3">
+                        <form action="Account/Logout" method="post" class="w-100">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                            <button type="submit" class="nav-link nav-btn">
+                                <span class="bi bi-box-arrow-right me-2" aria-hidden="true"></span>
+                                @_localizer["Logout"]
+                            </button>
+                        </form>
+                    </div>
+                </Authorized>
+
+                <NotAuthorized>
+                    <div class="nav-section">@_localizer["Account"]</div>
+
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="Account/Register">
+                            <span class="bi bi-person-plus-fill me-2" aria-hidden="true"></span>
+                            @_localizer["Register"]
+                        </NavLink>
+                    </div>
+
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="Account/Login">
+                            <span class="bi bi-box-arrow-in-right me-2" aria-hidden="true"></span>
+                            @_localizer["Login"]
+                        </NavLink>
+                    </div>
+                </NotAuthorized>
+            </AuthorizeView>
+
+        </nav>
+    </div>
+
+    <div class="sidebar-footer">
+        <span class="bi bi-globe2 me-2"></span>
+        <span>@_localizer["Language"]</span>
+    </div>
 </div>
 
 @code {
@@ -89,4 +128,3 @@
         NavigationManager.LocationChanged -= OnLocationChanged;
     }
 }
-
