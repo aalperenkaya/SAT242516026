@@ -1,0 +1,145 @@
+﻿@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+@page "/logs-1"
+@inject Logging.LogService LogService
+
+<div class="page-scroll">
+
+    <h3 class="mb-3">Log İzleme Merkezi</h3>
+
+    <div class="row g-3">
+
+        <!-- FILE LOGS -->
+        <div class="col-12">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <h4 class="text-primary mb-0">📄 Dosya Logları (File Logs)</h4>
+                <button class="btn btn-sm btn-outline-secondary" @onclick="Reload">Yenile</button>
+            </div>
+
+            <div class="table-responsive table-box">
+                <table class="table table-sm table-bordered table-striped mb-0">
+                    <thead class="table-dark sticky-top">
+                        <tr>
+                            <th style="width:90px;">Kaynak</th>
+                            <th style="width:190px;">Zaman</th>
+                            <th style="width:120px;">Seviye</th>
+                            <th style="width:260px;">Kategori</th>
+                            <th>Mesaj</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (fileLogs?.Any() == true)
+                        {
+                            @foreach (var log in fileLogs)
+                            {
+                                <tr>
+                                    <td>File</td>
+                                    <td>@log.Timestamp</td>
+                                    <td>
+                                        <span class="badge bg-@(GetBadgeColor(log.Level))">@log.Level</span>
+                                    </td>
+                                    <td>@log.Category</td>
+                                    <td class="text-break">@log.Message</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-3">Henüz dosya logu yok.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- DB LOGS -->
+        <div class="col-12">
+            <div class="d-flex align-items-center justify-content-between mb-2 mt-2">
+                <h4 class="text-success mb-0">🗄️ Veritabanı Logları (DB Logs)</h4>
+                <button class="btn btn-sm btn-outline-secondary" @onclick="Reload">Yenile</button>
+            </div>
+
+            <div class="table-responsive table-box">
+                <table class="table table-sm table-bordered table-striped mb-0">
+                    <thead class="table-dark sticky-top">
+                        <tr>
+                            <th style="width:90px;">Kaynak</th>
+                            <th style="width:190px;">Zaman</th>
+                            <th style="width:120px;">Seviye</th>
+                            <th style="width:260px;">Kategori</th>
+                            <th>Mesaj</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (dbLogs?.Any() == true)
+                        {
+                            @foreach (var log in dbLogs)
+                            {
+                                <tr>
+                                    <td>DB</td>
+                                    <td>@log.Timestamp</td>
+                                    <td>
+                                        <span class="badge bg-@(GetBadgeColor(log.Level))">@log.Level</span>
+                                    </td>
+                                    <td>@log.Category</td>
+                                    <td class="text-break">@log.Message</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-3">Henüz veritabanı logu yok.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .table-box {
+        max-height: 420px;
+        overflow-y: auto;
+        border-radius: .5rem;
+        border: 1px solid rgba(0,0,0,.08);
+    }
+</style>
+
+@code {
+    private List<Logging.LogEntry> fileLogs = new();
+    private List<Logging.LogEntry> dbLogs = new();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadLogs();
+            StateHasChanged();
+        }
+    }
+
+    private async Task Reload()
+    {
+        await LoadLogs();
+    }
+
+    private async Task LoadLogs()
+    {
+        fileLogs = await LogService.GetFileLogsAsync();
+        dbLogs = await LogService.GetDbLogsAsync();
+    }
+
+    private string GetBadgeColor(string? level) => level switch
+    {
+        "Information" => "info",
+        "Warning" => "warning",
+        "Error" => "danger",
+        "Critical" => "dark",
+        _ => "secondary"
+    };
+}

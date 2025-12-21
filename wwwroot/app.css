@@ -1,4 +1,4 @@
-/* -----------------------------
+ï»¿/* -----------------------------
    Global
 ----------------------------- */
 
@@ -165,7 +165,7 @@ h1:focus {
     color: var(--w);
 }
 
-/* Senin NavMenu kabuðu */
+/* Senin NavMenu kabuÄŸu */
 .sidebar-shell {
     min-height: 100vh;
     display: flex;
@@ -305,9 +305,9 @@ html, body {
     overflow: hidden;
 }
 
-/* Sað taraf (content) kendi yüksekliðini alsýn, default scroll yok */
+/* SaÄŸ taraf (content) kendi yÃ¼ksekliÄŸini alsÄ±n, default scroll yok */
 .app-content {
-    height: calc(100vh - 3.5rem); /* top-row yüksekliðine göre, gerekirse 3.5rem -> 4rem yap */
+    height: calc(100vh - 3.5rem); /* top-row yÃ¼ksekliÄŸine gÃ¶re, gerekirse 3.5rem -> 4rem yap */
     overflow: hidden;
 }
 

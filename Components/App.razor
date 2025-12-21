@@ -1,6 +1,5 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,18 +19,9 @@
 </head>
 
 <body>
-    <Routes @rendermode="@RenderModeForPage" />
+    <Routes @rendermode="InteractiveServer" />
 
     <script src="js/lang.js"></script>
     <script src="_framework/blazor.web.js"></script>
 </body>
-
-@code {
-    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
-
-    private IComponentRenderMode? RenderModeForPage =>
-            HttpContext.Request.Path.StartsWithSegments("/Account")
-                ? null
-                : InteractiveServer;
-}
 </html>

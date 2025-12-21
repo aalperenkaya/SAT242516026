@@ -1,0 +1,64 @@
+﻿@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+@page "/user/tahakkuklarim"
+@using SAT242516026.Data
+@using SAT242516026.Models.DbContexts
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.Authorization
+
+@inject MyDbModel_Context Db
+
+<h3 class="mb-3">Benim Tahakkuklarım</h3>
+
+@if (!string.IsNullOrWhiteSpace(Message))
+{
+    <div class="alert alert-info">@Message</div>
+}
+
+<table class="table table-sm table-striped">
+    <thead>
+        <tr>
+            <th style="width:80px;">Id</th>
+            <th style="width:120px;">BeyannameId</th>
+            <th>Tutar</th>
+            <th>Tarih</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var t in items)
+        {
+            <tr>
+                <td>@t.Id</td>
+                <td>@t.BeyannameId</td>
+                <td>@t.Tutar.ToString("C")</td>
+                <td>@t.Tarih?.ToString("yyyy-MM-dd")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [CascadingParameter] private Task<AuthenticationState> AuthStateTask { get; set; } = default!;
+    string? Message;
+    int CurrentUserId;
+
+    List<Tahakkuk> items = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var auth = await AuthStateTask;
+        var idStr = auth.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+        if (!int.TryParse(idStr, out CurrentUserId)) CurrentUserId = 0;
+
+        try
+        {
+            items = await Db.Tahakkuk
+                .Include(x => x.Beyanname)
+                    .ThenInclude(b => b.Mukellef)
+                .Where(x => x.Beyanname.Mukellef.KullaniciId == CurrentUserId)
+                .OrderByDescending(x => x.Id)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+        catch (Exception ex) { Message = ex.Message; }
+    }
+}

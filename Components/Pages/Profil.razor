@@ -1,0 +1,34 @@
+﻿@page "/profil"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+@inject SAT242516026.Models.Services.AuthService Auth
+@inject SAT242516026.Models.DbContexts.MyDbModel_Context Db
+
+<h3>Profil</h3>
+
+@if (_me is null)
+{
+    <p>Yükleniyor...</p>
+}
+else
+{
+    <div class="card p-3">
+        <div><b>Kullanıcı:</b> @_me.KullaniciAdi</div>
+        <div><b>Ad Soyad:</b> @_me.AdSoyad</div>
+        <div><b>Email:</b> @_me.Email</div>
+        <div><b>Rol:</b> @(_me.IsAdmin ? "Admin" : "Kullanıcı")</div>
+    </div>
+
+    <a class="btn btn-outline-danger mt-3" href="/cikis">Çıkış</a>
+}
+
+@code {
+    private SAT242516026.Models.DbContexts.Kullanici? _me;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var id = Auth.GetUserId();
+        if (id is null) return;
+
+        _me = await Db.Kullanicilar.FindAsync(id.Value);
+    }
+}

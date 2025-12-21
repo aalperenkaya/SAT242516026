@@ -1,0 +1,14 @@
+﻿@page "/cikis"
+@using SAT242516026.Models.Services
+@inject AuthService Auth
+@inject NavigationManager Nav
+
+<h3>Çıkış...</h3>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await Auth.LogoutAsync();
+        Nav.NavigateTo("/giris", true);
+    }
+}

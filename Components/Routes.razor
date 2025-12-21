@@ -1,14 +1,20 @@
-﻿@using SAT242516026.Components.Account.Shared
-@using Microsoft.AspNetCore.Components
-@using Microsoft.AspNetCore.Components.Web
+﻿@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Authorization
 
-<Router AppAssembly="typeof(Program).Assembly">
+<Router AppAssembly="@typeof(Program).Assembly">
     <Found Context="routeData">
-        <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)">
+        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)">
             <NotAuthorized>
-                <RedirectToLogin />
+                <RedirectToGiris />
             </NotAuthorized>
         </AuthorizeRouteView>
-        <FocusOnNavigate RouteData="routeData" Selector="h1" />
+
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
     </Found>
+
+    <NotFound>
+        <LayoutView Layout="@typeof(Layout.MainLayout)">
+            <h3>Sayfa bulunamadı</h3>
+        </LayoutView>
+    </NotFound>
 </Router>

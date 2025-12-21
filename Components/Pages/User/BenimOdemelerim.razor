@@ -1,0 +1,305 @@
+﻿@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+@page "/user/odemelerim"
+
+@using SAT242516026.Data
+@using SAT242516026.Models.DbContexts
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.Authorization
+@inject MyDbModel_Context Db
+
+<h3 class="mb-3">Benim Ödemelerim</h3>
+
+@if (!string.IsNullOrWhiteSpace(Message))
+{
+    <div class="alert alert-info">@Message</div>
+}
+
+<div class="card mb-4">
+    <div class="card-header fw-bold">Borçlarım (Tahakkuklar)</div>
+    <div class="card-body">
+
+        <table class="table table-sm table-striped align-middle">
+            <thead>
+                <tr>
+                    <th style="width:90px;">TahakkukId</th>
+                    <th>Beyanname</th>
+                    <th style="width:140px;">Tahakkuk</th>
+                    <th style="width:140px;">Ödenen</th>
+                    <th style="width:140px;">Kalan</th>
+                    <th style="width:160px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in Rows)
+                {
+                    <tr>
+                        <td>@row.TahakkukId</td>
+                        <td>#@row.BeyannameId - @row.MukellefAd - @row.BeyannameTipiAd</td>
+                        <td>@row.TahakkukTutar.ToString("C")</td>
+                        <td>@row.Odenen.ToString("C")</td>
+                        <td class="fw-bold">@row.Kalan.ToString("C")</td>
+                        <td class="text-end">
+                            @if (row.Kalan <= 0)
+                            {
+                                <span class="badge bg-success">Kapandı</span>
+                            }
+                            else
+                            {
+                                <button class="btn btn-sm btn-primary" @onclick="() => StartPay(row)">
+                                    Öde
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@if (PayOpen)
+{
+    <div class="card mb-4">
+        <div class="card-header fw-bold">Ödeme Yap (Simülasyon)</div>
+        <div class="card-body">
+
+            <div class="alert alert-warning mb-3">
+                Bu işlem “ödeme yapılmış” gibi kayıt atar. Kart bilgileri DB’ye kaydedilmez.
+            </div>
+
+            <div class="row g-2">
+                <div class="col-md-4">
+                    <label class="form-label">Seçili Tahakkuk</label>
+                    <input class="form-control" value="@SelectedInfo" disabled />
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">Tutar</label>
+                    <input type="number" step="0.01" class="form-control" @bind="PayAmount" />
+                </div>
+
+                <div class="col-md-6"></div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Kart İsim</label>
+                    <input class="form-control" @bind="CardName" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Kart No</label>
+                    <input class="form-control" @bind="CardNumber" placeholder="1111 2222 3333 4444" />
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">SKT</label>
+                    <input class="form-control" @bind="Exp" placeholder="12/27" />
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">CVC</label>
+                    <input class="form-control" @bind="Cvc" placeholder="123" />
+                </div>
+
+                <div class="col-md-3">
+                    <button class="btn btn-success w-100" @onclick="DoPay">Ödemeyi Tamamla</button>
+                </div>
+
+                <div class="col-md-3">
+                    <button class="btn btn-outline-secondary w-100" @onclick="CancelPay">İptal</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+<div class="card mb-5">
+    <div class="card-header fw-bold">Geçmiş Ödemelerim</div>
+    <div class="card-body">
+
+        <table class="table table-sm table-striped">
+            <thead>
+                <tr>
+                    <th style="width:90px;">Id</th>
+                    <th style="width:120px;">TahakkukId</th>
+                    <th>Tutar</th>
+                    <th style="width:160px;">Ödeme Tarihi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var o in Odemeler)
+                {
+                    <tr>
+                        <td>@o.Id</td>
+                        <td>@o.TahakkukId</td>
+                        <td>@o.Tutar.ToString("C")</td>
+                        <td>@o.OdemeTarihi?.ToString("yyyy-MM-dd")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@code {
+    [CascadingParameter] private Task<AuthenticationState> AuthStateTask { get; set; } = default!;
+
+    string? Message;
+
+    int CurrentUserId;
+
+    // Borç satırı
+    class DebtRow
+    {
+        public int TahakkukId { get; set; }
+        public int BeyannameId { get; set; }
+        public string MukellefAd { get; set; } = "";
+        public string BeyannameTipiAd { get; set; } = "";
+        public decimal TahakkukTutar { get; set; }
+        public decimal Odenen { get; set; }
+        public decimal Kalan => TahakkukTutar - Odenen;
+    }
+
+    List<DebtRow> Rows = new();
+    List<Odeme> Odemeler = new();
+
+    // ödeme state
+    bool PayOpen = false;
+    int SelectedTahakkukId;
+    string SelectedInfo = "";
+    decimal PayAmount;
+
+    string CardName = "";
+    string CardNumber = "";
+    string Exp = "";
+    string Cvc = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadUserId();
+        await Refresh();
+    }
+
+    private async Task LoadUserId()
+    {
+        var authState = await AuthStateTask;
+        var user = authState.User;
+
+        var idStr = user.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+        if (!int.TryParse(idStr, out CurrentUserId))
+            CurrentUserId = 0;
+    }
+
+    private async Task Refresh()
+    {
+        try
+        {
+            // 1) Kullanıcının kendi tahakkuklarını çek
+            var tahakkuklar = await Db.Tahakkuk
+                .Include(t => t.Beyanname).ThenInclude(b => b.Mukellef)
+                .Include(t => t.Beyanname).ThenInclude(b => b.BeyannameTipi)
+                .Include(t => t.Odemeler)
+                .Where(t => t.Beyanname.Mukellef.KullaniciId == CurrentUserId)
+                .OrderByDescending(t => t.Id)
+                .Take(200)
+                .AsNoTracking()
+                .ToListAsync();
+
+            Rows = tahakkuklar.Select(t => new DebtRow
+                {
+                    TahakkukId = t.Id,
+                    BeyannameId = t.BeyannameId,
+                    MukellefAd = t.Beyanname?.Mukellef?.Ad ?? "",
+                    BeyannameTipiAd = t.Beyanname?.BeyannameTipi?.Ad ?? "",
+                    TahakkukTutar = t.Tutar,
+                    Odenen = t.Odemeler?.Sum(o => o.Tutar) ?? 0m
+                }).ToList();
+
+            // 2) Kullanıcının geçmiş ödemeleri (kendi tahakkukları üzerinden)
+            var tahIds = tahakkuklar.Select(x => x.Id).ToList();
+
+            Odemeler = await Db.Odeme
+                .Where(o => tahIds.Contains(o.TahakkukId))
+                .OrderByDescending(o => o.Id)
+                .Take(300)
+                .AsNoTracking()
+                .ToListAsync();
+
+            Message = null;
+        }
+        catch (Exception ex)
+        {
+            Message = ex.Message;
+        }
+    }
+
+    private void StartPay(DebtRow row)
+    {
+        PayOpen = true;
+        SelectedTahakkukId = row.TahakkukId;
+        SelectedInfo = $"Tahakkuk #{row.TahakkukId} | Kalan: {row.Kalan:C}";
+        PayAmount = row.Kalan;
+
+        CardName = "";
+        CardNumber = "";
+        Exp = "";
+        Cvc = "";
+    }
+
+    private void CancelPay()
+    {
+        PayOpen = false;
+    }
+
+    private static string OnlyDigits(string s)
+        => new string((s ?? "").Where(char.IsDigit).ToArray());
+
+    private async Task DoPay()
+    {
+        if (SelectedTahakkukId <= 0) { Message = "Tahakkuk seçimi yok."; return; }
+        if (PayAmount <= 0) { Message = "Ödeme tutarı 0 olamaz."; return; }
+
+        // fake ama makul validasyon
+        if (string.IsNullOrWhiteSpace(CardName)) { Message = "Kart isim boş."; return; }
+        if (OnlyDigits(CardNumber).Length < 12) { Message = "Kart numarası hatalı."; return; }
+        if (Cvc.Trim().Length < 3) { Message = "CVC hatalı."; return; }
+
+        // güvenlik: bu tahakkuk bu kullanıcıya mı ait?
+        var tah = await Db.Tahakkuk
+            .Include(t => t.Beyanname).ThenInclude(b => b.Mukellef)
+            .Include(t => t.Odemeler)
+            .FirstOrDefaultAsync(t => t.Id == SelectedTahakkukId);
+
+        if (tah is null) { Message = "Tahakkuk bulunamadı."; return; }
+        if (tah.Beyanname?.Mukellef?.KullaniciId != CurrentUserId)
+        {
+            Message = "Bu tahakkuk sana ait değil.";
+            return;
+        }
+
+        var odenen = tah.Odemeler.Sum(x => x.Tutar);
+        var kalan = tah.Tutar - odenen;
+
+        if (PayAmount > kalan)
+        {
+            Message = $"Fazla ödeme yapamazsın. Kalan: {kalan:C}";
+            return;
+        }
+
+        Db.Odeme.Add(new Odeme
+            {
+                TahakkukId = tah.Id,
+                Tutar = PayAmount,
+                OdemeTarihi = DateTime.Today
+            });
+
+        await Db.SaveChangesAsync();
+
+        Message = "Ödeme alındı (simülasyon). Admin tarafında görünecek.";
+        PayOpen = false;
+
+        await Refresh();
+    }
+}
