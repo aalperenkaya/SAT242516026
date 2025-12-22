@@ -13,6 +13,11 @@ using SAT242516026.Logging;
 using SAT242516026.Models.DbContexts;
 using SAT242516026.Models.Services;
 
+// 🔴 EKLENENLER (hocanın UI + Razor hataları için)
+using SAT242516026.Models.Attributes;
+using SAT242516026.Models.Extensions;
+using SAT242516026.Models.Enums;
+
 var builder = WebApplication.CreateBuilder(args);
 
 #region LOGGER (FILE + DB)
@@ -28,6 +33,9 @@ var compositeLoggerProvider = new CompositeLoggerProvider()
 
 builder.Logging.ClearProviders();
 builder.Logging.AddProvider(compositeLoggerProvider);
+
+// 🔴 Razor ILogger patlamasın diye
+builder.Services.AddLogging();
 
 builder.Services.AddSingleton(new LogService(
     filePath: logFilePath,
@@ -81,14 +89,17 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.Cookie.Name = "SAT242516026.Auth";
         options.Cookie.SameSite = SameSiteMode.Lax;
         options.Cookie.HttpOnly = true;
-
-        // bazen dev ortamında lazım oluyor
         options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
     });
 
-builder.Services.AddAuthorization();
+// 🔴 Authorization net olsun (Admin rolü)
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy =>
+        policy.RequireRole("Admin"));
+});
 
-// Register sayfası bunu kullanıyor
+// Register sayfası
 builder.Services.AddScoped<AuthService>();
 #endregion
 
@@ -111,32 +122,80 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// ✅ Blazor formlarında lazım olacak (NavMenu logout POST gibi)
+// Blazor logout POST için
 app.UseAntiforgery();
 
-#region AUTH ENDPOINTS (LOGIN/LOGOUT)
+#region AUTH ENDPOINTS
 
-// ✅ LOGIN (Form POST) - antiforgery KAPALI, düz şifre kontrol
+// REGISTER
+app.MapPost("/auth/register", async (HttpContext http, MyDbModel_Context db) =>
+{
+    try
+    {
+        var form = await http.Request.ReadFormAsync();
+
+        var kullaniciAdi = (form["kullaniciAdi"].ToString() ?? "").Trim();
+        var sifre = (form["sifre"].ToString() ?? "");
+        var adSoyad = (form["adSoyad"].ToString() ?? "").Trim();
+        var email = (form["email"].ToString() ?? "").Trim();
+
+        if (kullaniciAdi.Length < 3)
+            return Results.Redirect("/kayit?err=kullanici_adi_kisa");
+
+        if (string.IsNullOrWhiteSpace(sifre) || sifre.Length < 4)
+            return Results.Redirect("/kayit?err=sifre_kisa");
+
+        var exists = await db.Kullanicilar.AnyAsync(x => x.KullaniciAdi == kullaniciAdi);
+        if (exists)
+            return Results.Redirect("/kayit?err=kullanici_adi_alinmis");
+
+        var user = new Kullanici
+        {
+            KullaniciAdi = kullaniciAdi,
+            SifreHash = sifre,
+            AdSoyad = string.IsNullOrWhiteSpace(adSoyad) ? null : adSoyad,
+            Email = string.IsNullOrWhiteSpace(email) ? null : email,
+            IsAdmin = false
+        };
+
+        db.Kullanicilar.Add(user);
+        await db.SaveChangesAsync();
+
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Name, user.KullaniciAdi),
+            new Claim("IsAdmin", "0"),
+        };
+
+        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        await http.SignInAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            new ClaimsPrincipal(identity),
+            new AuthenticationProperties { IsPersistent = true });
+
+        return Results.Redirect("/user/beyannamelerim");
+    }
+    catch (Exception ex)
+    {
+        return Results.Redirect("/kayit?err=" + Uri.EscapeDataString(ex.Message));
+    }
+})
+.DisableAntiforgery();
+
+// LOGIN
 app.MapPost("/auth/login", async (HttpContext http, MyDbModel_Context db) =>
 {
     try
     {
-        // Form alanlarını buradan çekiyoruz (binder triplerini azaltır)
         var form = await http.Request.ReadFormAsync();
 
         var kullaniciAdi = (form["kullaniciAdi"].ToString() ?? "").Trim();
         var sifre = (form["sifre"].ToString() ?? "");
 
-        if (string.IsNullOrWhiteSpace(kullaniciAdi))
-            return Results.Redirect("/giris?err=kullanici_adi_bos");
-
         var user = await db.Kullanicilar.FirstOrDefaultAsync(x => x.KullaniciAdi == kullaniciAdi);
-        if (user is null)
-            return Results.Redirect("/giris?err=user_not_found");
-
-        // ✅ BCrypt yok: düz şifre karşılaştırma
-        if ((user.SifreHash ?? "") != (sifre ?? ""))
-            return Results.Redirect("/giris?err=bad_password");
+        if (user == null || user.SifreHash != sifre)
+            return Results.Redirect("/giris?err=bad_login");
 
         var claims = new List<Claim>
         {
@@ -149,32 +208,21 @@ app.MapPost("/auth/login", async (HttpContext http, MyDbModel_Context db) =>
             claims.Add(new Claim(ClaimTypes.Role, "Admin"));
 
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        var principal = new ClaimsPrincipal(identity);
-
         await http.SignInAsync(
             CookieAuthenticationDefaults.AuthenticationScheme,
-            principal,
+            new ClaimsPrincipal(identity),
             new AuthenticationProperties { IsPersistent = true });
 
         return Results.Redirect("/");
     }
     catch (Exception ex)
     {
-        return Results.Redirect("/giris?err=server_error_" + Uri.EscapeDataString(ex.Message));
+        return Results.Redirect("/giris?err=" + Uri.EscapeDataString(ex.Message));
     }
 })
-.DisableAntiforgery(); // ✅ login formunda token aramasın
+.DisableAntiforgery();
 
-// ✅ LOGOUT (POST) - NavMenu bunu kullanacak (güvenli)
-app.MapPost("/auth/logout", async (HttpContext http) =>
-{
-    await http.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-    return Results.Redirect("/giris");
-});
-// Not: Buna DisableAntiforgery eklemiyorum çünkü NavMenu formunda <AntiforgeryToken /> var.
-// Yani güvenli şekilde token ile çalışacak.
-
-// ✅ LOGOUT (GET) - elinde link varsa diye (opsiyonel ama pratik)
+// LOGOUT
 app.MapGet("/auth/logout", async (HttpContext http) =>
 {
     await http.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

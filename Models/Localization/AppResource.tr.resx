@@ -135,6 +135,18 @@
   <data name="Home" xml:space="preserve">
     <value>Ana Sayfa</value>
   </data>
+  <data name="Home_AdminInfo" xml:space="preserve">
+    <value>Admin Hesabı = alperen - alp123</value>
+  </data>
+  <data name="Home_LoginInfo" xml:space="preserve">
+    <value>Lütfen hesabınıza giriş yapınız. Eğer hesabınız yoksa Kayıt Ol ekranından hesap oluşturunuz.</value>
+  </data>
+  <data name="Home_PageTitle" xml:space="preserve">
+    <value>Ana Sayfa</value>
+  </data>
+  <data name="Home_Title" xml:space="preserve">
+    <value>Ana Sayfa</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Giriş</value>
   </data>

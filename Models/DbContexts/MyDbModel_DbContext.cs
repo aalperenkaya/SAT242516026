@@ -23,7 +23,10 @@ namespace SAT242516026.Models.DbContexts
         {
             base.OnModelCreating(modelBuilder);
 
-            // dbo.Kullanicilar tablosu mapping
+            // =========================
+            // KULLANICI
+            // (Kullanicilar tablosunda trigger yoksa HasTrigger yazmana gerek yok)
+            // =========================
             modelBuilder.Entity<Kullanici>(e =>
             {
                 e.ToTable("Kullanicilar", "dbo");
@@ -36,7 +39,6 @@ namespace SAT242516026.Models.DbContexts
                     .HasMaxLength(50)
                     .IsUnicode(true);
 
-                // BCrypt kaldırdıysan bu alan artık düz şifre tutuyor ama kolon adı aynı kalabilir
                 e.Property(x => x.SifreHash)
                     .IsRequired()
                     .HasMaxLength(200)
@@ -52,19 +54,19 @@ namespace SAT242516026.Models.DbContexts
 
                 e.Property(x => x.IsAdmin)
                     .HasDefaultValue(false);
-
-                // Eğer Kullanici entity'nde CreatedAt yoksa bu satırı SİL
-                // e.Property(x => x.CreatedAt);
             });
 
+            // =========================
+            // MUKELLEF ✅ trigger var
+            // =========================
             modelBuilder.Entity<Mukellef>(e =>
             {
                 e.ToTable("Mukellef", "dbo");
+                e.ToTable(tb => tb.HasTrigger("Trg_Mukellef_IUD"));
 
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
 
-                // sp_help: Ad nvarchar(300), VergiNo nvarchar(40), Tip nvarchar(40), Telefon nvarchar(60)
                 e.Property(x => x.Ad)
                     .IsRequired()
                     .HasMaxLength(300)
@@ -82,13 +84,16 @@ namespace SAT242516026.Models.DbContexts
                     .HasMaxLength(60)
                     .IsUnicode(true);
 
-                // ✅ SQL'de eklediğimiz kolon (entity'de de olmalı)
                 e.Property(x => x.KullaniciId).IsRequired();
             });
 
+            // =========================
+            // BEYANNAME TIPI ✅ trigger var
+            // =========================
             modelBuilder.Entity<BeyannameTipi>(e =>
             {
                 e.ToTable("BeyannameTipi", "dbo");
+                e.ToTable(tb => tb.HasTrigger("Trg_BeyannameTipi_IUD"));
 
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
@@ -99,9 +104,13 @@ namespace SAT242516026.Models.DbContexts
                     .IsUnicode(true);
             });
 
+            // =========================
+            // BEYANNAME ✅ trigger var
+            // =========================
             modelBuilder.Entity<Beyanname>(e =>
             {
                 e.ToTable("Beyanname", "dbo");
+                e.ToTable(tb => tb.HasTrigger("Trg_Beyanname_IUD"));
 
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
@@ -110,7 +119,6 @@ namespace SAT242516026.Models.DbContexts
                 e.Property(x => x.BeyannameTipiId).IsRequired();
                 e.Property(x => x.Yil).IsRequired();
 
-                // sp_help: Donem nvarchar(40), Durum nvarchar(100)
                 e.Property(x => x.Donem)
                     .HasMaxLength(40)
                     .IsUnicode(true);
@@ -133,9 +141,13 @@ namespace SAT242516026.Models.DbContexts
                     .OnDelete(DeleteBehavior.NoAction);
             });
 
+            // =========================
+            // TAHHAKKUK ✅ trigger var
+            // =========================
             modelBuilder.Entity<Tahakkuk>(e =>
             {
                 e.ToTable("Tahakkuk", "dbo");
+                e.ToTable(tb => tb.HasTrigger("Trg_Tahakkuk_IUD"));
 
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
@@ -150,10 +162,19 @@ namespace SAT242516026.Models.DbContexts
                     .OnDelete(DeleteBehavior.NoAction);
             });
 
+            // =========================
+            // ODEME ✅ 2 trigger var
+            // =========================
             modelBuilder.Entity<Odeme>(e =>
             {
                 e.ToTable("Odeme", "dbo");
-                e.ToTable(tb => tb.HasTrigger("TR_Odeme_UpdateBeyannameDurum"));
+
+                // ✅ Odeme tablosunda 2 trigger var, ikisini de aynı ToTable içinde tanıt
+                e.ToTable(tb =>
+                {
+                    tb.HasTrigger("TR_Odeme_UpdateBeyannameDurum");
+                    tb.HasTrigger("Trg_Odeme_IUD");
+                });
 
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();

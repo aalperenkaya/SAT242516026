@@ -1,38 +1,39 @@
 ﻿@page "/kayit"
-@using SAT242516026.Models.Services
-@inject AuthService Auth
+@using Microsoft.AspNetCore.WebUtilities
 @inject NavigationManager Nav
 
 <h3 class="mb-3">Kayıt</h3>
 
-@if (!string.IsNullOrWhiteSpace(Message))
+@if (!string.IsNullOrWhiteSpace(Error))
 {
-    <div class="alert alert-info">@Message</div>
+    <div class="alert alert-danger">@Error</div>
 }
 
 <div class="card" style="max-width:620px;">
     <div class="card-body">
-        <div class="row g-2">
-            <div class="col-md-6">
-                <label class="form-label">Ad Soyad</label>
-                <input class="form-control" @bind="AdSoyad" />
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">Email</label>
-                <input class="form-control" @bind="Email" />
+        <form method="post" action="/auth/register">
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <label class="form-label">Ad Soyad</label>
+                    <input class="form-control" name="adSoyad" />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    <input class="form-control" name="email" />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Kullanıcı Adı*</label>
+                    <input class="form-control" name="kullaniciAdi" required />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Şifre*</label>
+                    <input type="password" class="form-control" name="sifre" required />
+                </div>
             </div>
 
-            <div class="col-md-6">
-                <label class="form-label">Kullanıcı Adı*</label>
-                <input class="form-control" @bind="Username" />
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">Şifre*</label>
-                <input type="password" class="form-control" @bind="Password" />
-            </div>
-        </div>
-
-        <button class="btn btn-success w-100 mt-3" @onclick="DoRegister">Kayıt Ol</button>
+            <button class="btn btn-success w-100 mt-3" type="submit">Kayıt Ol</button>
+        </form>
 
         <div class="mt-3">
             Zaten hesabın var mı? <a href="/giris">Giriş yap</a>
@@ -41,31 +42,14 @@
 </div>
 
 @code {
-    string Username = "";
-    string Password = "";
-    string? AdSoyad;
-    string? Email;
-    string? Message;
+    string? Error;
 
-    private async Task DoRegister()
+    protected override void OnInitialized()
     {
-        Message = null;
+        var uri = Nav.ToAbsoluteUri(Nav.Uri);
+        var q = QueryHelpers.ParseQuery(uri.Query);
 
-        var (ok, error) = await Auth.RegisterAsync(Username, Password, AdSoyad, Email);
-        if (!ok)
-        {
-            Message = error ?? "Kayıt başarısız.";
-            return;
-        }
-
-        // kayıt sonrası direkt giriş
-        var (ok2, err2) = await Auth.LoginAsync(Username, Password);
-        if (!ok2)
-        {
-            Message = "Kayıt oldu ama giriş yapılamadı: " + (err2 ?? "");
-            return;
-        }
-
-        Nav.NavigateTo("/", true);
+        if (q.TryGetValue("err", out var err))
+            Error = err.ToString();
     }
 }

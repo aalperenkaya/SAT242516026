@@ -1,15 +1,29 @@
-// Bu dosya diðer MyDbModel sýnýflarýna baðlý, o yüzden namespace'i doðru olmalý
-namespace SAT242516026.Models.MyDbModels;
-
-// Bu dosya Extensions klasöründeki kodlarý kullanýyor
+ï»¿using System.Reflection;
 using SAT242516026.Models.Extensions;
+
+namespace SAT242516026.Models.MyDbModels;
 
 public static class MyDbModel_Extension
 {
-    public static IDictionary<object, object> GetOrderByItems<E>(this MyDbModel<E> myDbModel) where E : class, new()
+    public static IDictionary<object, object> GetOrderByItems<E>(this MyDbModel<E> _)
+        where E : class, new()
     {
-        var sortByItems = new Dictionary<object, object>();
+        var dict = new Dictionary<object, object>();
 
-        return sortByItems;
+        foreach (var p in typeof(E).GetProperties().Where(x => x.GetIndexParameters().Length == 0))
+        {
+            if (!p.Sortable()) continue;
+
+            dict.Add($"{p.LocalizedDescription()} â†‘", $"{p.Name} asc");
+            dict.Add($"{p.LocalizedDescription()} â†“", $"{p.Name} desc");
+        }
+
+        if (dict.Count == 0)
+        {
+            dict.Add("Id â†‘", "Id asc");
+            dict.Add("Id â†“", "Id desc");
+        }
+
+        return dict;
     }
 }

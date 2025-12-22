@@ -1,77 +1,217 @@
-﻿@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+﻿@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
 @page "/admin/beyannameler"
+
 @using SAT242516026.Data
 @using SAT242516026.Models.DbContexts
 @using Microsoft.EntityFrameworkCore
-@using Microsoft.AspNetCore.Components.Authorization
 @inject MyDbModel_Context Db
 
 <div class="page-scroll">
-
-    <h3 class="mb-3">Beyannameler</h3>
+    <h3 class="mb-3">Admin - Beyannameler</h3>
 
     @if (!string.IsNullOrWhiteSpace(Message))
     {
         <div class="alert alert-info">@Message</div>
     }
 
-    <div class="d-flex gap-2 mb-3">
-        <button class="btn btn-outline-secondary" @onclick="Refresh">Yenile</button>
-    </div>
-
     <div class="row g-3">
+
+        <!-- ===================== -->
+        <!-- BEYANNAME TIPLERI     -->
+        <!-- ===================== -->
         <div class="col-lg-5">
+            <!-- FILTER + SORT + PAGINATION -->
+            <div class="card mb-3">
+                <div class="card-header fw-bold">Tipler - Filtre / Sıralama / Sayfalama</div>
+                <div class="card-body">
+                    <div class="row g-2 align-items-end">
+                        <div class="col-md-6">
+                            <label class="form-label">Ad</label>
+                            <input class="form-control" @bind="T_F_Ad" @bind:event="oninput" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Sırala</label>
+                            <select class="form-select" @bind="T_OrderBy">
+                                @foreach (var ob in T_OrderByItems)
+                                {
+                                    <option value="@ob.Value">@ob.Key</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Boyut</label>
+                            <select class="form-select" @bind="T_PageSize">
+                                @foreach (var ps in new[] { 5, 10, 20, 50, 100 })
+                                {
+                                    <option value="@ps">@ps</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary w-100" @onclick="T_ApplyQuery">Uygula</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-outline-danger w-100" @onclick="T_ResetQuery">Sıfırla</button>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="small text-muted">
+                            @($"{(T_TotalRecordCount == 0 ? 0 : (T_PageNumber - 1) * T_PageSize + 1)} - {Math.Min(T_TotalRecordCount, T_PageNumber * T_PageSize)} / {T_TotalRecordCount}")
+                        </div>
+
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-secondary" @onclick="T_FirstPage" disabled="@(T_PageNumber<=1)">&lt;&lt;</button>
+                            <button type="button" class="btn btn-outline-secondary" @onclick="T_PrevPage" disabled="@(T_PageNumber<=1)">&lt;</button>
+                            <button type="button" class="btn btn-outline-secondary" disabled>@T_PageNumber / @T_TotalPageCount</button>
+                            <button type="button" class="btn btn-outline-secondary" @onclick="T_NextPage" disabled="@(T_PageNumber>=T_TotalPageCount)">&gt;</button>
+                            <button type="button" class="btn btn-outline-secondary" @onclick="T_LastPage" disabled="@(T_PageNumber>=T_TotalPageCount)">&gt;&gt;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CRUD -->
             <div class="card mb-4">
-                <div class="card-header fw-bold">Beyanname Tipleri</div>
+                <div class="card-header fw-bold">Beyanname Tipleri (Ekle / Güncelle)</div>
                 <div class="card-body">
                     <div class="row g-2 align-items-end">
                         <div class="col-8">
-                            <input class="form-control" placeholder="Ad*" @bind="bt.Ad" />
+                            <label class="form-label">Ad*</label>
+                            <input class="form-control" placeholder="Örn: KDV, Gelir..." @bind="bt.Ad" />
                         </div>
                         <div class="col-4">
-                            <button class="btn btn-success w-100" @onclick="SaveBeyannameTipi">
+                            <button type="button" class="btn btn-success w-100" @onclick="SaveBeyannameTipi">
                                 @(EditBeyannameTipiId is null ? "Ekle" : "Güncelle")
                             </button>
+
                             @if (EditBeyannameTipiId is not null)
                             {
-                                <button class="btn btn-outline-secondary w-100 mt-2" @onclick="CancelBeyannameTipiEdit">İptal</button>
+                                <button type="button" class="btn btn-outline-secondary w-100 mt-2" @onclick="CancelBeyannameTipiEdit">İptal</button>
                             }
                         </div>
                     </div>
 
                     <hr />
 
-                    <table class="table table-sm table-striped">
-                        <thead>
-                            <tr>
-                                <th style="width:80px;">Id</th>
-                                <th>Ad</th>
-                                <th style="width:160px;"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var t in beyannameTipleri)
-                            {
+                    <div class="table-responsive main-scroll">
+                        <table class="table table-sm table-striped align-middle mb-0">
+                            <thead style="position: sticky; top: 0; background: white; z-index: 2;">
                                 <tr>
-                                    <td>@t.Id</td>
-                                    <td>@t.Ad</td>
-                                    <td class="text-end">
-                                        <button class="btn btn-sm btn-outline-primary me-2" @onclick="() => StartEditBeyannameTipi(t)">Güncelle</button>
-                                        <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteBeyannameTipi(t.Id)">Sil</button>
-                                    </td>
+                                    <th style="width:80px;">Id</th>
+                                    <th>Ad</th>
+                                    <th style="width:170px;"></th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var t in beyannameTipleri)
+                                {
+                                    <tr>
+                                        <td>@t.Id</td>
+                                        <td>@t.Ad</td>
+                                        <td class="text-end">
+                                            <button type="button" class="btn btn-sm btn-outline-primary me-2" @onclick="() => StartEditBeyannameTipi(t)">Güncelle</button>
+                                            <button type="button" class="btn btn-sm btn-outline-danger" @onclick="() => DeleteBeyannameTipi(t.Id)">Sil</button>
+                                        </td>
+                                    </tr>
+                                }
+
+                                @if (beyannameTipleri.Count == 0)
+                                {
+                                    <tr><td colspan="3" class="text-center text-muted py-3">Henüz tip yok.</td></tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
 
                 </div>
             </div>
         </div>
 
+        <!-- ===================== -->
+        <!-- BEYANNAME             -->
+        <!-- ===================== -->
         <div class="col-lg-7">
-            <div class="card mb-4">
-                <div class="card-header fw-bold">Beyanname</div>
+
+            <!-- FILTER + SORT + PAGINATION -->
+            <div class="card mb-3">
+                <div class="card-header fw-bold">Beyannameler - Filtre / Sıralama / Sayfalama</div>
                 <div class="card-body">
+                    <div class="row g-2 align-items-end">
+
+                        <div class="col-md-3">
+                            <label class="form-label">MükellefId</label>
+                            <input type="number" class="form-control" @bind="B_F_MukellefId" />
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">TipId</label>
+                            <input type="number" class="form-control" @bind="B_F_TipId" />
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Yıl</label>
+                            <input type="number" class="form-control" @bind="B_F_Yil" />
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Durum</label>
+                            <input class="form-control" @bind="B_F_Durum" @bind:event="oninput" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Sırala</label>
+                            <select class="form-select" @bind="B_OrderBy">
+                                @foreach (var ob in B_OrderByItems)
+                                {
+                                    <option value="@ob.Value">@ob.Key</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label">Boyut</label>
+                            <select class="form-select" @bind="B_PageSize">
+                                @foreach (var ps in new[] { 5, 10, 20, 50, 100 })
+                                {
+                                    <option value="@ps">@ps</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary w-100" @onclick="B_ApplyQuery">Uygula</button>
+                        </div>
+
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-outline-danger w-100" @onclick="B_ResetQuery">Sıfırla</button>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="small text-muted">
+                            @($"{(B_TotalRecordCount == 0 ? 0 : (B_PageNumber - 1) * B_PageSize + 1)} - {Math.Min(B_TotalRecordCount, B_PageNumber * B_PageSize)} / {B_TotalRecordCount}")
+                        </div>
+
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-secondary" @onclick="B_FirstPage" disabled="@(B_PageNumber<=1)">&lt;&lt;</button>
+                            <button type="button" class="btn btn-outline-secondary" @onclick="B_PrevPage" disabled="@(B_PageNumber<=1)">&lt;</button>
+                            <button type="button" class="btn btn-outline-secondary" disabled>@B_PageNumber / @B_TotalPageCount</button>
+                            <button type="button" class="btn btn-outline-secondary" @onclick="B_NextPage" disabled="@(B_PageNumber>=B_TotalPageCount)">&gt;</button>
+                            <button type="button" class="btn btn-outline-secondary" @onclick="B_LastPage" disabled="@(B_PageNumber>=B_TotalPageCount)">&gt;&gt;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CRUD -->
+            <div class="card mb-4">
+                <div class="card-header fw-bold">Beyanname (Ekle / Güncelle)</div>
+                <div class="card-body">
+
                     <div class="row g-2 align-items-end">
                         <div class="col-md-6">
                             <label class="form-label">Mükellef*</label>
@@ -79,7 +219,7 @@
                                 <option value="0">Seç...</option>
                                 @foreach (var m in mukellefler)
                                 {
-                                    <option value="@m.Id">@m.Ad (@m.Id)</option>
+                                    <option value="@m.Id">@m.Ad (#@m.Id) - KullanıcıId:@m.KullaniciId</option>
                                 }
                             </select>
                         </div>
@@ -88,9 +228,9 @@
                             <label class="form-label">Beyanname Tipi*</label>
                             <select class="form-select" @bind="bn.BeyannameTipiId">
                                 <option value="0">Seç...</option>
-                                @foreach (var t in beyannameTipleri)
+                                @foreach (var t in beyannameTipleri_All)
                                 {
-                                    <option value="@t.Id">@t.Ad (@t.Id)</option>
+                                    <option value="@t.Id">@t.Ad (#@t.Id)</option>
                                 }
                             </select>
                         </div>
@@ -99,10 +239,12 @@
                             <label class="form-label">Yıl*</label>
                             <input type="number" class="form-control" @bind="bn.Yil" />
                         </div>
+
                         <div class="col-md-4">
                             <label class="form-label">Dönem</label>
                             <input class="form-control" placeholder="01, 2025-10, Q3..." @bind="bn.Donem" />
                         </div>
+
                         <div class="col-md-4">
                             <label class="form-label">Durum</label>
                             <input class="form-control" placeholder="Taslak/Verildi..." @bind="bn.Durum" />
@@ -112,209 +254,389 @@
                             <label class="form-label">Son Gönderme</label>
                             <input type="date" class="form-control" @bind="bn.SonGondermeTarihi" />
                         </div>
+
                         <div class="col-md-6">
                             <label class="form-label">Gönderme</label>
                             <input type="date" class="form-control" @bind="bn.GondermeTarihi" />
                         </div>
 
                         <div class="col-md-4">
-                            <button class="btn btn-success w-100" @onclick="SaveBeyanname">
+                            <button type="button" class="btn btn-success w-100" @onclick="SaveBeyanname">
                                 @(EditBeyannameId is null ? "Ekle" : "Güncelle")
                             </button>
+
                             @if (EditBeyannameId is not null)
                             {
-                                <button class="btn btn-outline-secondary w-100 mt-2" @onclick="CancelBeyannameEdit">İptal</button>
+                                <button type="button" class="btn btn-outline-secondary w-100 mt-2" @onclick="CancelBeyannameEdit">İptal</button>
                             }
                         </div>
                     </div>
 
                     <hr />
 
-                    <table class="table table-sm table-striped">
-                        <thead>
-                            <tr>
-                                <th style="width:80px;">Id</th>
-                                <th>Mükellef</th>
-                                <th>Tip</th>
-                                <th style="width:90px;">Yıl</th>
-                                <th style="width:110px;">Dönem</th>
-                                <th>Durum</th>
-                                <th style="width:190px;"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var b in beyannameler)
-                            {
+                    <div class="table-responsive main-scroll">
+                        <table class="table table-sm table-striped align-middle mb-0">
+                            <thead style="position: sticky; top: 0; background: white; z-index: 2;">
                                 <tr>
-                                    <td>@b.Id</td>
-                                    <td>@b.Mukellef?.Ad (@b.MukellefId)</td>
-                                    <td>@b.BeyannameTipi?.Ad (@b.BeyannameTipiId)</td>
-                                    <td>@b.Yil</td>
-                                    <td>@b.Donem</td>
-                                    <td>@b.Durum</td>
-                                    <td class="text-end">
-                                        <button class="btn btn-sm btn-outline-primary me-2" @onclick="() => StartEditBeyanname(b)">Güncelle</button>
-                                        <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteBeyanname(b.Id)">Sil</button>
-                                    </td>
+                                    <th style="width:80px;">Id</th>
+                                    <th>Mükellef</th>
+                                    <th>Tip</th>
+                                    <th style="width:90px;">Yıl</th>
+                                    <th style="width:110px;">Dönem</th>
+                                    <th>Durum</th>
+                                    <th style="width:190px;"></th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var b in beyannameler)
+                                {
+                                    <tr>
+                                        <td>@b.Id</td>
+                                        <td>@b.Mukellef?.Ad (@b.MukellefId)</td>
+                                        <td>@b.BeyannameTipi?.Ad (@b.BeyannameTipiId)</td>
+                                        <td>@b.Yil</td>
+                                        <td>@b.Donem</td>
+                                        <td>@b.Durum</td>
+                                        <td class="text-end">
+                                            <button type="button" class="btn btn-sm btn-outline-primary me-2" @onclick="() => StartEditBeyanname(b)">Güncelle</button>
+                                            <button type="button" class="btn btn-sm btn-outline-danger" @onclick="() => DeleteBeyanname(b.Id)">Sil</button>
+                                        </td>
+                                    </tr>
+                                }
+
+                                @if (beyannameler.Count == 0)
+                                {
+                                    <tr><td colspan="7" class="text-center text-muted py-3">Henüz beyanname yok.</td></tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
 
                 </div>
             </div>
-        </div>
-    </div>
 
+        </div>
+
+    </div>
 </div>
 
 @code {
-    [CascadingParameter] private Task<AuthenticationState> AuthStateTask { get; set; } = default!;
-
     string? Message;
 
+    // Lookup lists (dropdown için)
     List<Mukellef> mukellefler = new();
+    List<BeyannameTipi> beyannameTipleri_All = new();
+
+    // List shown on left (paged)
     List<BeyannameTipi> beyannameTipleri = new();
     List<Beyanname> beyannameler = new();
 
+    // Forms
     BeyannameTipi bt = new();
     Beyanname bn = new() { Yil = DateTime.Now.Year };
 
     int? EditBeyannameTipiId = null;
     int? EditBeyannameId = null;
 
-    int CurrentUserId;
-    bool IsAdmin;
+    // =========================
+    // TIP FILTER/SORT/PAGING
+    // =========================
+    string? T_F_Ad;
+
+    string T_OrderBy = "Id desc";
+    int T_PageSize = 10;
+    int T_PageNumber = 1;
+
+    int T_TotalRecordCount;
+    int T_TotalPageCount => T_PageSize <= 0 ? 1 : Math.Max(1, (int)Math.Ceiling(T_TotalRecordCount / (double)T_PageSize));
+
+    Dictionary<string, string> T_OrderByItems = new()
+    {
+        { "Id ↓", "Id desc" },
+        { "Id ↑", "Id asc" },
+        { "Ad ↑", "Ad asc" },
+        { "Ad ↓", "Ad desc" },
+    };
+
+    // =========================
+    // BEYANNAME FILTER/SORT/PAGING
+    // =========================
+    int? B_F_MukellefId;
+    int? B_F_TipId;
+    int? B_F_Yil;
+    string? B_F_Durum;
+
+    string B_OrderBy = "Id desc";
+    int B_PageSize = 10;
+    int B_PageNumber = 1;
+
+    int B_TotalRecordCount;
+    int B_TotalPageCount => B_PageSize <= 0 ? 1 : Math.Max(1, (int)Math.Ceiling(B_TotalRecordCount / (double)B_PageSize));
+
+    Dictionary<string, string> B_OrderByItems = new()
+    {
+        { "Id ↓", "Id desc" },
+        { "Id ↑", "Id asc" },
+        { "Yıl ↓", "Yil desc" },
+        { "Yıl ↑", "Yil asc" },
+        { "Durum ↑", "Durum asc" },
+        { "Durum ↓", "Durum desc" },
+        { "MükellefId ↑", "MukellefId asc" },
+        { "MükellefId ↓", "MukellefId desc" },
+        { "TipId ↑", "BeyannameTipiId asc" },
+        { "TipId ↓", "BeyannameTipiId desc" },
+    };
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadUserContext();
-        await Refresh();
+        await RefreshLookups();
+        await RefreshTipList();
+        await RefreshBeyannameList();
     }
 
-    private async Task LoadUserContext()
+    // ---------- Lookups ----------
+    async Task RefreshLookups()
     {
-        var authState = await AuthStateTask;
-        var user = authState.User;
+        mukellefler = await Db.Mukellef
+            .OrderByDescending(x => x.Id)
+            .Take(500)
+            .AsNoTracking()
+            .ToListAsync();
 
-        IsAdmin = user.IsInRole("Admin") || user.HasClaim("IsAdmin", "1");
-
-        var idStr = user.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-        if (!int.TryParse(idStr, out CurrentUserId))
-            CurrentUserId = 0;
+        beyannameTipleri_All = await Db.BeyannameTipi
+            .OrderByDescending(x => x.Id)
+            .Take(500)
+            .AsNoTracking()
+            .ToListAsync();
     }
 
-    private IQueryable<Mukellef> MukellefQuery()
-    {
-        var q = Db.Mukellef.AsQueryable();
-        if (!IsAdmin)
-            q = q.Where(x => x.KullaniciId == CurrentUserId);
-        return q;
-    }
-
-    private IQueryable<Beyanname> BeyannameQuery()
-    {
-        var q = Db.Beyanname.AsQueryable();
-        if (!IsAdmin)
-            q = q.Where(b => b.Mukellef.KullaniciId == CurrentUserId);
-        return q;
-    }
-
-    private async Task Refresh()
+    // ---------- TIP LIST ----------
+    async Task RefreshTipList()
     {
         try
         {
-            mukellefler = await MukellefQuery()
-                .OrderByDescending(x => x.Id)
-                .Take(50)
-                .AsNoTracking()
-                .ToListAsync();
+            IQueryable<BeyannameTipi> q = Db.BeyannameTipi.AsNoTracking();
 
-            beyannameTipleri = await Db.BeyannameTipi
-                .OrderByDescending(x => x.Id)
-                .Take(50)
-                .AsNoTracking()
-                .ToListAsync();
+            if (!string.IsNullOrWhiteSpace(T_F_Ad))
+                q = q.Where(x => x.Ad.Contains(T_F_Ad));
 
-            beyannameler = await BeyannameQuery()
-                .Include(x => x.Mukellef)
-                .Include(x => x.BeyannameTipi)
-                .OrderByDescending(x => x.Id)
-                .Take(50)
-                .AsNoTracking()
+            T_TotalRecordCount = await q.CountAsync();
+
+            if (T_PageNumber < 1) T_PageNumber = 1;
+            if (T_PageNumber > T_TotalPageCount) T_PageNumber = T_TotalPageCount;
+
+            q = T_OrderBy switch
+            {
+                "Id asc" => q.OrderBy(x => x.Id),
+                "Id desc" => q.OrderByDescending(x => x.Id),
+                "Ad asc" => q.OrderBy(x => x.Ad),
+                "Ad desc" => q.OrderByDescending(x => x.Ad),
+                _ => q.OrderByDescending(x => x.Id)
+            };
+
+            beyannameTipleri = await q
+                .Skip((T_PageNumber - 1) * T_PageSize)
+                .Take(T_PageSize)
                 .ToListAsync();
 
             Message = null;
         }
         catch (Exception ex)
         {
-            Message = ex.Message;
+            Message = ex.InnerException?.Message ?? ex.Message;
         }
         StateHasChanged();
     }
 
-    private void StartEditBeyannameTipi(BeyannameTipi t)
+    async Task T_ApplyQuery() { T_PageNumber = 1; await RefreshTipList(); }
+    async Task T_ResetQuery()
+    {
+        T_F_Ad = null;
+        T_OrderBy = "Id desc";
+        T_PageSize = 10;
+        T_PageNumber = 1;
+        await RefreshTipList();
+    }
+    async Task T_FirstPage() { T_PageNumber = 1; await RefreshTipList(); }
+    async Task T_LastPage() { T_PageNumber = T_TotalPageCount; await RefreshTipList(); }
+    async Task T_PrevPage() { if (T_PageNumber > 1) T_PageNumber--; await RefreshTipList(); }
+    async Task T_NextPage() { if (T_PageNumber < T_TotalPageCount) T_PageNumber++; await RefreshTipList(); }
+
+    // ---------- BEYANNAME LIST ----------
+    async Task RefreshBeyannameList()
+    {
+        try
+        {
+            IQueryable<Beyanname> q = Db.Beyanname
+                .Include(x => x.Mukellef)
+                .Include(x => x.BeyannameTipi)
+                .AsNoTracking();
+
+            if (B_F_MukellefId is not null && B_F_MukellefId > 0)
+                q = q.Where(x => x.MukellefId == B_F_MukellefId.Value);
+
+            if (B_F_TipId is not null && B_F_TipId > 0)
+                q = q.Where(x => x.BeyannameTipiId == B_F_TipId.Value);
+
+            if (B_F_Yil is not null && B_F_Yil > 0)
+                q = q.Where(x => x.Yil == B_F_Yil.Value);
+
+            if (!string.IsNullOrWhiteSpace(B_F_Durum))
+                q = q.Where(x => (x.Durum ?? "").Contains(B_F_Durum));
+
+            B_TotalRecordCount = await q.CountAsync();
+
+            if (B_PageNumber < 1) B_PageNumber = 1;
+            if (B_PageNumber > B_TotalPageCount) B_PageNumber = B_TotalPageCount;
+
+            q = B_OrderBy switch
+            {
+                "Id asc" => q.OrderBy(x => x.Id),
+                "Id desc" => q.OrderByDescending(x => x.Id),
+                "Yil asc" => q.OrderBy(x => x.Yil),
+                "Yil desc" => q.OrderByDescending(x => x.Yil),
+                "Durum asc" => q.OrderBy(x => x.Durum),
+                "Durum desc" => q.OrderByDescending(x => x.Durum),
+                "MukellefId asc" => q.OrderBy(x => x.MukellefId),
+                "MukellefId desc" => q.OrderByDescending(x => x.MukellefId),
+                "BeyannameTipiId asc" => q.OrderBy(x => x.BeyannameTipiId),
+                "BeyannameTipiId desc" => q.OrderByDescending(x => x.BeyannameTipiId),
+                _ => q.OrderByDescending(x => x.Id)
+            };
+
+            beyannameler = await q
+                .Skip((B_PageNumber - 1) * B_PageSize)
+                .Take(B_PageSize)
+                .ToListAsync();
+
+            Message = null;
+        }
+        catch (Exception ex)
+        {
+            Message = ex.InnerException?.Message ?? ex.Message;
+        }
+
+        StateHasChanged();
+    }
+
+    async Task B_ApplyQuery() { B_PageNumber = 1; await RefreshBeyannameList(); }
+    async Task B_ResetQuery()
+    {
+        B_F_MukellefId = null;
+        B_F_TipId = null;
+        B_F_Yil = null;
+        B_F_Durum = null;
+
+        B_OrderBy = "Id desc";
+        B_PageSize = 10;
+        B_PageNumber = 1;
+
+        await RefreshBeyannameList();
+    }
+
+    async Task B_FirstPage() { B_PageNumber = 1; await RefreshBeyannameList(); }
+    async Task B_LastPage() { B_PageNumber = B_TotalPageCount; await RefreshBeyannameList(); }
+    async Task B_PrevPage() { if (B_PageNumber > 1) B_PageNumber--; await RefreshBeyannameList(); }
+    async Task B_NextPage() { if (B_PageNumber < B_TotalPageCount) B_PageNumber++; await RefreshBeyannameList(); }
+
+    // ---------------- TIP CRUD ----------------
+    void StartEditBeyannameTipi(BeyannameTipi t)
     {
         EditBeyannameTipiId = t.Id;
         bt = new BeyannameTipi { Ad = t.Ad };
-        Message = "Beyanname Tipi düzenleme modunda.";
+        Message = "Tip düzenleme modunda.";
     }
 
-    private void CancelBeyannameTipiEdit()
+    void CancelBeyannameTipiEdit()
     {
         EditBeyannameTipiId = null;
         bt = new();
         Message = "Düzenleme iptal edildi.";
     }
 
-    private async Task SaveBeyannameTipi()
+    async Task SaveBeyannameTipi()
     {
-        if (string.IsNullOrWhiteSpace(bt.Ad)) { Message = "Beyanname Tipi Ad zorunlu."; return; }
-
-        if (EditBeyannameTipiId is null)
+        if (string.IsNullOrWhiteSpace(bt.Ad))
         {
-            Db.BeyannameTipi.Add(bt);
-            await Db.SaveChangesAsync();
-            Message = "Beyanname Tipi eklendi.";
-        }
-        else
-        {
-            var entity = await Db.BeyannameTipi.FindAsync(EditBeyannameTipiId.Value);
-            if (entity is null) { Message = "Beyanname Tipi bulunamadı."; return; }
-
-            entity.Ad = bt.Ad;
-            await Db.SaveChangesAsync();
-            Message = "Beyanname Tipi güncellendi.";
-
-            EditBeyannameTipiId = null;
+            Message = "Tip adı zorunlu.";
+            return;
         }
 
-        bt = new();
-        await Refresh();
-    }
-
-    private async Task DeleteBeyannameTipi(int id)
-    {
-        var entity = await Db.BeyannameTipi.FindAsync(id);
-        if (entity is null) { Message = "Beyanname Tipi bulunamadı."; return; }
-
-        Db.BeyannameTipi.Remove(entity);
-        await Db.SaveChangesAsync();
-        Message = "Beyanname Tipi silindi.";
-
-        if (EditBeyannameTipiId == id)
+        try
         {
-            EditBeyannameTipiId = null;
+            if (EditBeyannameTipiId is null)
+            {
+                Db.BeyannameTipi.Add(bt);
+                await Db.SaveChangesAsync();
+                Message = "Tip eklendi.";
+            }
+            else
+            {
+                var entity = await Db.BeyannameTipi.FindAsync(EditBeyannameTipiId.Value);
+                if (entity is null) { Message = "Tip bulunamadı."; return; }
+
+                entity.Ad = bt.Ad;
+                await Db.SaveChangesAsync();
+                Message = "Tip güncellendi.";
+                EditBeyannameTipiId = null;
+            }
+
             bt = new();
-        }
 
-        await Refresh();
+            await RefreshLookups();   // dropdown güncellensin
+            await RefreshTipList();   // list güncellensin
+        }
+        catch (DbUpdateException dbex)
+        {
+            Message = dbex.InnerException?.Message ?? dbex.Message;
+        }
+        catch (Exception ex)
+        {
+            Message = ex.InnerException?.Message ?? ex.Message;
+        }
     }
 
-    private void StartEditBeyanname(Beyanname b)
+    async Task DeleteBeyannameTipi(int id)
+    {
+        try
+        {
+            var used = await Db.Beyanname.AnyAsync(b => b.BeyannameTipiId == id);
+            if (used)
+            {
+                Message = "Bu tip kullanılıyor. Önce bu tipe bağlı beyannameleri silmelisin.";
+                return;
+            }
+
+            var entity = await Db.BeyannameTipi.FindAsync(id);
+            if (entity is null) { Message = "Tip bulunamadı."; return; }
+
+            Db.BeyannameTipi.Remove(entity);
+            await Db.SaveChangesAsync();
+            Message = "Tip silindi.";
+
+            if (EditBeyannameTipiId == id)
+            {
+                EditBeyannameTipiId = null;
+                bt = new();
+            }
+
+            await RefreshLookups();
+            await RefreshTipList();
+        }
+        catch (DbUpdateException dbex)
+        {
+            Message = dbex.InnerException?.Message ?? dbex.Message;
+        }
+        catch (Exception ex)
+        {
+            Message = ex.InnerException?.Message ?? ex.Message;
+        }
+    }
+
+    // ---------------- BEYANNAME CRUD ----------------
+    void StartEditBeyanname(Beyanname b)
     {
         EditBeyannameId = b.Id;
-
         bn = new Beyanname
             {
                 MukellefId = b.MukellefId,
@@ -325,73 +647,98 @@
                 SonGondermeTarihi = b.SonGondermeTarihi,
                 GondermeTarihi = b.GondermeTarihi
             };
-
         Message = "Beyanname düzenleme modunda.";
     }
 
-    private void CancelBeyannameEdit()
+    void CancelBeyannameEdit()
     {
         EditBeyannameId = null;
         bn = new() { Yil = DateTime.Now.Year };
         Message = "Düzenleme iptal edildi.";
     }
 
-    private async Task SaveBeyanname()
+    async Task SaveBeyanname()
     {
         if (bn.MukellefId <= 0 || bn.BeyannameTipiId <= 0 || bn.Yil <= 0)
-        { Message = "Mükellef, Tip ve Yıl zorunlu."; return; }
-
-        // normal kullanıcı başkasının mükellefine beyanname açamasın
-        if (!IsAdmin)
         {
-            var okMukellef = await Db.Mukellef.AnyAsync(x => x.Id == bn.MukellefId && x.KullaniciId == CurrentUserId);
-            if (!okMukellef) { Message = "Bu mükellef sana ait değil."; return; }
+            Message = "Mükellef, Tip ve Yıl zorunlu.";
+            return;
         }
 
-        if (EditBeyannameId is null)
+        try
         {
-            Db.Beyanname.Add(bn);
-            await Db.SaveChangesAsync();
-            Message = "Beyanname eklendi.";
+            if (EditBeyannameId is null)
+            {
+                Db.Beyanname.Add(bn);
+                await Db.SaveChangesAsync();
+                Message = "Beyanname eklendi.";
+            }
+            else
+            {
+                var entity = await Db.Beyanname.FindAsync(EditBeyannameId.Value);
+                if (entity is null) { Message = "Beyanname bulunamadı."; return; }
+
+                entity.MukellefId = bn.MukellefId;
+                entity.BeyannameTipiId = bn.BeyannameTipiId;
+                entity.Yil = bn.Yil;
+                entity.Donem = bn.Donem;
+                entity.Durum = bn.Durum;
+                entity.SonGondermeTarihi = bn.SonGondermeTarihi;
+                entity.GondermeTarihi = bn.GondermeTarihi;
+
+                await Db.SaveChangesAsync();
+                Message = "Beyanname güncellendi.";
+                EditBeyannameId = null;
+            }
+
+            bn = new() { Yil = DateTime.Now.Year };
+
+            await RefreshBeyannameList();
         }
-        else
+        catch (DbUpdateException dbex)
         {
-            var entity = await BeyannameQuery().FirstOrDefaultAsync(x => x.Id == EditBeyannameId.Value);
-            if (entity is null) { Message = "Beyanname bulunamadı / yetkin yok."; return; }
-
-            entity.MukellefId = bn.MukellefId;
-            entity.BeyannameTipiId = bn.BeyannameTipiId;
-            entity.Yil = bn.Yil;
-            entity.Donem = bn.Donem;
-            entity.Durum = bn.Durum;
-            entity.SonGondermeTarihi = bn.SonGondermeTarihi;
-            entity.GondermeTarihi = bn.GondermeTarihi;
-
-            await Db.SaveChangesAsync();
-            Message = "Beyanname güncellendi.";
-
-            EditBeyannameId = null;
+            Message = dbex.InnerException?.Message ?? dbex.Message;
         }
-
-        bn = new() { Yil = DateTime.Now.Year };
-        await Refresh();
+        catch (Exception ex)
+        {
+            Message = ex.InnerException?.Message ?? ex.Message;
+        }
     }
 
-    private async Task DeleteBeyanname(int id)
+    async Task DeleteBeyanname(int id)
     {
-        var entity = await BeyannameQuery().FirstOrDefaultAsync(x => x.Id == id);
-        if (entity is null) { Message = "Beyanname bulunamadı / yetkin yok."; return; }
-
-        Db.Beyanname.Remove(entity);
-        await Db.SaveChangesAsync();
-        Message = "Beyanname silindi.";
-
-        if (EditBeyannameId == id)
+        try
         {
-            EditBeyannameId = null;
-            bn = new() { Yil = DateTime.Now.Year };
-        }
+            var hasTahakkuk = await Db.Tahakkuk.AnyAsync(t => t.BeyannameId == id);
+            if (hasTahakkuk)
+            {
+                Message = "Bu beyannameye bağlı tahakkuk var. Önce tahakkukları silmelisin.";
+                return;
+            }
 
-        await Refresh();
+            var entity = await Db.Beyanname.FindAsync(id);
+            if (entity is null) { Message = "Beyanname bulunamadı."; return; }
+
+            Db.Beyanname.Remove(entity);
+            await Db.SaveChangesAsync();
+            Message = "Beyanname silindi.";
+
+            if (EditBeyannameId == id)
+            {
+                EditBeyannameId = null;
+                bn = new() { Yil = DateTime.Now.Year };
+            }
+
+            await RefreshBeyannameList();
+        }
+        catch (DbUpdateException dbex)
+        {
+            Message = dbex.InnerException?.Message ?? dbex.Message;
+        }
+        catch (Exception ex)
+        {
+            Message = ex.InnerException?.Message ?? ex.Message;
+        }
     }
 }
+

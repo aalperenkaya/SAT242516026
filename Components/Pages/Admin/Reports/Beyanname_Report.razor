@@ -1,0 +1,51 @@
+﻿@page "/admin/reports/beyannameler"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+
+@using Microsoft.EntityFrameworkCore
+@using SAT242516026.Models.DbContexts
+@using SAT242516026.Models.MyReports
+@inject MyDbModel_Context Db
+
+<h3>Admin - Beyanname Raporu (PDF)</h3>
+
+@if (!string.IsNullOrEmpty(pdfDataUrl))
+{
+    <iframe src="@pdfDataUrl" width="100%" height="700px" style="border:1px solid #ddd;"></iframe>
+}
+else
+{
+    <p>Yükleniyor...</p>
+}
+
+@code {
+    string? pdfDataUrl;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        var data = await Db.Beyanname
+            .Include(x => x.Mukellef)
+            .Include(x => x.BeyannameTipi)
+            .OrderByDescending(x => x.Id)
+            .Take(300)
+            .AsNoTracking()
+            .Select(x => new BeyannameRow
+                {
+                    Id = x.Id,
+                    MukellefAd = x.Mukellef != null ? x.Mukellef.Ad : ("#" + x.MukellefId),
+                    TipAd = x.BeyannameTipi != null ? x.BeyannameTipi.Ad : ("#" + x.BeyannameTipiId),
+                    Yil = x.Yil,
+                    Donem = x.Donem ?? "",
+                    Durum = x.Durum ?? "",
+                    SonTarih = x.SonGondermeTarihi.HasValue ? x.SonGondermeTarihi.Value.ToString("dd.MM.yyyy") : "-"
+                })
+            .ToListAsync();
+
+        var report = new Report_BeyannameList();
+        var pdfBytes = report.Generate(data);
+
+        pdfDataUrl = $"data:application/pdf;base64,{Convert.ToBase64String(pdfBytes)}";
+        await InvokeAsync(StateHasChanged);
+    }
+}

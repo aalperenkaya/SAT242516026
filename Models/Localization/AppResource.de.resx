@@ -135,6 +135,18 @@
   <data name="Home" xml:space="preserve">
     <value>Startseite</value>
   </data>
+  <data name="Home_AdminInfo" xml:space="preserve">
+    <value>Admin-Konto = alperen - alp123</value>
+  </data>
+  <data name="Home_LoginInfo" xml:space="preserve">
+    <value>Bitte melden Sie sich an. Wenn Sie kein Konto haben, erstellen Sie eines über die Registrierungsseite.</value>
+  </data>
+  <data name="Home_PageTitle" xml:space="preserve">
+    <value>Startseite</value>
+  </data>
+  <data name="Home_Title" xml:space="preserve">
+    <value>Startseite</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Anmelden</value>
   </data>

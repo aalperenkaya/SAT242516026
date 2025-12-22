@@ -1,14 +1,15 @@
 ﻿@page "/"
-@using Microsoft.AspNetCore.Components.Routing
 @inject ILogger<Home> Logger
 
-<PageTitle>Home</PageTitle>
+<PageTitle>@_localizer["Home_PageTitle"]</PageTitle>
 
 <h1>@_localizer["AppTitle"]</h1>
 
+<h4>@_localizer["Home_Title"]</h4>
 
-    <h4>Ana Sayfa</h4>
-   <p>Lütfen hesabınıza giriş yapınız. Eğer Hesabınız yoksa Kayıt Ol ekranından hesap oluşturunuz.</p>
+<p>@_localizer["Home_LoginInfo"]</p>
+
+<h2>@_localizer["Home_AdminInfo"]</h2>
 
 @code {
     protected override async Task OnAfterRenderAsync(bool firstRender)

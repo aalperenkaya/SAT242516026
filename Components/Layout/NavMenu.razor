@@ -71,6 +71,14 @@
                             </NavLink>
                         </div>
 
+                        <div class="nav-item px-3">
+                            <NavLink class="nav-link" href="/admin/reports/beyannameler">
+                                <span class="bi bi-filetype-pdf me-2"></span>
+                                Beyanname Raporu
+                            </NavLink>
+                        </div>
+
+
                     }
                     else
                     {
@@ -115,15 +123,12 @@
                     </div>
 
                     <div class="nav-item px-3">
-                        <form action="/auth/logout" method="post" class="w-100">
-
-                            <AntiforgeryToken />
-                            <button type="submit" class="nav-link nav-btn">
-                                <span class="bi bi-box-arrow-right me-2"></span>
-                                @_localizer["Logout"]
-                            </button>
-                        </form>
+                        <a class="nav-link nav-btn" href="/auth/logout">
+                            <span class="bi bi-box-arrow-right me-2"></span>
+                            @_localizer["Logout"]
+                        </a>
                     </div>
+
                 </Authorized>
 
                 <NotAuthorized>
@@ -148,9 +153,4 @@
 
         </nav>
     </div>
-
-    <div class="sidebar-footer">
-        <span class="bi bi-globe2 me-2"></span>
-        <span>@_localizer["Language"]</span>
     </div>
-</div>
