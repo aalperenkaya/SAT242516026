@@ -1,0 +1,181 @@
+﻿@page "/admin/dashboard"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+
+@using Microsoft.EntityFrameworkCore
+@using SAT242516026.Models.DbContexts
+@inject MyDbModel_Context Db
+@inject IJSRuntime JS
+
+<h3 class="mb-3">Admin Dashboard</h3>
+
+<div class="row g-3">
+
+    <!-- 1) KAYIT SAYILARI -->
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header fw-bold">Kayıt Sayıları</div>
+            <div class="card-body" style="height:260px;">
+                <canvas id="chartBar1"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2) DURUMA GÖRE BEYANNAME -->
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header fw-bold">Duruma Göre Beyanname</div>
+            <div class="card-body" style="height:260px;">
+                <canvas id="chartBarDurum"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3) TAHAKKUK / ÖDEME / KALAN -->
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header fw-bold">Tahakkuk / Ödeme / Kalan</div>
+            <div class="card-body" style="height:260px;">
+                <canvas id="chartBarFin"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4) AYLARA GÖRE ÖDEME -->
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header fw-bold">Aylara Göre Ödeme</div>
+            <div class="card-body" style="height:260px;">
+                <canvas id="chartLineAy"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@code {
+    bool _drawn;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender || _drawn) return;
+        _drawn = true;
+
+        // -----------------------------
+        // 1) Kayıt sayıları (Bar)
+        // -----------------------------
+        var mukellefCount = await Db.Mukellef.CountAsync();
+        var beyannameCount = await Db.Beyanname.CountAsync();
+        var tahakkukCount = await Db.Tahakkuk.CountAsync();
+        var odemeCount = await Db.Odeme.CountAsync();
+
+        var labels1 = new[] { "Mükellef", "Beyanname", "Tahakkuk", "Ödeme" };
+        var seriesBar1 = new[] {
+            new {
+                label = "Toplam",
+                data = new[] { mukellefCount, beyannameCount, tahakkukCount, odemeCount },
+                backgroundColor = "rgba(0,127,0,0.35)",
+                borderColor = "rgba(0,127,0,1)",
+                borderWidth = 1
+            }
+        };
+
+        await JS.InvokeVoidAsync("drawBarChart", "chartBar1", labels1, seriesBar1, true, true, "x");
+
+        // -----------------------------
+        // 2) Duruma göre beyanname (Bar)
+        // -----------------------------
+        var durumList = await Db.Beyanname
+            .AsNoTracking()
+            .GroupBy(x => (x.Durum ?? "Bilinmiyor"))
+            .Select(g => new { Durum = g.Key, Cnt = g.Count() })
+            .OrderByDescending(x => x.Cnt)
+            .ToListAsync();
+
+        // hiç veri yoksa boş kalmasın
+        if (durumList.Count == 0)
+        {
+            durumList = new()
+            {
+                new { Durum = "Bilinmiyor", Cnt = 0 }
+            };
+        }
+
+        var labelsDurum = durumList.Select(x => x.Durum).ToArray();
+        var seriesDurum = new[] {
+            new {
+                label = "Adet",
+                data = durumList.Select(x => x.Cnt).ToArray(),
+                backgroundColor = "rgba(0,127,0,0.35)",
+                borderColor = "rgba(0,127,0,1)",
+                borderWidth = 1
+            }
+        };
+
+        await JS.InvokeVoidAsync("drawBarChart", "chartBarDurum", labelsDurum, seriesDurum, true, true, "x");
+
+        // -----------------------------
+        // 3) Tahakkuk / Ödeme / Kalan (Bar)
+        // -----------------------------
+        var toplamTahakkuk = await Db.Tahakkuk.AsNoTracking().SumAsync(x => (decimal?)x.Tutar) ?? 0m;
+        var toplamOdeme = await Db.Odeme.AsNoTracking().SumAsync(x => (decimal?)x.Tutar) ?? 0m;
+        var kalan = toplamTahakkuk - toplamOdeme;
+
+        var labelsFin = new[] { "Tahakkuk", "Ödeme", "Kalan" };
+        var seriesFin = new[] {
+            new {
+                label = "Tutar",
+                data = new[] { (double)toplamTahakkuk, (double)toplamOdeme, (double)kalan },
+                backgroundColor = "rgba(0,127,0,0.35)",
+                borderColor = "rgba(0,127,0,1)",
+                borderWidth = 1
+            }
+        };
+
+        await JS.InvokeVoidAsync("drawBarChart", "chartBarFin", labelsFin, seriesFin, true, true, "x");
+
+        // -----------------------------
+        // 4) Aylara göre ödeme (Line)
+        // -----------------------------
+        // SQL Server date -> DateTime? (OdemeTarihi)
+        var odemeler = await Db.Odeme
+            .AsNoTracking()
+            .Where(x => x.OdemeTarihi != null)
+            .Select(x => new { Tarih = x.OdemeTarihi!.Value, x.Tutar })
+            .ToListAsync();
+
+        // Son 12 ay (ekranda düzgün dursun diye)
+        var now = DateTime.Now;
+        var months = Enumerable.Range(0, 12)
+            .Select(i => new DateTime(now.Year, now.Month, 1).AddMonths(-11 + i))
+            .ToList();
+
+        var monthMap = months.ToDictionary(
+            m => (m.Year, m.Month),
+            m => 0m
+        );
+
+        foreach (var o in odemeler)
+        {
+            var key = (o.Tarih.Year, o.Tarih.Month);
+            if (monthMap.ContainsKey(key))
+                monthMap[key] += o.Tutar;
+        }
+
+        var labelsAy = months.Select(m => m.ToString("MM.yyyy")).ToArray();
+        var dataAy = months.Select(m => (double)monthMap[(m.Year, m.Month)]).ToArray();
+
+        var seriesAy = new[] {
+            new {
+                label = "Ödeme",
+                data = dataAy,
+                backgroundColor = "rgba(0,127,0,0.15)",
+                borderColor = "rgba(0,127,0,1)",
+                borderWidth = 2,
+                fill = true,
+                tension = 0.25
+            }
+        };
+
+        await JS.InvokeVoidAsync("drawLineChart", "chartLineAy", labelsAy, seriesAy, true, true, true, 0.25);
+    }
+}

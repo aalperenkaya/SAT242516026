@@ -13,7 +13,7 @@ using SAT242516026.Logging;
 using SAT242516026.Models.DbContexts;
 using SAT242516026.Models.Services;
 
-// 🔴 EKLENENLER (hocanın UI + Razor hataları için)
+// (hocadan gelen attribute/extension/enums varsa kalsın, zararı yok)
 using SAT242516026.Models.Attributes;
 using SAT242516026.Models.Extensions;
 using SAT242516026.Models.Enums;
@@ -34,7 +34,7 @@ var compositeLoggerProvider = new CompositeLoggerProvider()
 builder.Logging.ClearProviders();
 builder.Logging.AddProvider(compositeLoggerProvider);
 
-// 🔴 Razor ILogger patlamasın diye
+// Razor/DI ILogger patlamasın diye kalsın
 builder.Services.AddLogging();
 
 builder.Services.AddSingleton(new LogService(
@@ -92,12 +92,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
     });
 
-// 🔴 Authorization net olsun (Admin rolü)
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("AdminOnly", policy =>
-        policy.RequireRole("Admin"));
-});
+// Admin rolü zaten ClaimTypes.Role ile veriliyor
+builder.Services.AddAuthorization();
 
 // Register sayfası
 builder.Services.AddScoped<AuthService>();
@@ -122,7 +118,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Blazor logout POST için
+// Form POST logout için lazım
 app.UseAntiforgery();
 
 #region AUTH ENDPOINTS
@@ -222,7 +218,14 @@ app.MapPost("/auth/login", async (HttpContext http, MyDbModel_Context db) =>
 })
 .DisableAntiforgery();
 
-// LOGOUT
+// LOGOUT (POST) ✅ form kullanırsan burası
+app.MapPost("/auth/logout", async (HttpContext http) =>
+{
+    await http.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+    return Results.Redirect("/giris");
+});
+
+// LOGOUT (GET) ✅ link kullanırsan burası
 app.MapGet("/auth/logout", async (HttpContext http) =>
 {
     await http.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
