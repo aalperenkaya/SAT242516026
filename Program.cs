@@ -13,7 +13,6 @@ using SAT242516026.Logging;
 using SAT242516026.Models.DbContexts;
 using SAT242516026.Models.Services;
 
-// (hocadan gelen attribute/extension/enums varsa kalsın, zararı yok)
 using SAT242516026.Models.Attributes;
 using SAT242516026.Models.Extensions;
 using SAT242516026.Models.Enums;
@@ -193,7 +192,6 @@ app.MapPost("/auth/register", async (HttpContext http, MyDbModel_Context db) =>
 })
 .DisableAntiforgery();
 
-// LOGIN
 app.MapPost("/auth/login", async (HttpContext http, MyDbModel_Context db) =>
 {
     try
@@ -232,14 +230,12 @@ app.MapPost("/auth/login", async (HttpContext http, MyDbModel_Context db) =>
 })
 .DisableAntiforgery();
 
-// LOGOUT (POST) ✅ form kullanırsan burası
 app.MapPost("/auth/logout", async (HttpContext http) =>
 {
     await http.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
     return Results.Redirect("/giris");
 });
 
-// LOGOUT (GET) ✅ link kullanırsan burası
 app.MapGet("/auth/logout", async (HttpContext http) =>
 {
     await http.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
