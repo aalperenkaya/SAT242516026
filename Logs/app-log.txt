@@ -19949,3 +19949,987 @@ SELECT [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[Ver
 FROM [dbo].[Mukellef] AS [m]
 ORDER BY [m].[Id] DESC
 OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+24.12.2025 14:53:00 [Information] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: User profile is available. Using 'C:\Users\ASUS\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+24.12.2025 14:53:00 [Debug] Microsoft.Extensions.Hosting.Internal.Host: Hosting starting
+24.12.2025 14:53:00 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\ASUS\AppData\Local\ASP.NET\DataProtection-Keys\key-181714ec-c174-4358-9fcc-c0e6b5d383bf.xml'.
+24.12.2025 14:53:00 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\ASUS\AppData\Local\ASP.NET\DataProtection-Keys\key-3e9bd96b-ccae-43b8-8817-2e08c47d189a.xml'.
+24.12.2025 14:53:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {181714ec-c174-4358-9fcc-c0e6b5d383bf}.
+24.12.2025 14:53:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {3e9bd96b-ccae-43b8-8817-2e08c47d189a}.
+24.12.2025 14:53:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.DefaultKeyResolver: Considering key {181714ec-c174-4358-9fcc-c0e6b5d383bf} with expiration date 2025-12-24 12:01:55Z as default key.
+24.12.2025 14:53:00 [Debug] Microsoft.AspNetCore.DataProtection.TypeForwardingActivator: Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+24.12.2025 14:53:00 [Debug] Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor: Decrypting secret element using Windows DPAPI.
+24.12.2025 14:53:00 [Debug] Microsoft.AspNetCore.DataProtection.TypeForwardingActivator: Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+24.12.2025 14:53:00 [Debug] Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory: Opening CNG algorithm 'AES' from provider '(null)' with chaining mode CBC.
+24.12.2025 14:53:00 [Debug] Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory: Opening CNG algorithm 'SHA256' from provider '(null)' with HMAC.
+24.12.2025 14:53:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingProvider: Using key {181714ec-c174-4358-9fcc-c0e6b5d383bf} as the default key.
+24.12.2025 14:53:00 [Debug] Microsoft.AspNetCore.DataProtection.Internal.DataProtectionHostedService: Key ring with default key {181714ec-c174-4358-9fcc-c0e6b5d383bf} was loaded during application startup.
+24.12.2025 14:53:00 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubProtocolResolver: Registered SignalR Protocol: json, implemented by Microsoft.AspNetCore.SignalR.Protocol.JsonHubProtocol.
+24.12.2025 14:53:00 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubProtocolResolver: Registered SignalR Protocol: blazorpack, implemented by Microsoft.AspNetCore.Components.Server.BlazorPack.BlazorPackHubProtocol.
+24.12.2025 14:53:00 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+24.12.2025 14:53:00 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+24.12.2025 14:53:00 [Debug] Microsoft.AspNetCore.Hosting.Diagnostics: Loaded hosting startup assembly SAT242516026
+24.12.2025 14:53:00 [Debug] Microsoft.AspNetCore.Hosting.Diagnostics: Loaded hosting startup assembly Microsoft.WebTools.ApiEndpointDiscovery
+24.12.2025 14:53:00 [Debug] Microsoft.AspNetCore.Hosting.Diagnostics: Loaded hosting startup assembly Microsoft.AspNetCore.Watch.BrowserRefresh
+24.12.2025 14:53:00 [Debug] Microsoft.AspNetCore.Hosting.Diagnostics: Loaded hosting startup assembly Microsoft.WebTools.BrowserLink.Net
+24.12.2025 14:53:00 [Information] Microsoft.AspNetCore.Mvc.Infrastructure.DefaultActionDescriptorCollectionProvider: No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+24.12.2025 14:53:00 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+24.12.2025 14:53:00 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+24.12.2025 14:53:00 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+24.12.2025 14:53:00 [Debug] Microsoft.Extensions.Hosting.Internal.Host: Hosting started
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SBUL0L3B" accepted.
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SBUL0L3B" started.
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SBUL0L3C" accepted.
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SBUL0L3C" started.
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets: Connection id "0HNI2SBUL0L3C" received FIN.
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware: Failed to authenticate HTTPS connection.
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SBUL0L3B" stopped.
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets: Connection id "0HNI2SBUL0L3B" sending FIN because: "The Socket transport's send loop completed gracefully."
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SBUL0L3D" accepted.
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SBUL0L3D" started.
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware: Connection 0HNI2SBUL0L3D established using the following protocol: Tls13
+24.12.2025 14:53:01 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request starting HTTP/2 GET https://localhost:7124/ - - -
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware: Wildcard detected, all requests with hosts will be allowed.
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: The request path / does not match a supported file type
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Routing.Matching.DfaMatcher: 1 candidate(s) found for the request path '/'
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware: Request matched endpoint '/ (/)'
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler: AuthenticationScheme: Cookies was successfully authenticated.
+24.12.2025 14:53:01 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executing endpoint '/ (/)'
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.Endpoints.RazorComponentEndpointInvoker: Begin render root component 'App' with page 'Home'.
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing root component 0 (SAT242516026.Components.App)
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 0 of type SAT242516026.Components.App
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 1 (Microsoft.AspNetCore.Components.Web.HeadOutlet) as child of 0 (SAT242516026.Components.App)
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 2 (Microsoft.AspNetCore.Components.Endpoints.SSRRenderModeBoundary) as child of 0 (SAT242516026.Components.App)
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 1 of type Microsoft.AspNetCore.Components.Web.HeadOutlet
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 3 (Microsoft.AspNetCore.Components.Sections.SectionOutlet) as child of 1 (Microsoft.AspNetCore.Components.Web.HeadOutlet)
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 4 (Microsoft.AspNetCore.Components.Sections.SectionOutlet) as child of 1 (Microsoft.AspNetCore.Components.Web.HeadOutlet)
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 2 of type Microsoft.AspNetCore.Components.Endpoints.SSRRenderModeBoundary
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 5 (SAT242516026.Components.Routes) as child of 2 (Microsoft.AspNetCore.Components.Endpoints.SSRRenderModeBoundary)
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 3 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 6 (Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer) as child of 3 (Microsoft.AspNetCore.Components.Sections.SectionOutlet)
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 3 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 4 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 7 (Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer) as child of 4 (Microsoft.AspNetCore.Components.Sections.SectionOutlet)
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 4 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 5 of type SAT242516026.Components.Routes
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 8 (Microsoft.AspNetCore.Components.Routing.Router) as child of 5 (SAT242516026.Components.Routes)
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.Routing.Router: Navigating to component SAT242516026.Components.Pages.Home in response to path '/' with base URI 'https://localhost:7124/'
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 6 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 6 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 7 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 7 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 8 of type Microsoft.AspNetCore.Components.Routing.Router
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 9 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView) as child of 8 (Microsoft.AspNetCore.Components.Routing.Router)
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 10 (Microsoft.AspNetCore.Components.Routing.FocusOnNavigate) as child of 8 (Microsoft.AspNetCore.Components.Routing.Router)
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 9 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore) as child of 9 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView)
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 10 of type Microsoft.AspNetCore.Components.Routing.FocusOnNavigate
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 11 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 12 (Microsoft.AspNetCore.Components.LayoutView) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore)
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 12 of type Microsoft.AspNetCore.Components.LayoutView
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 13 (SAT242516026.Components.Layout.MainLayout) as child of 12 (Microsoft.AspNetCore.Components.LayoutView)
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 13 of type SAT242516026.Components.Layout.MainLayout
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 14 (SAT242516026.Components.Layout.NavMenu) as child of 13 (SAT242516026.Components.Layout.MainLayout)
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 15 (SAT242516026.Components.Layout.LanguageSelector) as child of 13 (SAT242516026.Components.Layout.MainLayout)
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 16 (SAT242516026.Components.Pages.Home) as child of 13 (SAT242516026.Components.Layout.MainLayout)
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 14 of type SAT242516026.Components.Layout.NavMenu
+24.12.2025 14:53:01 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'AppTitle' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:01 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Menu' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:01 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Menu' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 17 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 14 (SAT242516026.Components.Layout.NavMenu)
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView) as child of 14 (SAT242516026.Components.Layout.NavMenu)
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService: Authorization was successful.
+24.12.2025 14:53:01 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 15 of type SAT242516026.Components.Layout.LanguageSelector
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 16 of type SAT242516026.Components.Pages.Home
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'AppTitle' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_Title' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_LoginInfo' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_AdminInfo' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 19 (Microsoft.AspNetCore.Components.Web.PageTitle) as child of 16 (SAT242516026.Components.Pages.Home)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 17 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 18 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeView
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Account' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Logout' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 20 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 21 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 22 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 23 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 24 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 25 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 26 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 19 of type Microsoft.AspNetCore.Components.Web.PageTitle
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 27 (Microsoft.AspNetCore.Components.Sections.SectionContent) as child of 19 (Microsoft.AspNetCore.Components.Web.PageTitle)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 20 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Mukellefler' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 21 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Beyannameler' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 22 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Tahakkuklar' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 23 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Odemeler' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 24 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 25 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 26 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 3 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 28 (Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer) as child of 3 (Microsoft.AspNetCore.Components.Sections.SectionOutlet)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 6 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 28 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_PageTitle' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Antiforgery.DefaultAntiforgery: An antiforgery cookie token was reused.
+24.12.2025 14:53:02 [Debug] Microsoft.WebTools.BrowserLink.Net.BrowserLinkMiddleware: Response markup is scheduled to include Browser Link script injection.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware: Response markup is scheduled to include browser refresh script injection.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Antiforgery.DefaultAntiforgery: An antiforgery cookie token was reused.
+24.12.2025 14:53:02 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executed endpoint '/ (/)'
+24.12.2025 14:53:02 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request starting HTTP/2 GET https://localhost:7124/_framework/blazor.web.js - - -
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: The request path /_framework/blazor.web.js does not match an existing file
+24.12.2025 14:53:02 [Debug] Microsoft.WebTools.BrowserLink.Net.BrowserLinkMiddleware: Response markup was updated to include Browser Link script injection.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware: Response markup was updated to include browser refresh script injection.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware: Request matched endpoint 'Blazor web static files'
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler: AuthenticationScheme: Cookies was successfully authenticated.
+24.12.2025 14:53:02 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 GET https://localhost:7124/_framework/aspnetcore-browser-refresh.js - 200 13760 application/javascript;+charset=utf-8 124.5233ms
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 0 of type SAT242516026.Components.App
+24.12.2025 14:53:02 [Information] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: The file /_framework/blazor.web.js was not modified
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: Handled. Status code: 304 File: /_framework/blazor.web.js
+24.12.2025 14:53:02 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executed endpoint 'Blazor web static files'
+24.12.2025 14:53:02 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 GET https://localhost:7124/_framework/blazor.web.js - 304 - text/javascript 179.7823ms
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 3 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet
+24.12.2025 14:53:02 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request starting HTTP/2 GET https://localhost:7124/_blazor/initializers - - -
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: The request path /_blazor/initializers does not match a supported file type
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Routing.Matching.DfaMatcher: 1 candidate(s) found for the request path '/_blazor/initializers'
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware: Request matched endpoint '(null)'
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 7 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 8 of type Microsoft.AspNetCore.Components.Routing.Router
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 9 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 10 of type Microsoft.AspNetCore.Components.Routing.FocusOnNavigate
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 11 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 12 of type Microsoft.AspNetCore.Components.LayoutView
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 13 of type SAT242516026.Components.Layout.MainLayout
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 14 of type SAT242516026.Components.Layout.NavMenu
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 15 of type SAT242516026.Components.Layout.LanguageSelector
+24.12.2025 14:53:02 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 14:53:02 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 GET https://localhost:7124/_blazor/initializers - 200 - application/json;+charset=utf-8 76.6148ms
+24.12.2025 14:53:02 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request starting HTTP/2 POST https://localhost:7124/_blazor/negotiate?negotiateVersion=1 - - 0
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: POST requests are not supported
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 18 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeView
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 19 of type Microsoft.AspNetCore.Components.Web.PageTitle
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 20 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 21 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 22 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 23 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 24 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 25 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 26 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Routing.Matching.DfaMatcher: 1 candidate(s) found for the request path '/_blazor/negotiate'
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware: Request matched endpoint '(null)'
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler: AuthenticationScheme: Cookies was successfully authenticated.
+24.12.2025 14:53:02 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.HttpConnectionManager: New connection Se1ZHETdca1agOy0r6YxsQ created.
+24.12.2025 14:53:02 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 GET https://localhost:7124/ - 200 - text/html;+charset=utf-8 883.9845ms
+24.12.2025 14:53:02 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 GET https://localhost:7124/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 402.9061ms
+24.12.2025 14:53:02 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 14:53:02 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 POST https://localhost:7124/_blazor/negotiate?negotiateVersion=1 - 200 316 application/json 98.1009ms
+24.12.2025 14:53:02 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request starting HTTP/2 CONNECT https://localhost:7124/_blazor?id=yIkD6C2ZinjLP3fqQ4w9RA - - -
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: CONNECT requests are not supported
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Routing.Matching.DfaMatcher: 1 candidate(s) found for the request path '/_blazor'
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware: Request matched endpoint '(null)'
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler: AuthenticationScheme: Cookies was successfully authenticated.
+24.12.2025 14:53:02 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.HttpConnectionDispatcher: Establishing new connection.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.SignalR.HubConnectionHandler: OnConnectedAsync started.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.Transports.WebSocketsTransport: Socket opened using Sub-Protocol: '(null)'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubProtocolResolver: Found protocol implementation for requested protocol: blazorpack.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.SignalR.HubConnectionContext: Completed connection handshake. Using HubProtocol 'blazorpack'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "0", Target: "StartCircuit", Arguments: [ https://localhost:7124/, https://localhost:7124/, [], CfDJ8OwUFxh0wVhDn8zA5rXTg7+9qi9Lxt4ihQ++rAh0r1eyALQ5SEDoKvQcyKwXd2CfZUUycgTC0H0TfAyBYBmhdISryIzw8kZrTB33eRkzjbfggK2KZCIoMaTCLJVa1zuy1sDwlvUz/+uvDWAcxu/8C9vHoU6LCP97Ub0S1Q292aXCR2rH6yrpaxjnWTc6GaFuJ2b6LLz/155iCv7fRpNwXUVgaLSjVIeh6h91IXVqLnKBSgNA2WUq4kV4ibAHgUz+lNQqUljPKIdHHy4a2TFMCHKitpaS50SKNxTn7SxC1ZpK8HFe0ikS//hXJN2EB8BS53lmvqX/NvKRP4HbIF5g9Ce6zHXn2CuFtvTn+r5VwNk+/iyOHy24KYMvFMajjITrHTlWaJCvRXnm/JCkKCNrStyd8W/tHwy10hiUrD/PVTZl37De2OtzRIhvXgyRLKGHlYaz8n6CfstfCXJOVf81625aRJ4cGGOLEWVaemFpCxcVJeX3sKzKmC56ScihaL+BzPy+lxIzVhW8Y8T2iW+24Xb2VZAFQM1oAAk3ANTmo3BkVSvKXa/h1n6coFqJBCBncio648j8F2+1bMNikEmTjrh7gK0uaQJNbbIeO45utG7Z ], StreamIds: [  ] }.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.RemoteJSRuntime: Begin invoke JS interop '2': 'Blazor._internal.attachWebRendererInterop'
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitFactory: Created circuit 8u6kRc5DzRb34Ho3EWX7LR6YsL5NcHjj_uYVRohnqHU for connection Se1ZHETdca1agOy0r6YxsQ
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Circuit initialization started.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Circuit initialization succeeded.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.ComponentHub: Created circuit '8u6kRc5DzRb34Ho3EWX7LR6YsL5NcHjj_uYVRohnqHU' with secret '(redacted)' for 'Se1ZHETdca1agOy0r6YxsQ'
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "", Target: "EndInvokeJSFromDotNet", Arguments: [ 2, True, [2,true,null] ], StreamIds: [  ] }.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: The JS interop call with callback id '2' succeeded.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "", Target: "UpdateRootComponents", Arguments: [ {"batchId":1,"operations":[{"type":"add","ssrComponentId":1,"marker":{"type":"server","prerenderId":"0496b43efca5478db8c9530466736735","key":{"locationHash":"BA912EF6C24E3748384151B25F61E6125B6FB5E06A5080F43E3CCF55654A5AD5:8","formattedComponentKey":""},"sequence":0,"descriptor":"CfDJ8OwUFxh0wVhDn8zA5rXTg79wv1jsODwH3AYe9afMOYkNPFwddw1waGe7c4iLqu7Bqcw7RIxyNAto2vKObM9beeniMZ13/Sun1AJOezD1LwDQeZWEZkFngkvUlb1Hz27R61dUa0VehwoJwwLGEEOL0tmDjlmgzpu+NTWWmx4jbTWDilcKgH6J5Wn9ALfrNikulmJP52be3XzwG0o8MDTEywWHqlWjS84lEuMQUtWqWzgukUWkqWM6gwpxtINbiGtUl1qWqBHodUXZaz58hoVlyNB6abBFajOLJUiZv79HiLpxCbtr2jaeXM2It4bZ95VIjtxiwLewYnUZI6cYyJpkT/gsGciTfjPCKaDl6toOkIr/MvGSL9kaEIfnV6cwD9u1mNyKAMMlEuFkfbleFrohBLEaCpYJT+xU9VFQ2/tjGrEVhrCP31zkvclN3bChMQuwKpRnJOazss3OxkICuZS6fv8gDhnb+kWftTo7jRz6XZi0mGV+QIhoIwFYUzG1J8cHCk7YmuoFb+jLGRAwov+OL34=","uniqueId":0}}]}, CfDJ8OwUFxh0wVhDn8zA5rXTg7+9qi9Lxt4ihQ++rAh0r1eyALQ5SEDoKvQcyKwXd2CfZUUycgTC0H0TfAyBYBmhdISryIzw8kZrTB33eRkzjbfggK2KZCIoMaTCLJVa1zuy1sDwlvUz/+uvDWAcxu/8C9vHoU6LCP97Ub0S1Q292aXCR2rH6yrpaxjnWTc6GaFuJ2b6LLz/155iCv7fRpNwXUVgaLSjVIeh6h91IXVqLnKBSgNA2WUq4kV4ibAHgUz+lNQqUljPKIdHHy4a2TFMCHKitpaS50SKNxTn7SxC1ZpK8HFe0ikS//hXJN2EB8BS53lmvqX/NvKRP4HbIF5g9Ce6zHXn2CuFtvTn+r5VwNk+/iyOHy24KYMvFMajjITrHTlWaJCvRXnm/JCkKCNrStyd8W/tHwy10hiUrD/PVTZl37De2OtzRIhvXgyRLKGHlYaz8n6CfstfCXJOVf81625aRJ4cGGOLEWVaemFpCxcVJeX3sKzKmC56ScihaL+BzPy+lxIzVhW8Y8T2iW+24Xb2VZAFQM1oAAk3ANTmo3BkVSvKXa/h1n6coFqJBCBncio648j8F2+1bMNikEmTjrh7gK0uaQJNbbIeO45utG7Z ], StreamIds: [  ] }.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Update root components started.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Opening circuit with id '8u6kRc5DzRb34Ho3EWX7LR6YsL5NcHjj_uYVRohnqHU'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Circuit id '8u6kRc5DzRb34Ho3EWX7LR6YsL5NcHjj_uYVRohnqHU' connected using connection 'Se1ZHETdca1agOy0r6YxsQ'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing root component 0 (SAT242516026.Components.Routes)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 0 of type SAT242516026.Components.Routes
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 1 (Microsoft.AspNetCore.Components.Routing.Router) as child of 0 (SAT242516026.Components.Routes)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Routing.Tree.TreeRouter: Request successfully matched the route with name '(null)' and template '/'
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Routing.Router: Navigating to component SAT242516026.Components.Pages.Home in response to path '/' with base URI 'https://localhost:7124/'
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 1 of type Microsoft.AspNetCore.Components.Routing.Router
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 2 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView) as child of 1 (Microsoft.AspNetCore.Components.Routing.Router)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 3 (Microsoft.AspNetCore.Components.Routing.FocusOnNavigate) as child of 1 (Microsoft.AspNetCore.Components.Routing.Router)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 2 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 4 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore) as child of 2 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 3 of type Microsoft.AspNetCore.Components.Routing.FocusOnNavigate
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 4 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 5 (Microsoft.AspNetCore.Components.LayoutView) as child of 4 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 5 of type Microsoft.AspNetCore.Components.LayoutView
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 6 (SAT242516026.Components.Layout.MainLayout) as child of 5 (Microsoft.AspNetCore.Components.LayoutView)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 6 of type SAT242516026.Components.Layout.MainLayout
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 7 (SAT242516026.Components.Layout.NavMenu) as child of 6 (SAT242516026.Components.Layout.MainLayout)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 8 (SAT242516026.Components.Layout.LanguageSelector) as child of 6 (SAT242516026.Components.Layout.MainLayout)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 9 (SAT242516026.Components.Pages.Home) as child of 6 (SAT242516026.Components.Layout.MainLayout)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 7 of type SAT242516026.Components.Layout.NavMenu
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'AppTitle' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Menu' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Menu' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 10 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 7 (SAT242516026.Components.Layout.NavMenu)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView) as child of 7 (SAT242516026.Components.Layout.NavMenu)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService: Authorization was successful.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 8 of type SAT242516026.Components.Layout.LanguageSelector
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 9 of type SAT242516026.Components.Pages.Home
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'AppTitle' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_Title' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_LoginInfo' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_AdminInfo' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 12 (Microsoft.AspNetCore.Components.Web.PageTitle) as child of 9 (SAT242516026.Components.Pages.Home)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 10 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 11 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeView
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Account' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Logout' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 13 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 14 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 15 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 16 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 17 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 18 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 19 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 12 of type Microsoft.AspNetCore.Components.Web.PageTitle
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 20 (Microsoft.AspNetCore.Components.Sections.SectionContent) as child of 12 (Microsoft.AspNetCore.Components.Web.PageTitle)
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 13 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Mukellefler' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 14 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Beyannameler' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 15 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Tahakkuklar' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 16 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Odemeler' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 17 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 18 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 19 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.RemoteRenderer: Sending render batch 2 of size 10153 bytes to client Se1ZHETdca1agOy0r6YxsQ.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Update root components succeeded.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "", Target: "OnRenderCompleted", Arguments: [ 2,  ], StreamIds: [  ] }.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.ComponentHub: Received confirmation for batch 2
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.RemoteRenderer: Completing batch 2 without error in 27.8509ms.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.RemoteJSRuntime: Begin invoke JS interop '3': 'Blazor._internal.navigationManager.enableNavigationInterception'
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "", Target: "EndInvokeJSFromDotNet", Arguments: [ 3, True, [3,true,null] ], StreamIds: [  ] }.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.RemoteJSRuntime: Begin invoke JS interop '4': 'Blazor._internal.domWrapper.focusBySelector'
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "", Target: "EndInvokeJSFromDotNet", Arguments: [ 4, True, [4,true,null] ], StreamIds: [  ] }.
+24.12.2025 14:53:02 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-24 14:53:02
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 9 of type SAT242516026.Components.Pages.Home
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'AppTitle' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_Title' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_LoginInfo' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_AdminInfo' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 12 of type Microsoft.AspNetCore.Components.Web.PageTitle
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.RemoteRenderer: Sending render batch 3 of size 60 bytes to client Se1ZHETdca1agOy0r6YxsQ.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: The JS interop call with callback id '3' succeeded.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "", Target: "OnRenderCompleted", Arguments: [ 3,  ], StreamIds: [  ] }.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.ComponentHub: Received confirmation for batch 3
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.RemoteRenderer: Completing batch 3 without error in 6.7159ms.
+24.12.2025 14:53:02 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: The JS interop call with callback id '4' succeeded.
+24.12.2025 14:53:03 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request starting HTTP/2 POST https://localhost:7124/_blazor/disconnect - multipart/form-data;+boundary=----WebKitFormBoundary0MecIt0UN8VIF1KJ 359
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: POST requests are not supported
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Routing.Matching.DfaMatcher: 1 candidate(s) found for the request path '/_blazor/disconnect'
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware: Request matched endpoint '(null)'
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler: AuthenticationScheme: Cookies was successfully authenticated.
+24.12.2025 14:53:03 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.Transports.WebSocketsTransport: Waiting for the application to finish sending data.
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.Transports.WebSocketsTransport: Socket closed.
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Server.Kestrel: Connection id "0HNI2SBUL0L3D", Request id "0HNI2SBUL0L3D:0000000F": started reading request body.
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Server.Kestrel: Connection id "0HNI2SBUL0L3D", Request id "0HNI2SBUL0L3D:0000000F": done reading request body.
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitRegistry: Attempting to disconnect circuit with id 8u6kRc5DzRb34Ho3EWX7LR6YsL5NcHjj_uYVRohnqHU from connection Se1ZHETdca1agOy0r6YxsQ.
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitRegistry: Circuit with id 8u6kRc5DzRb34Ho3EWX7LR6YsL5NcHjj_uYVRohnqHU is disconnected.
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.Server.CircuitDisconnectMiddleware: Circuit with id '8u6kRc5DzRb34Ho3EWX7LR6YsL5NcHjj_uYVRohnqHU' terminating gracefully.
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Circuit id '8u6kRc5DzRb34Ho3EWX7LR6YsL5NcHjj_uYVRohnqHU' disconnected from connection 'Se1ZHETdca1agOy0r6YxsQ'.
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.SignalR.HubConnectionHandler: OnConnectedAsync ending.
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitRegistry: Circuit with id 8u6kRc5DzRb34Ho3EWX7LR6YsL5NcHjj_uYVRohnqHU has been removed from the registry for permanent disconnection.
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Disposing circuit '8u6kRc5DzRb34Ho3EWX7LR6YsL5NcHjj_uYVRohnqHU' started.
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.HttpConnectionManager: Removing connection yIkD6C2ZinjLP3fqQ4w9RA from the list of connections.
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Circuit id '8u6kRc5DzRb34Ho3EWX7LR6YsL5NcHjj_uYVRohnqHU' disconnected from connection 'Se1ZHETdca1agOy0r6YxsQ'.
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Closing circuit with id '8u6kRc5DzRb34Ho3EWX7LR6YsL5NcHjj_uYVRohnqHU'.
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 0 of type SAT242516026.Components.Routes
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 1 of type Microsoft.AspNetCore.Components.Routing.Router
+24.12.2025 14:53:03 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 CONNECT https://localhost:7124/_blazor?id=yIkD6C2ZinjLP3fqQ4w9RA - 200 - - 703.3873ms
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 3 of type Microsoft.AspNetCore.Components.Routing.FocusOnNavigate
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 4 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 5 of type Microsoft.AspNetCore.Components.LayoutView
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 6 of type SAT242516026.Components.Layout.MainLayout
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 7 of type SAT242516026.Components.Layout.NavMenu
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 8 of type SAT242516026.Components.Layout.LanguageSelector
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 9 of type SAT242516026.Components.Pages.Home
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 10 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 11 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeView
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 12 of type Microsoft.AspNetCore.Components.Web.PageTitle
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 13 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 14 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 15 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 16 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 17 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 18 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 19 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 20 of type Microsoft.AspNetCore.Components.Sections.SectionContent
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Disposing circuit '8u6kRc5DzRb34Ho3EWX7LR6YsL5NcHjj_uYVRohnqHU' succeeded.
+24.12.2025 14:53:03 [Debug] Microsoft.AspNetCore.Components.Server.CircuitDisconnectMiddleware: Circuit with id '8u6kRc5DzRb34Ho3EWX7LR6YsL5NcHjj_uYVRohnqHU' terminated gracefully.
+24.12.2025 14:53:03 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 14:53:03 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 POST https://localhost:7124/_blazor/disconnect - 200 0 - 145.9619ms
+24.12.2025 14:53:06 [Information] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: User profile is available. Using 'C:\Users\ASUS\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+24.12.2025 14:53:06 [Debug] Microsoft.Extensions.Hosting.Internal.Host: Hosting starting
+24.12.2025 14:53:06 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\ASUS\AppData\Local\ASP.NET\DataProtection-Keys\key-181714ec-c174-4358-9fcc-c0e6b5d383bf.xml'.
+24.12.2025 14:53:06 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\ASUS\AppData\Local\ASP.NET\DataProtection-Keys\key-3e9bd96b-ccae-43b8-8817-2e08c47d189a.xml'.
+24.12.2025 14:53:06 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {181714ec-c174-4358-9fcc-c0e6b5d383bf}.
+24.12.2025 14:53:06 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {3e9bd96b-ccae-43b8-8817-2e08c47d189a}.
+24.12.2025 14:53:06 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.DefaultKeyResolver: Considering key {181714ec-c174-4358-9fcc-c0e6b5d383bf} with expiration date 2025-12-24 12:01:55Z as default key.
+24.12.2025 14:53:06 [Debug] Microsoft.AspNetCore.DataProtection.TypeForwardingActivator: Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+24.12.2025 14:53:06 [Debug] Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor: Decrypting secret element using Windows DPAPI.
+24.12.2025 14:53:06 [Debug] Microsoft.AspNetCore.DataProtection.TypeForwardingActivator: Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+24.12.2025 14:53:06 [Debug] Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory: Opening CNG algorithm 'AES' from provider '(null)' with chaining mode CBC.
+24.12.2025 14:53:06 [Debug] Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory: Opening CNG algorithm 'SHA256' from provider '(null)' with HMAC.
+24.12.2025 14:53:06 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingProvider: Using key {181714ec-c174-4358-9fcc-c0e6b5d383bf} as the default key.
+24.12.2025 14:53:06 [Debug] Microsoft.AspNetCore.DataProtection.Internal.DataProtectionHostedService: Key ring with default key {181714ec-c174-4358-9fcc-c0e6b5d383bf} was loaded during application startup.
+24.12.2025 14:53:06 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubProtocolResolver: Registered SignalR Protocol: json, implemented by Microsoft.AspNetCore.SignalR.Protocol.JsonHubProtocol.
+24.12.2025 14:53:06 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubProtocolResolver: Registered SignalR Protocol: blazorpack, implemented by Microsoft.AspNetCore.Components.Server.BlazorPack.BlazorPackHubProtocol.
+24.12.2025 14:53:07 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+24.12.2025 14:53:07 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Hosting.Diagnostics: Loaded hosting startup assembly SAT242516026
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Hosting.Diagnostics: Loaded hosting startup assembly Microsoft.WebTools.ApiEndpointDiscovery
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Hosting.Diagnostics: Loaded hosting startup assembly Microsoft.AspNetCore.Watch.BrowserRefresh
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Hosting.Diagnostics: Loaded hosting startup assembly Microsoft.WebTools.BrowserLink.Net
+24.12.2025 14:53:07 [Information] Microsoft.AspNetCore.Mvc.Infrastructure.DefaultActionDescriptorCollectionProvider: No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+24.12.2025 14:53:07 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+24.12.2025 14:53:07 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+24.12.2025 14:53:07 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+24.12.2025 14:53:07 [Debug] Microsoft.Extensions.Hosting.Internal.Host: Hosting started
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SC0EO85T" accepted.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SC0EO85T" started.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets: Connection id "0HNI2SC0EO85U" received FIN.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SC0EO85U" accepted.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SC0EO85U" started.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware: Failed to authenticate HTTPS connection.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SC0EO85T" stopped.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets: Connection id "0HNI2SC0EO85U" sending FIN because: "The Socket transport's send loop completed gracefully."
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SC0EO85V" accepted.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SC0EO85V" started.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware: Connection 0HNI2SC0EO85V established using the following protocol: Tls13
+24.12.2025 14:53:07 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request starting HTTP/2 GET https://localhost:7124/ - - -
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware: Wildcard detected, all requests with hosts will be allowed.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: The request path / does not match a supported file type
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Routing.Matching.DfaMatcher: 1 candidate(s) found for the request path '/'
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware: Request matched endpoint '/ (/)'
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler: AuthenticationScheme: Cookies was successfully authenticated.
+24.12.2025 14:53:07 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executing endpoint '/ (/)'
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.Endpoints.RazorComponentEndpointInvoker: Begin render root component 'App' with page 'Home'.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing root component 0 (SAT242516026.Components.App)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 0 of type SAT242516026.Components.App
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 1 (Microsoft.AspNetCore.Components.Web.HeadOutlet) as child of 0 (SAT242516026.Components.App)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 2 (Microsoft.AspNetCore.Components.Endpoints.SSRRenderModeBoundary) as child of 0 (SAT242516026.Components.App)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 1 of type Microsoft.AspNetCore.Components.Web.HeadOutlet
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 3 (Microsoft.AspNetCore.Components.Sections.SectionOutlet) as child of 1 (Microsoft.AspNetCore.Components.Web.HeadOutlet)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 4 (Microsoft.AspNetCore.Components.Sections.SectionOutlet) as child of 1 (Microsoft.AspNetCore.Components.Web.HeadOutlet)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 2 of type Microsoft.AspNetCore.Components.Endpoints.SSRRenderModeBoundary
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 5 (SAT242516026.Components.Routes) as child of 2 (Microsoft.AspNetCore.Components.Endpoints.SSRRenderModeBoundary)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 3 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 6 (Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer) as child of 3 (Microsoft.AspNetCore.Components.Sections.SectionOutlet)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 3 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 4 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 7 (Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer) as child of 4 (Microsoft.AspNetCore.Components.Sections.SectionOutlet)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 4 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 5 of type SAT242516026.Components.Routes
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 8 (Microsoft.AspNetCore.Components.Routing.Router) as child of 5 (SAT242516026.Components.Routes)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.Routing.Router: Navigating to component SAT242516026.Components.Pages.Home in response to path '/' with base URI 'https://localhost:7124/'
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 6 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 6 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 7 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 7 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 8 of type Microsoft.AspNetCore.Components.Routing.Router
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 9 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView) as child of 8 (Microsoft.AspNetCore.Components.Routing.Router)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 10 (Microsoft.AspNetCore.Components.Routing.FocusOnNavigate) as child of 8 (Microsoft.AspNetCore.Components.Routing.Router)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 9 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore) as child of 9 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 10 of type Microsoft.AspNetCore.Components.Routing.FocusOnNavigate
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 11 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 12 (Microsoft.AspNetCore.Components.LayoutView) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 12 of type Microsoft.AspNetCore.Components.LayoutView
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 13 (SAT242516026.Components.Layout.MainLayout) as child of 12 (Microsoft.AspNetCore.Components.LayoutView)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 13 of type SAT242516026.Components.Layout.MainLayout
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 14 (SAT242516026.Components.Layout.NavMenu) as child of 13 (SAT242516026.Components.Layout.MainLayout)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 15 (SAT242516026.Components.Layout.LanguageSelector) as child of 13 (SAT242516026.Components.Layout.MainLayout)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 16 (SAT242516026.Components.Pages.Home) as child of 13 (SAT242516026.Components.Layout.MainLayout)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 14 of type SAT242516026.Components.Layout.NavMenu
+24.12.2025 14:53:07 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'AppTitle' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:07 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Menu' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:07 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Menu' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 17 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 14 (SAT242516026.Components.Layout.NavMenu)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView) as child of 14 (SAT242516026.Components.Layout.NavMenu)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService: Authorization was successful.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 15 of type SAT242516026.Components.Layout.LanguageSelector
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 16 of type SAT242516026.Components.Pages.Home
+24.12.2025 14:53:07 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'AppTitle' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:07 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_Title' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:07 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_LoginInfo' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:07 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_AdminInfo' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 19 (Microsoft.AspNetCore.Components.Web.PageTitle) as child of 16 (SAT242516026.Components.Pages.Home)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 17 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:07 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 18 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeView
+24.12.2025 14:53:07 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Account' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:07 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Logout' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 20 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 21 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 22 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 23 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 24 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 25 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 26 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 19 of type Microsoft.AspNetCore.Components.Web.PageTitle
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 27 (Microsoft.AspNetCore.Components.Sections.SectionContent) as child of 19 (Microsoft.AspNetCore.Components.Web.PageTitle)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 20 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:07 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Mukellefler' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 21 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:07 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Beyannameler' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 22 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:07 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Tahakkuklar' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 23 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:07 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Odemeler' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 24 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 25 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 26 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 3 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 28 (Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer) as child of 3 (Microsoft.AspNetCore.Components.Sections.SectionOutlet)
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 6 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 28 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 14:53:07 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_PageTitle' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Antiforgery.DefaultAntiforgery: An antiforgery cookie token was reused.
+24.12.2025 14:53:07 [Debug] Microsoft.WebTools.BrowserLink.Net.BrowserLinkMiddleware: Response markup is scheduled to include Browser Link script injection.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware: Response markup is scheduled to include browser refresh script injection.
+24.12.2025 14:53:07 [Debug] Microsoft.AspNetCore.Antiforgery.DefaultAntiforgery: An antiforgery cookie token was reused.
+24.12.2025 14:53:07 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executed endpoint '/ (/)'
+24.12.2025 14:53:07 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request starting HTTP/2 GET https://localhost:7124/_framework/aspnetcore-browser-refresh.js - - -
+24.12.2025 14:53:07 [Debug] Microsoft.WebTools.BrowserLink.Net.BrowserLinkMiddleware: Response markup was updated to include Browser Link script injection.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: The request path /_framework/blazor.web.js does not match an existing file
+24.12.2025 14:53:08 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 GET https://localhost:7124/_framework/aspnetcore-browser-refresh.js - 200 13760 application/javascript;+charset=utf-8 102.4759ms
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Routing.Matching.DfaMatcher: 1 candidate(s) found for the request path '/_framework/blazor.web.js'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware: Request matched endpoint 'Blazor web static files'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler: AuthenticationScheme: Cookies was successfully authenticated.
+24.12.2025 14:53:08 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executing endpoint 'Blazor web static files'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 0 of type SAT242516026.Components.App
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 1 of type Microsoft.AspNetCore.Components.Web.HeadOutlet
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 2 of type Microsoft.AspNetCore.Components.Endpoints.SSRRenderModeBoundary
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 3 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 4 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 5 of type SAT242516026.Components.Routes
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 7 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 8 of type Microsoft.AspNetCore.Components.Routing.Router
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 9 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 10 of type Microsoft.AspNetCore.Components.Routing.FocusOnNavigate
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 11 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 12 of type Microsoft.AspNetCore.Components.LayoutView
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 13 of type SAT242516026.Components.Layout.MainLayout
+24.12.2025 14:53:08 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request starting HTTP/2 GET https://localhost:7124/_blazor/initializers - - -
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: The request path /_blazor/initializers does not match a supported file type
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 15 of type SAT242516026.Components.Layout.LanguageSelector
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 16 of type SAT242516026.Components.Pages.Home
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Routing.Matching.DfaMatcher: 1 candidate(s) found for the request path '/_blazor/initializers'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware: Request matched endpoint '(null)'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 18 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeView
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 19 of type Microsoft.AspNetCore.Components.Web.PageTitle
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 20 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 21 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 22 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 23 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 24 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 25 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 26 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 27 of type Microsoft.AspNetCore.Components.Sections.SectionContent
+24.12.2025 14:53:08 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 14:53:08 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 GET https://localhost:7124/_blazor/initializers - 200 - application/json;+charset=utf-8 107.9698ms
+24.12.2025 14:53:08 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request starting HTTP/2 POST https://localhost:7124/_blazor/negotiate?negotiateVersion=1 - - 0
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: POST requests are not supported
+24.12.2025 14:53:08 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 GET https://localhost:7124/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 395.9771ms
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Routing.Matching.DfaMatcher: 1 candidate(s) found for the request path '/_blazor/negotiate'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware: Request matched endpoint '(null)'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler: AuthenticationScheme: Cookies was successfully authenticated.
+24.12.2025 14:53:08 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.HttpConnectionManager: New connection 9wLrtlAUcQH1QZjzUXNVCg created.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.HttpConnectionDispatcher: Sending negotiation response.
+24.12.2025 14:53:08 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 14:53:08 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 POST https://localhost:7124/_blazor/negotiate?negotiateVersion=1 - 200 316 application/json 50.1576ms
+24.12.2025 14:53:08 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request starting HTTP/2 CONNECT https://localhost:7124/_blazor?id=r5JIWDBjn0fEiFBnqFlNwQ - - -
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: CONNECT requests are not supported
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Routing.Matching.DfaMatcher: 1 candidate(s) found for the request path '/_blazor'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware: Request matched endpoint '(null)'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler: AuthenticationScheme: Cookies was successfully authenticated.
+24.12.2025 14:53:08 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.HttpConnectionDispatcher: Establishing new connection.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.SignalR.HubConnectionHandler: OnConnectedAsync started.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.Transports.WebSocketsTransport: Socket opened using Sub-Protocol: '(null)'.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubProtocolResolver: Found protocol implementation for requested protocol: blazorpack.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.SignalR.HubConnectionContext: Completed connection handshake. Using HubProtocol 'blazorpack'.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "0", Target: "StartCircuit", Arguments: [ https://localhost:7124/, https://localhost:7124/, [], CfDJ8OwUFxh0wVhDn8zA5rXTg78nbzQMAOhnj9n2mh6g3VPgUKiT3Y2F+iBYZRgmolygCbBoQXzYAxp3ys2i/eYvmdRqMgiYxRW4/87HDHA1MUvazD8vs3vWBB/yuOJGKMLbygHAo1D6Sr/3cert6LkUrpovSnLFO0LZTfJxaD7VXReBpn3M/2OP1gDLsBLNcClVXsGEPFKva01M9aUBRvkXAgN/x47ZRDQZ1FqDYQIr5MbsC9QrcWHwCLHqEEMmRwBIWhYlXPrTrGGIa1xf3Avtd4a2/Zzcg2SaAHXIod82zrI3qteWchRD9p8ZuYVfmv4mz0wLBKDD51iplwFYK1BUOOAPk7lHcxmBcO4lhmk5/stuI/fn19xltK6Cp3zjpceyBG53mEOKZGyskTkc1v4gw+84wEDGidss/mqpfMNCOW8Y/ZP+kRiMKMG9fdaMqc+LnV42PZl4em+e7bFRKTzypM+Az7wGEFORJJQ98QN5DaQx6nDzuynhzPBEVXqKce/e8QuLzRSw28O0UM4d7NRLo6ySdd8sHElHEyCBccxUvpxmL4Fo28MnMm+kXRoH5V37GzMGilA+NPCJiimlDDYFRauUkf0NG9LDLlJmNsPTqnuW ], StreamIds: [  ] }.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.RemoteJSRuntime: Begin invoke JS interop '2': 'Blazor._internal.attachWebRendererInterop'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitFactory: Created circuit uKsDH5E_j6oxaN_ivStdVGkGjF_nmYgboQQ-adbdqnw for connection 9wLrtlAUcQH1QZjzUXNVCg
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Circuit initialization started.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Circuit initialization succeeded.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.ComponentHub: Created circuit 'uKsDH5E_j6oxaN_ivStdVGkGjF_nmYgboQQ-adbdqnw' with secret '(redacted)' for '9wLrtlAUcQH1QZjzUXNVCg'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "", Target: "EndInvokeJSFromDotNet", Arguments: [ 2, True, [2,true,null] ], StreamIds: [  ] }.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: The JS interop call with callback id '2' succeeded.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "", Target: "UpdateRootComponents", Arguments: [ {"batchId":1,"operations":[{"type":"add","ssrComponentId":1,"marker":{"type":"server","prerenderId":"804af0248dc04c8796cdb3b751916db7","key":{"locationHash":"BA912EF6C24E3748384151B25F61E6125B6FB5E06A5080F43E3CCF55654A5AD5:8","formattedComponentKey":""},"sequence":0,"descriptor":"CfDJ8OwUFxh0wVhDn8zA5rXTg7/7sPZDSl3fJaxmF1rZt/nQKkDG+LCXQfqPd6oV1Ea8wZE2vBr1hFVLHpRoKUnWlF1EorPcM3VUtSlY/b7l/YNcjo9dj+BzMU9lD3Ws3taVp7gyY+BLfn6lrxmaTkEd5T/Z68LnJVBHf46ppymA88iWIyLXJbTBTghriv2XAy9HSrW0RZXXd4OmgQlbA4JKgrltlOY0Y9C3gY5930v5ibXzyfyA+XsM8xvmqVink2iCY3jUEjhCIcd8MNk/fR4eZ6zC3IjZxby1fyQGGGU+wItlhVJWfDdEv9qQbgMhfvAt5HSZkOLKBm9EQHzNRhFu4x0i+ircbqciiiyNjEPXLB112OVq49TgBqvgN+zXk+7QxTYCXYa02OrRN7JjJ6FxUuBSsnIWCml4Nbubvwsogn1NlcTajIuEH3fwt5f5Z9FqalsEmeWp4BtaWye1ud7BjHqiWPA1mfOFmITTybxHlo3ue9sUHzRMb//h2srtPStTWT30TLZ8DKbWIuA2hVviz1U=","uniqueId":0}}]}, CfDJ8OwUFxh0wVhDn8zA5rXTg78nbzQMAOhnj9n2mh6g3VPgUKiT3Y2F+iBYZRgmolygCbBoQXzYAxp3ys2i/eYvmdRqMgiYxRW4/87HDHA1MUvazD8vs3vWBB/yuOJGKMLbygHAo1D6Sr/3cert6LkUrpovSnLFO0LZTfJxaD7VXReBpn3M/2OP1gDLsBLNcClVXsGEPFKva01M9aUBRvkXAgN/x47ZRDQZ1FqDYQIr5MbsC9QrcWHwCLHqEEMmRwBIWhYlXPrTrGGIa1xf3Avtd4a2/Zzcg2SaAHXIod82zrI3qteWchRD9p8ZuYVfmv4mz0wLBKDD51iplwFYK1BUOOAPk7lHcxmBcO4lhmk5/stuI/fn19xltK6Cp3zjpceyBG53mEOKZGyskTkc1v4gw+84wEDGidss/mqpfMNCOW8Y/ZP+kRiMKMG9fdaMqc+LnV42PZl4em+e7bFRKTzypM+Az7wGEFORJJQ98QN5DaQx6nDzuynhzPBEVXqKce/e8QuLzRSw28O0UM4d7NRLo6ySdd8sHElHEyCBccxUvpxmL4Fo28MnMm+kXRoH5V37GzMGilA+NPCJiimlDDYFRauUkf0NG9LDLlJmNsPTqnuW ], StreamIds: [  ] }.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Update root components started.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Opening circuit with id 'uKsDH5E_j6oxaN_ivStdVGkGjF_nmYgboQQ-adbdqnw'.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Circuit id 'uKsDH5E_j6oxaN_ivStdVGkGjF_nmYgboQQ-adbdqnw' connected using connection '9wLrtlAUcQH1QZjzUXNVCg'.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing root component 0 (SAT242516026.Components.Routes)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 0 of type SAT242516026.Components.Routes
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 1 (Microsoft.AspNetCore.Components.Routing.Router) as child of 0 (SAT242516026.Components.Routes)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Routing.Tree.TreeRouter: Request successfully matched the route with name '(null)' and template '/'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Routing.Router: Navigating to component SAT242516026.Components.Pages.Home in response to path '/' with base URI 'https://localhost:7124/'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 1 of type Microsoft.AspNetCore.Components.Routing.Router
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 2 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView) as child of 1 (Microsoft.AspNetCore.Components.Routing.Router)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 3 (Microsoft.AspNetCore.Components.Routing.FocusOnNavigate) as child of 1 (Microsoft.AspNetCore.Components.Routing.Router)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 2 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 4 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore) as child of 2 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 3 of type Microsoft.AspNetCore.Components.Routing.FocusOnNavigate
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 4 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 5 (Microsoft.AspNetCore.Components.LayoutView) as child of 4 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 5 of type Microsoft.AspNetCore.Components.LayoutView
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 6 (SAT242516026.Components.Layout.MainLayout) as child of 5 (Microsoft.AspNetCore.Components.LayoutView)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 6 of type SAT242516026.Components.Layout.MainLayout
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 7 (SAT242516026.Components.Layout.NavMenu) as child of 6 (SAT242516026.Components.Layout.MainLayout)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 8 (SAT242516026.Components.Layout.LanguageSelector) as child of 6 (SAT242516026.Components.Layout.MainLayout)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 9 (SAT242516026.Components.Pages.Home) as child of 6 (SAT242516026.Components.Layout.MainLayout)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 7 of type SAT242516026.Components.Layout.NavMenu
+24.12.2025 14:53:08 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'AppTitle' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:08 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Menu' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:08 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Menu' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 10 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 7 (SAT242516026.Components.Layout.NavMenu)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView) as child of 7 (SAT242516026.Components.Layout.NavMenu)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService: Authorization was successful.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 8 of type SAT242516026.Components.Layout.LanguageSelector
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 9 of type SAT242516026.Components.Pages.Home
+24.12.2025 14:53:08 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'AppTitle' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:08 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_Title' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:08 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_LoginInfo' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:08 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_AdminInfo' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 12 (Microsoft.AspNetCore.Components.Web.PageTitle) as child of 9 (SAT242516026.Components.Pages.Home)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 10 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 11 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeView
+24.12.2025 14:53:08 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Account' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:08 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Logout' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 13 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 14 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 15 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 16 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 17 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 18 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 19 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 12 of type Microsoft.AspNetCore.Components.Web.PageTitle
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 20 (Microsoft.AspNetCore.Components.Sections.SectionContent) as child of 12 (Microsoft.AspNetCore.Components.Web.PageTitle)
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 13 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Mukellefler' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 14 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Beyannameler' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 15 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Tahakkuklar' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 16 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Odemeler' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 17 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 18 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 19 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.RemoteRenderer: Sending render batch 2 of size 10153 bytes to client 9wLrtlAUcQH1QZjzUXNVCg.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Update root components succeeded.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "", Target: "OnRenderCompleted", Arguments: [ 2,  ], StreamIds: [  ] }.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.ComponentHub: Received confirmation for batch 2
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.RemoteRenderer: Completing batch 2 without error in 28.2318ms.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.RemoteJSRuntime: Begin invoke JS interop '3': 'Blazor._internal.navigationManager.enableNavigationInterception'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "", Target: "EndInvokeJSFromDotNet", Arguments: [ 3, True, [3,true,null] ], StreamIds: [  ] }.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.RemoteJSRuntime: Begin invoke JS interop '4': 'Blazor._internal.domWrapper.focusBySelector'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "", Target: "EndInvokeJSFromDotNet", Arguments: [ 4, True, [4,true,null] ], StreamIds: [  ] }.
+24.12.2025 14:53:08 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-24 14:53:08
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 9 of type SAT242516026.Components.Pages.Home
+24.12.2025 14:53:08 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'AppTitle' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:08 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_Title' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:08 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_LoginInfo' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:08 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_AdminInfo' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 12 of type Microsoft.AspNetCore.Components.Web.PageTitle
+24.12.2025 14:53:08 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request starting HTTP/2 POST https://localhost:7124/_blazor/disconnect - multipart/form-data;+boundary=----WebKitFormBoundaryPFo3jc8eGLfHDAEA 359
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: POST requests are not supported
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Routing.Matching.DfaMatcher: 1 candidate(s) found for the request path '/_blazor/disconnect'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: The JS interop call with callback id '3' succeeded.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware: Request matched endpoint '(null)'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler: AuthenticationScheme: Cookies was successfully authenticated.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.Transports.WebSocketsTransport: Socket connection closed prematurely.
+24.12.2025 14:53:08 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.Transports.WebSocketsTransport: Waiting for the application to finish sending data.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.Transports.WebSocketsTransport: Socket closed.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Server.Kestrel: Connection id "0HNI2SC0EO85V", Request id "0HNI2SC0EO85V:0000000F": started reading request body.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Server.Kestrel: Connection id "0HNI2SC0EO85V", Request id "0HNI2SC0EO85V:0000000F": done reading request body.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitRegistry: Circuit with id uKsDH5E_j6oxaN_ivStdVGkGjF_nmYgboQQ-adbdqnw is disconnected.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Circuit id 'uKsDH5E_j6oxaN_ivStdVGkGjF_nmYgboQQ-adbdqnw' disconnected from connection '9wLrtlAUcQH1QZjzUXNVCg'.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.SignalR.HubConnectionHandler: OnConnectedAsync ending.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.CircuitDisconnectMiddleware: Circuit with id 'uKsDH5E_j6oxaN_ivStdVGkGjF_nmYgboQQ-adbdqnw' terminating gracefully.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.HttpConnectionManager: Removing connection r5JIWDBjn0fEiFBnqFlNwQ from the list of connections.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitRegistry: Circuit with id uKsDH5E_j6oxaN_ivStdVGkGjF_nmYgboQQ-adbdqnw has been removed from the registry for permanent disconnection.
+24.12.2025 14:53:08 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Disposing circuit 'uKsDH5E_j6oxaN_ivStdVGkGjF_nmYgboQQ-adbdqnw' started.
+24.12.2025 14:53:08 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 CONNECT https://localhost:7124/_blazor?id=r5JIWDBjn0fEiFBnqFlNwQ - 200 - - 528.4201ms
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Circuit id 'uKsDH5E_j6oxaN_ivStdVGkGjF_nmYgboQQ-adbdqnw' disconnected from connection '9wLrtlAUcQH1QZjzUXNVCg'.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Closing circuit with id 'uKsDH5E_j6oxaN_ivStdVGkGjF_nmYgboQQ-adbdqnw'.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 0 of type SAT242516026.Components.Routes
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 1 of type Microsoft.AspNetCore.Components.Routing.Router
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 2 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 3 of type Microsoft.AspNetCore.Components.Routing.FocusOnNavigate
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 4 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 5 of type Microsoft.AspNetCore.Components.LayoutView
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 6 of type SAT242516026.Components.Layout.MainLayout
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 7 of type SAT242516026.Components.Layout.NavMenu
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 8 of type SAT242516026.Components.Layout.LanguageSelector
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 9 of type SAT242516026.Components.Pages.Home
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 10 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 11 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeView
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 12 of type Microsoft.AspNetCore.Components.Web.PageTitle
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 13 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 14 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 15 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 16 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 17 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 18 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 19 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 20 of type Microsoft.AspNetCore.Components.Sections.SectionContent
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Disposing circuit 'uKsDH5E_j6oxaN_ivStdVGkGjF_nmYgboQQ-adbdqnw' succeeded.
+24.12.2025 14:53:08 [Debug] Microsoft.AspNetCore.Components.Server.CircuitDisconnectMiddleware: Circuit with id 'uKsDH5E_j6oxaN_ivStdVGkGjF_nmYgboQQ-adbdqnw' terminated gracefully.
+24.12.2025 14:53:08 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 14:53:08 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 POST https://localhost:7124/_blazor/disconnect - 200 0 - 174.7354ms
+24.12.2025 15:01:46 [Information] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: User profile is available. Using 'C:\Users\ASUS\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+24.12.2025 15:01:47 [Debug] Microsoft.Extensions.Hosting.Internal.Host: Hosting starting
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\ASUS\AppData\Local\ASP.NET\DataProtection-Keys\key-181714ec-c174-4358-9fcc-c0e6b5d383bf.xml'.
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\ASUS\AppData\Local\ASP.NET\DataProtection-Keys\key-3e9bd96b-ccae-43b8-8817-2e08c47d189a.xml'.
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {181714ec-c174-4358-9fcc-c0e6b5d383bf}.
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {3e9bd96b-ccae-43b8-8817-2e08c47d189a}.
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.DefaultKeyResolver: Considering key {3e9bd96b-ccae-43b8-8817-2e08c47d189a} with expiration date 2026-03-22 13:14:22Z as default key.
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.DataProtection.TypeForwardingActivator: Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor: Decrypting secret element using Windows DPAPI.
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.DataProtection.TypeForwardingActivator: Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory: Opening CNG algorithm 'AES' from provider '(null)' with chaining mode CBC.
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory: Opening CNG algorithm 'SHA256' from provider '(null)' with HMAC.
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingProvider: Using key {3e9bd96b-ccae-43b8-8817-2e08c47d189a} as the default key.
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.DataProtection.Internal.DataProtectionHostedService: Key ring with default key {3e9bd96b-ccae-43b8-8817-2e08c47d189a} was loaded during application startup.
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubProtocolResolver: Registered SignalR Protocol: json, implemented by Microsoft.AspNetCore.SignalR.Protocol.JsonHubProtocol.
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubProtocolResolver: Registered SignalR Protocol: blazorpack, implemented by Microsoft.AspNetCore.Components.Server.BlazorPack.BlazorPackHubProtocol.
+24.12.2025 15:01:47 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+24.12.2025 15:01:47 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.Hosting.Diagnostics: Loaded hosting startup assembly SAT242516026
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.Hosting.Diagnostics: Loaded hosting startup assembly Microsoft.WebTools.ApiEndpointDiscovery
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.Hosting.Diagnostics: Loaded hosting startup assembly Microsoft.AspNetCore.Watch.BrowserRefresh
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.Hosting.Diagnostics: Loaded hosting startup assembly Microsoft.WebTools.BrowserLink.Net
+24.12.2025 15:01:47 [Information] Microsoft.AspNetCore.Mvc.Infrastructure.DefaultActionDescriptorCollectionProvider: No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SGRJBJIE" accepted.
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SGRJBJIE" started.
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SGRJBJIF" accepted.
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SGRJBJIF" started.
+24.12.2025 15:01:47 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+24.12.2025 15:01:47 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+24.12.2025 15:01:47 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+24.12.2025 15:01:47 [Debug] Microsoft.Extensions.Hosting.Internal.Host: Hosting started
+24.12.2025 15:01:47 [Debug] Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets: Connection id "0HNI2SGRJBJIE" received FIN.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware: Failed to authenticate HTTPS connection.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SGRJBJIF" stopped.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets: Connection id "0HNI2SGRJBJIF" sending FIN because: "The Socket transport's send loop completed gracefully."
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SGRJBJIG" accepted.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Server.Kestrel.Connections: Connection id "0HNI2SGRJBJIG" started.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware: Connection 0HNI2SGRJBJIG established using the following protocol: Tls13
+24.12.2025 15:01:48 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request starting HTTP/2 GET https://localhost:7124/ - - -
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware: Wildcard detected, all requests with hosts will be allowed.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: The request path / does not match a supported file type
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Routing.Matching.DfaMatcher: 1 candidate(s) found for the request path '/'
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware: Request matched endpoint '/ (/)'
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.DataProtection.TypeForwardingActivator: Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor: Decrypting secret element using Windows DPAPI.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.DataProtection.TypeForwardingActivator: Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory: Opening CNG algorithm 'AES' from provider '(null)' with chaining mode CBC.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory: Opening CNG algorithm 'SHA256' from provider '(null)' with HMAC.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler: AuthenticationScheme: Cookies was successfully authenticated.
+24.12.2025 15:01:48 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executing endpoint '/ (/)'
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.Endpoints.RazorComponentEndpointInvoker: Begin render root component 'App' with page 'Home'.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing root component 0 (SAT242516026.Components.App)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 0 of type SAT242516026.Components.App
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 1 (Microsoft.AspNetCore.Components.Web.HeadOutlet) as child of 0 (SAT242516026.Components.App)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 2 (Microsoft.AspNetCore.Components.Endpoints.SSRRenderModeBoundary) as child of 0 (SAT242516026.Components.App)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 1 of type Microsoft.AspNetCore.Components.Web.HeadOutlet
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 3 (Microsoft.AspNetCore.Components.Sections.SectionOutlet) as child of 1 (Microsoft.AspNetCore.Components.Web.HeadOutlet)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 4 (Microsoft.AspNetCore.Components.Sections.SectionOutlet) as child of 1 (Microsoft.AspNetCore.Components.Web.HeadOutlet)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 2 of type Microsoft.AspNetCore.Components.Endpoints.SSRRenderModeBoundary
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 5 (SAT242516026.Components.Routes) as child of 2 (Microsoft.AspNetCore.Components.Endpoints.SSRRenderModeBoundary)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 3 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 6 (Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer) as child of 3 (Microsoft.AspNetCore.Components.Sections.SectionOutlet)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 3 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 4 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 7 (Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer) as child of 4 (Microsoft.AspNetCore.Components.Sections.SectionOutlet)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 4 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 5 of type SAT242516026.Components.Routes
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 8 (Microsoft.AspNetCore.Components.Routing.Router) as child of 5 (SAT242516026.Components.Routes)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.Routing.Router: Navigating to component SAT242516026.Components.Pages.Home in response to path '/' with base URI 'https://localhost:7124/'
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 6 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 6 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 7 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 7 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 8 of type Microsoft.AspNetCore.Components.Routing.Router
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 9 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView) as child of 8 (Microsoft.AspNetCore.Components.Routing.Router)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 10 (Microsoft.AspNetCore.Components.Routing.FocusOnNavigate) as child of 8 (Microsoft.AspNetCore.Components.Routing.Router)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 9 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore) as child of 9 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 10 of type Microsoft.AspNetCore.Components.Routing.FocusOnNavigate
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 11 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 12 (Microsoft.AspNetCore.Components.LayoutView) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 12 of type Microsoft.AspNetCore.Components.LayoutView
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 13 (SAT242516026.Components.Layout.MainLayout) as child of 12 (Microsoft.AspNetCore.Components.LayoutView)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 13 of type SAT242516026.Components.Layout.MainLayout
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 14 (SAT242516026.Components.Layout.NavMenu) as child of 13 (SAT242516026.Components.Layout.MainLayout)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 15 (SAT242516026.Components.Layout.LanguageSelector) as child of 13 (SAT242516026.Components.Layout.MainLayout)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 16 (SAT242516026.Components.Pages.Home) as child of 13 (SAT242516026.Components.Layout.MainLayout)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 14 of type SAT242516026.Components.Layout.NavMenu
+24.12.2025 15:01:48 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'AppTitle' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:48 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Menu' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:48 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Menu' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 17 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 14 (SAT242516026.Components.Layout.NavMenu)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView) as child of 14 (SAT242516026.Components.Layout.NavMenu)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService: Authorization was successful.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 15 of type SAT242516026.Components.Layout.LanguageSelector
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 16 of type SAT242516026.Components.Pages.Home
+24.12.2025 15:01:48 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'AppTitle' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:48 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_Title' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:48 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_LoginInfo' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:48 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_AdminInfo' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 19 (Microsoft.AspNetCore.Components.Web.PageTitle) as child of 16 (SAT242516026.Components.Pages.Home)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 17 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:48 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 18 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeView
+24.12.2025 15:01:48 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Account' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:48 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Logout' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 20 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 21 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 22 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 23 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 24 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 25 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 26 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 18 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 19 of type Microsoft.AspNetCore.Components.Web.PageTitle
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 27 (Microsoft.AspNetCore.Components.Sections.SectionContent) as child of 19 (Microsoft.AspNetCore.Components.Web.PageTitle)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 20 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:48 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Mukellefler' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 21 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:48 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Beyannameler' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 22 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:48 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Tahakkuklar' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 23 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:48 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Odemeler' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 24 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 25 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 26 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 3 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 28 (Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer) as child of 3 (Microsoft.AspNetCore.Components.Sections.SectionOutlet)
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 6 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 28 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 15:01:48 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_PageTitle' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Antiforgery.DefaultAntiforgery: An antiforgery cookie token was reused.
+24.12.2025 15:01:48 [Debug] Microsoft.WebTools.BrowserLink.Net.BrowserLinkMiddleware: Response markup is scheduled to include Browser Link script injection.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware: Response markup is scheduled to include browser refresh script injection.
+24.12.2025 15:01:48 [Debug] Microsoft.AspNetCore.Antiforgery.DefaultAntiforgery: An antiforgery cookie token was reused.
+24.12.2025 15:01:49 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executed endpoint '/ (/)'
+24.12.2025 15:01:49 [Debug] Microsoft.WebTools.BrowserLink.Net.BrowserLinkMiddleware: Response markup was updated to include Browser Link script injection.
+24.12.2025 15:01:49 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request starting HTTP/2 GET https://localhost:7124/_framework/blazor.web.js - - -
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Routing.Matching.DfaMatcher: 1 candidate(s) found for the request path '/_framework/blazor.web.js'
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware: Request matched endpoint 'Blazor web static files'
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 0 of type SAT242516026.Components.App
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 1 of type Microsoft.AspNetCore.Components.Web.HeadOutlet
+24.12.2025 15:01:49 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 GET https://localhost:7124/_framework/aspnetcore-browser-refresh.js - 200 13760 application/javascript;+charset=utf-8 150.1486ms
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 2 of type Microsoft.AspNetCore.Components.Endpoints.SSRRenderModeBoundary
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 3 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler: AuthenticationScheme: Cookies was successfully authenticated.
+24.12.2025 15:01:49 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executing endpoint 'Blazor web static files'
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 5 of type SAT242516026.Components.Routes
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 7 of type Microsoft.AspNetCore.Components.Sections.SectionOutlet+SectionOutletContentRenderer
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 8 of type Microsoft.AspNetCore.Components.Routing.Router
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 9 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 10 of type Microsoft.AspNetCore.Components.Routing.FocusOnNavigate
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 11 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 12 of type Microsoft.AspNetCore.Components.LayoutView
+24.12.2025 15:01:49 [Information] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: The file /_framework/blazor.web.js was not modified
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 14 of type SAT242516026.Components.Layout.NavMenu
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 15 of type SAT242516026.Components.Layout.LanguageSelector
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 16 of type SAT242516026.Components.Pages.Home
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 17 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 18 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeView
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 19 of type Microsoft.AspNetCore.Components.Web.PageTitle
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 20 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:49 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 GET https://localhost:7124/_framework/blazor.web.js - 304 - text/javascript 304.6920ms
+24.12.2025 15:01:49 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request starting HTTP/2 GET https://localhost:7124/_blazor/initializers - - -
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: The request path /_blazor/initializers does not match a supported file type
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 23 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 24 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Routing.Matching.DfaMatcher: 1 candidate(s) found for the request path '/_blazor/initializers'
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware: Request matched endpoint '(null)'
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 26 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 27 of type Microsoft.AspNetCore.Components.Sections.SectionContent
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler: AuthenticationScheme: Cookies was successfully authenticated.
+24.12.2025 15:01:49 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 15:01:49 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 GET https://localhost:7124/ - 200 - text/html;+charset=utf-8 1036.5965ms
+24.12.2025 15:01:49 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 15:01:49 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 GET https://localhost:7124/_blazor/initializers - 200 - application/json;+charset=utf-8 109.1826ms
+24.12.2025 15:01:49 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request starting HTTP/2 POST https://localhost:7124/_blazor/negotiate?negotiateVersion=1 - - 0
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: POST requests are not supported
+24.12.2025 15:01:49 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 GET https://localhost:7124/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 494.5259ms
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Routing.Matching.DfaMatcher: 1 candidate(s) found for the request path '/_blazor/negotiate'
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware: Request matched endpoint '(null)'
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler: AuthenticationScheme: Cookies was successfully authenticated.
+24.12.2025 15:01:49 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.HttpConnectionManager: New connection ArCbBvccH0Yu03wV5iNQsg created.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.HttpConnectionDispatcher: Sending negotiation response.
+24.12.2025 15:01:49 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 15:01:49 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 POST https://localhost:7124/_blazor/negotiate?negotiateVersion=1 - 200 316 application/json 35.4743ms
+24.12.2025 15:01:49 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request starting HTTP/2 CONNECT https://localhost:7124/_blazor?id=9GS4W-rAvq8W8dCk1to-pA - - -
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: CONNECT requests are not supported
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Routing.Matching.DfaMatcher: 1 candidate(s) found for the request path '/_blazor'
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware: Request matched endpoint '(null)'
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler: AuthenticationScheme: Cookies was successfully authenticated.
+24.12.2025 15:01:49 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.HttpConnectionDispatcher: Establishing new connection.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.Transports.WebSocketsTransport: Socket opened using Sub-Protocol: '(null)'.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubProtocolResolver: Found protocol implementation for requested protocol: blazorpack.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.SignalR.HubConnectionContext: Completed connection handshake. Using HubProtocol 'blazorpack'.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "0", Target: "StartCircuit", Arguments: [ https://localhost:7124/, https://localhost:7124/, [], CfDJ8GvZmz6uzLhDiBcuCMR9GJr4jjmWRA8zGtfm6O7AGrwhdVapk+QbjUKZYftwfoZbv/BsiZgZaILJ2pSe2WnWQur0s/225sLeJegf2AznskBc4/9Qt1RUHG4E4AqZVwPYeLuus6MWO93OYndcl6W0RuaLiNLs3Nsd+eo4yl+OZszXy7rLpA6lgxznM1UsNrW8cCJEgTw8kWsaM4klDOK96c9dlV5n+y/rtr87OrH7UFutfU+h6HLGsvvSKl8HXv4cIsq+5iHB76d6eGbJHf/k0Y9bTVuTx+8oD8dX6r2zBDBqnepWdVjji34YMQH3P69D8ydSCQPkw+yfI/Woufr3IvaSn+F7lSdrnWg5t7HbKsPhuxj08EwaMOnnNtGqQRzejZajToVF460U4PRbOZLunBmQRx/xk9DarQrCZ5j5v9FO7idITbmVtlYD+V4jv+Ae8R0+/2EOzeBNBW58cQBhaj1kVhquuFd1tscyG1yd7UZ7IAqf+Gk85v9mz7Xj1SqRb/kBHA/K18sN+aJ20Gmm/vMa96MRMXPpPjp3RFZ8ccTmmHzMeqWSNiHV0/3sybmwl4dPyf65gU7o3Hk7OFP1F2IxjAweehAAYqXVfrcMUpC4 ], StreamIds: [  ] }.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.RemoteJSRuntime: Begin invoke JS interop '2': 'Blazor._internal.attachWebRendererInterop'
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitFactory: Created circuit aKyuaW-ETIXl8fwYWIWvZP9iSry_Mqm6Y8JY39vwpj4 for connection ArCbBvccH0Yu03wV5iNQsg
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Circuit initialization started.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Circuit initialization succeeded.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.ComponentHub: Created circuit 'aKyuaW-ETIXl8fwYWIWvZP9iSry_Mqm6Y8JY39vwpj4' with secret '(redacted)' for 'ArCbBvccH0Yu03wV5iNQsg'
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "", Target: "EndInvokeJSFromDotNet", Arguments: [ 2, True, [2,true,null] ], StreamIds: [  ] }.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: The JS interop call with callback id '2' succeeded.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "", Target: "UpdateRootComponents", Arguments: [ {"batchId":1,"operations":[{"type":"add","ssrComponentId":1,"marker":{"type":"server","prerenderId":"191cb9162cc94a9ebe64dfeb3402838d","key":{"locationHash":"BA912EF6C24E3748384151B25F61E6125B6FB5E06A5080F43E3CCF55654A5AD5:8","formattedComponentKey":""},"sequence":0,"descriptor":"CfDJ8GvZmz6uzLhDiBcuCMR9GJrbLCD7Fdi/FO2GAHHL8+2yjaTU6HPFMca7fMc4E3z3W1q29a33bU2/Jt04ODBQv4dFSDQLYwUtmQeu5mocj/O4Twwkk9p7YMm7oLLGmhaAWMD9L75ZZb3g2E4i7oUjyP7nQAFWgH58mDuP+k2u1MglHDTdrCgPJuFANkutJnN5a/99h/EoKM/yaA8D7cY58lktjpgqHmqXvyeEhxa6V4xC/SYMt025G4w0nY960OmGNqgi3kPZO4dBK5Kqj/oc9MxWnVOSRtJVmCP8cepFo2L2kOhNsAuCLQ9ctG9HY9hNFEYtIxqCVrO1hQldMz2fkZujOFjITLecND2LwjefXM04G+mB0pyLOpl83bgDGXlPZ8qYwOZkquS6G+LCMXeShoQA+YaG8foyq2t03OcWxQG1asn5N8So7PGGwTQdiYonQPvX0m0ClnMC6C1ch47gI4Fu+97qjykQLV5Qz/yyWK+JWVlUB9t/qU303CwmFLefUkliUultrkah6yDQc+axagM=","uniqueId":0}}]}, CfDJ8GvZmz6uzLhDiBcuCMR9GJr4jjmWRA8zGtfm6O7AGrwhdVapk+QbjUKZYftwfoZbv/BsiZgZaILJ2pSe2WnWQur0s/225sLeJegf2AznskBc4/9Qt1RUHG4E4AqZVwPYeLuus6MWO93OYndcl6W0RuaLiNLs3Nsd+eo4yl+OZszXy7rLpA6lgxznM1UsNrW8cCJEgTw8kWsaM4klDOK96c9dlV5n+y/rtr87OrH7UFutfU+h6HLGsvvSKl8HXv4cIsq+5iHB76d6eGbJHf/k0Y9bTVuTx+8oD8dX6r2zBDBqnepWdVjji34YMQH3P69D8ydSCQPkw+yfI/Woufr3IvaSn+F7lSdrnWg5t7HbKsPhuxj08EwaMOnnNtGqQRzejZajToVF460U4PRbOZLunBmQRx/xk9DarQrCZ5j5v9FO7idITbmVtlYD+V4jv+Ae8R0+/2EOzeBNBW58cQBhaj1kVhquuFd1tscyG1yd7UZ7IAqf+Gk85v9mz7Xj1SqRb/kBHA/K18sN+aJ20Gmm/vMa96MRMXPpPjp3RFZ8ccTmmHzMeqWSNiHV0/3sybmwl4dPyf65gU7o3Hk7OFP1F2IxjAweehAAYqXVfrcMUpC4 ], StreamIds: [  ] }.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Update root components started.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Opening circuit with id 'aKyuaW-ETIXl8fwYWIWvZP9iSry_Mqm6Y8JY39vwpj4'.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Circuit id 'aKyuaW-ETIXl8fwYWIWvZP9iSry_Mqm6Y8JY39vwpj4' connected using connection 'ArCbBvccH0Yu03wV5iNQsg'.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing root component 0 (SAT242516026.Components.Routes)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 0 of type SAT242516026.Components.Routes
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 1 (Microsoft.AspNetCore.Components.Routing.Router) as child of 0 (SAT242516026.Components.Routes)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Routing.Tree.TreeRouter: Request successfully matched the route with name '(null)' and template '/'
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Routing.Router: Navigating to component SAT242516026.Components.Pages.Home in response to path '/' with base URI 'https://localhost:7124/'
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 1 of type Microsoft.AspNetCore.Components.Routing.Router
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 2 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView) as child of 1 (Microsoft.AspNetCore.Components.Routing.Router)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 3 (Microsoft.AspNetCore.Components.Routing.FocusOnNavigate) as child of 1 (Microsoft.AspNetCore.Components.Routing.Router)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 2 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 4 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore) as child of 2 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 3 of type Microsoft.AspNetCore.Components.Routing.FocusOnNavigate
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 4 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 5 (Microsoft.AspNetCore.Components.LayoutView) as child of 4 (Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView+AuthorizeRouteViewCore)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 5 of type Microsoft.AspNetCore.Components.LayoutView
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 6 (SAT242516026.Components.Layout.MainLayout) as child of 5 (Microsoft.AspNetCore.Components.LayoutView)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 6 of type SAT242516026.Components.Layout.MainLayout
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 7 (SAT242516026.Components.Layout.NavMenu) as child of 6 (SAT242516026.Components.Layout.MainLayout)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 8 (SAT242516026.Components.Layout.LanguageSelector) as child of 6 (SAT242516026.Components.Layout.MainLayout)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 9 (SAT242516026.Components.Pages.Home) as child of 6 (SAT242516026.Components.Layout.MainLayout)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 7 of type SAT242516026.Components.Layout.NavMenu
+24.12.2025 15:01:49 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'AppTitle' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:49 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Menu' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:49 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Menu' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 10 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 7 (SAT242516026.Components.Layout.NavMenu)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView) as child of 7 (SAT242516026.Components.Layout.NavMenu)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService: Authorization was successful.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 8 of type SAT242516026.Components.Layout.LanguageSelector
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 9 of type SAT242516026.Components.Pages.Home
+24.12.2025 15:01:49 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'AppTitle' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:49 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_Title' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:49 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_LoginInfo' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:49 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_AdminInfo' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 12 (Microsoft.AspNetCore.Components.Web.PageTitle) as child of 9 (SAT242516026.Components.Pages.Home)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 10 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:49 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 11 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeView
+24.12.2025 15:01:49 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Account' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:49 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Logout' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 13 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 14 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 15 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 16 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 17 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 18 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 19 (Microsoft.AspNetCore.Components.Routing.NavLink) as child of 11 (Microsoft.AspNetCore.Components.Authorization.AuthorizeView)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 12 of type Microsoft.AspNetCore.Components.Web.PageTitle
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Initializing component 20 (Microsoft.AspNetCore.Components.Sections.SectionContent) as child of 12 (Microsoft.AspNetCore.Components.Web.PageTitle)
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 13 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:49 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Mukellefler' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 14 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:49 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Beyannameler' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 15 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:49 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Tahakkuklar' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 16 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:49 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Odemeler' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 17 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 18 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 19 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.RemoteRenderer: Sending render batch 2 of size 10153 bytes to client ArCbBvccH0Yu03wV5iNQsg.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Update root components succeeded.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "", Target: "OnRenderCompleted", Arguments: [ 2,  ], StreamIds: [  ] }.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.ComponentHub: Received confirmation for batch 2
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.RemoteRenderer: Completing batch 2 without error in 26.353ms.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.RemoteJSRuntime: Begin invoke JS interop '3': 'Blazor._internal.navigationManager.enableNavigationInterception'
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "", Target: "EndInvokeJSFromDotNet", Arguments: [ 3, True, [3,true,null] ], StreamIds: [  ] }.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.RemoteJSRuntime: Begin invoke JS interop '4': 'Blazor._internal.domWrapper.focusBySelector'
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "", Target: "EndInvokeJSFromDotNet", Arguments: [ 4, True, [4,true,null] ], StreamIds: [  ] }.
+24.12.2025 15:01:49 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-24 15:01:49
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 9 of type SAT242516026.Components.Pages.Home
+24.12.2025 15:01:49 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'AppTitle' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:49 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_Title' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:49 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_LoginInfo' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:49 [Debug] Microsoft.Extensions.Localization.ResourceManagerStringLocalizer: ResourceManagerStringLocalizer searched for 'Home_AdminInfo' in 'SAT242516026.Models.Localization.AppResource' with culture 'tr'.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Rendering component 12 of type Microsoft.AspNetCore.Components.Web.PageTitle
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.RemoteRenderer: Sending render batch 3 of size 60 bytes to client ArCbBvccH0Yu03wV5iNQsg.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher: Received hub invocation: InvocationMessage { InvocationId: "", Target: "OnRenderCompleted", Arguments: [ 3,  ], StreamIds: [  ] }.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: The JS interop call with callback id '3' succeeded.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.ComponentHub: Received confirmation for batch 3
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.RemoteRenderer: Completing batch 3 without error in 6.0173ms.
+24.12.2025 15:01:49 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: The JS interop call with callback id '4' succeeded.
+24.12.2025 15:01:51 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request starting HTTP/2 POST https://localhost:7124/_blazor/disconnect - multipart/form-data;+boundary=----WebKitFormBoundaryBxLgA9rAuB0rSD3j 359
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: POST requests are not supported
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Routing.Matching.DfaMatcher: 1 candidate(s) found for the request path '/_blazor/disconnect'
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.Transports.WebSocketsTransport: Socket connection closed prematurely.
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler: AuthenticationScheme: Cookies was successfully authenticated.
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.Transports.WebSocketsTransport: Waiting for the application to finish sending data.
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.Transports.WebSocketsTransport: Socket closed.
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitRegistry: Attempting to disconnect circuit with id aKyuaW-ETIXl8fwYWIWvZP9iSry_Mqm6Y8JY39vwpj4 from connection ArCbBvccH0Yu03wV5iNQsg.
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Server.Kestrel: Connection id "0HNI2SGRJBJIG", Request id "0HNI2SGRJBJIG:0000000F": started reading request body.
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitRegistry: Circuit with id aKyuaW-ETIXl8fwYWIWvZP9iSry_Mqm6Y8JY39vwpj4 is disconnected.
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Circuit id 'aKyuaW-ETIXl8fwYWIWvZP9iSry_Mqm6Y8JY39vwpj4' disconnected from connection 'ArCbBvccH0Yu03wV5iNQsg'.
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.SignalR.HubConnectionHandler: OnConnectedAsync ending.
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.Server.CircuitDisconnectMiddleware: Circuit with id 'aKyuaW-ETIXl8fwYWIWvZP9iSry_Mqm6Y8JY39vwpj4' terminating gracefully.
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Http.Connections.Internal.HttpConnectionManager: Removing connection 9GS4W-rAvq8W8dCk1to-pA from the list of connections.
+24.12.2025 15:01:51 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Disposing circuit 'aKyuaW-ETIXl8fwYWIWvZP9iSry_Mqm6Y8JY39vwpj4' started.
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Circuit id 'aKyuaW-ETIXl8fwYWIWvZP9iSry_Mqm6Y8JY39vwpj4' disconnected from connection 'ArCbBvccH0Yu03wV5iNQsg'.
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Closing circuit with id 'aKyuaW-ETIXl8fwYWIWvZP9iSry_Mqm6Y8JY39vwpj4'.
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 0 of type SAT242516026.Components.Routes
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 1 of type Microsoft.AspNetCore.Components.Routing.Router
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 2 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 3 of type Microsoft.AspNetCore.Components.Routing.FocusOnNavigate
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 5 of type Microsoft.AspNetCore.Components.LayoutView
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 6 of type SAT242516026.Components.Layout.MainLayout
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 7 of type SAT242516026.Components.Layout.NavMenu
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 8 of type SAT242516026.Components.Layout.LanguageSelector
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 9 of type SAT242516026.Components.Pages.Home
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 10 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 11 of type Microsoft.AspNetCore.Components.Authorization.AuthorizeView
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 12 of type Microsoft.AspNetCore.Components.Web.PageTitle
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 13 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 14 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 15 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 16 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 17 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 18 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 19 of type Microsoft.AspNetCore.Components.Routing.NavLink
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.RenderTree.Renderer: Disposing component 20 of type Microsoft.AspNetCore.Components.Sections.SectionContent
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Disposing circuit 'aKyuaW-ETIXl8fwYWIWvZP9iSry_Mqm6Y8JY39vwpj4' succeeded.
+24.12.2025 15:01:51 [Debug] Microsoft.AspNetCore.Components.Server.CircuitDisconnectMiddleware: Circuit with id 'aKyuaW-ETIXl8fwYWIWvZP9iSry_Mqm6Y8JY39vwpj4' terminated gracefully.
+24.12.2025 15:01:51 [Information] Microsoft.AspNetCore.Routing.EndpointMiddleware: Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+24.12.2025 15:01:51 [Information] Microsoft.AspNetCore.Hosting.Diagnostics: Request finished HTTP/2 POST https://localhost:7124/_blazor/disconnect - 200 0 - 248.0221ms

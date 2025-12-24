@@ -17,6 +17,7 @@ using SAT242516026.Models.Services;
 using SAT242516026.Models.Attributes;
 using SAT242516026.Models.Extensions;
 using SAT242516026.Models.Enums;
+using SAT242516026.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -99,6 +100,20 @@ builder.Services.AddScoped<AuthService>();
 #endregion
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+        db.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Migration error:");
+        Console.WriteLine(ex.ToString());
+    }
+}
 
 if (!app.Environment.IsDevelopment())
 {
