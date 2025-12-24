@@ -2,7 +2,6 @@ namespace SAT242516026.Models.UnitOfWorks;
 
 using System.Data;
 using Microsoft.EntityFrameworkCore;
-// Diðer klasörlerdeki Interface'leri ve Extension'larý kullanabilmek için using ekliyoruz
 using SAT242516026.Models.Extensions;
 using SAT242516026.Models.MyDbModels;
 
@@ -11,7 +10,6 @@ public interface IMyDbModel_UnitOfWork
     Task Execute<T>(IMyDbModel<T> myDbModel, string spName = "", bool isPagination = true)
         where T : class, new();
 }
-
 
 public sealed class MyDbModel_UnitOfWork<TDbContext>(TDbContext context) : IMyDbModel_UnitOfWork where TDbContext : DbContext
 {

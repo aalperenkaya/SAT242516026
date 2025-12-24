@@ -10,7 +10,6 @@ namespace SAT242516026.Models.DbContexts
         {
         }
 
-        // AuthService burayı kullanıyor
         public DbSet<Kullanici> Kullanicilar { get; set; } = null!;
 
         public DbSet<Mukellef> Mukellef { get; set; } = null!;
@@ -23,10 +22,7 @@ namespace SAT242516026.Models.DbContexts
         {
             base.OnModelCreating(modelBuilder);
 
-            // =========================
-            // KULLANICI
-            // (Kullanicilar tablosunda trigger yoksa HasTrigger yazmana gerek yok)
-            // =========================
+      
             modelBuilder.Entity<Kullanici>(e =>
             {
                 e.ToTable("Kullanicilar", "dbo");
@@ -56,9 +52,6 @@ namespace SAT242516026.Models.DbContexts
                     .HasDefaultValue(false);
             });
 
-            // =========================
-            // MUKELLEF ✅ trigger var
-            // =========================
             modelBuilder.Entity<Mukellef>(e =>
             {
                 e.ToTable("Mukellef", "dbo");
@@ -87,9 +80,6 @@ namespace SAT242516026.Models.DbContexts
                 e.Property(x => x.KullaniciId).IsRequired();
             });
 
-            // =========================
-            // BEYANNAME TIPI ✅ trigger var
-            // =========================
             modelBuilder.Entity<BeyannameTipi>(e =>
             {
                 e.ToTable("BeyannameTipi", "dbo");
@@ -104,9 +94,7 @@ namespace SAT242516026.Models.DbContexts
                     .IsUnicode(true);
             });
 
-            // =========================
-            // BEYANNAME ✅ trigger var
-            // =========================
+
             modelBuilder.Entity<Beyanname>(e =>
             {
                 e.ToTable("Beyanname", "dbo");
@@ -141,9 +129,6 @@ namespace SAT242516026.Models.DbContexts
                     .OnDelete(DeleteBehavior.NoAction);
             });
 
-            // =========================
-            // TAHHAKKUK ✅ trigger var
-            // =========================
             modelBuilder.Entity<Tahakkuk>(e =>
             {
                 e.ToTable("Tahakkuk", "dbo");
@@ -162,14 +147,10 @@ namespace SAT242516026.Models.DbContexts
                     .OnDelete(DeleteBehavior.NoAction);
             });
 
-            // =========================
-            // ODEME ✅ 2 trigger var
-            // =========================
             modelBuilder.Entity<Odeme>(e =>
             {
                 e.ToTable("Odeme", "dbo");
 
-                // ✅ Odeme tablosunda 2 trigger var, ikisini de aynı ToTable içinde tanıt
                 e.ToTable(tb =>
                 {
                     tb.HasTrigger("TR_Odeme_UpdateBeyannameDurum");

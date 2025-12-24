@@ -34,7 +34,6 @@ var compositeLoggerProvider = new CompositeLoggerProvider()
 builder.Logging.ClearProviders();
 builder.Logging.AddProvider(compositeLoggerProvider);
 
-// Razor/DI ILogger patlamasın diye kalsın
 builder.Services.AddLogging();
 
 builder.Services.AddSingleton(new LogService(
@@ -236,5 +235,9 @@ app.MapGet("/auth/logout", async (HttpContext http) =>
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
+
+
+
 
 app.Run();

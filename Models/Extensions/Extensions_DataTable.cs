@@ -7,7 +7,6 @@ public static class Extensions_DataTable
 {
     public static IEnumerable<T> DataTableToList<T>(this DataTable table) where T : class
     {
-        // ... (Metodun içi dosyasýndakiyle ayný) ...
         var list = new List<T>();
         try
         {
@@ -28,7 +27,6 @@ public static class Extensions_DataTable
 
     public static T GetObject<T>(this DataRow row, List<string> columnsName) where T : class
     {
-        // ... (Metodun içi dosyasýndakiyle ayný) ...
         T obj = (T)Activator.CreateInstance(typeof(T));
         try
         {

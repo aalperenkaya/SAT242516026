@@ -18885,3 +18885,1067 @@ FROM [dbo].[Mukellef] AS [m]
 ORDER BY [m].[Id] DESC
 OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
 23.12.2025 17:50:46 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-23 17:50:46
+23.12.2025 17:52:50 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+23.12.2025 17:52:50 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+23.12.2025 17:52:50 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+23.12.2025 17:52:50 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+23.12.2025 17:52:50 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+23.12.2025 17:52:51 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-23 17:52:51
+23.12.2025 17:52:53 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (10ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [k].[Id], [k].[AdSoyad], [k].[CreatedAt], [k].[Email], [k].[IsAdmin], [k].[KullaniciAdi], [k].[SifreHash]
+FROM [dbo].[Kullanicilar] AS [k]
+ORDER BY [k].[KullaniciAdi]
+23.12.2025 17:52:53 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Mukellef] AS [m]
+23.12.2025 17:52:53 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+ORDER BY [m].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+23.12.2025 17:52:56 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+ORDER BY [m].[Id] DESC
+23.12.2025 17:52:56 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [b].[Id], [b].[Ad]
+FROM [dbo].[BeyannameTipi] AS [b]
+ORDER BY [b].[Id] DESC
+23.12.2025 17:52:56 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[BeyannameTipi] AS [b]
+23.12.2025 17:52:56 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [b].[Id], [b].[Ad]
+FROM [dbo].[BeyannameTipi] AS [b]
+ORDER BY [b].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+23.12.2025 17:52:56 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+23.12.2025 17:52:56 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameTipiId], [t].[Donem], [t].[Durum], [t].[GondermeTarihi], [t].[MukellefId], [t].[SonGondermeTarihi], [t].[Yil], [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo], [b0].[Id], [b0].[Ad]
+FROM (
+    SELECT [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+23.12.2025 17:52:57 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameTipiId], [t].[Donem], [t].[Durum], [t].[GondermeTarihi], [t].[MukellefId], [t].[SonGondermeTarihi], [t].[Yil], [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo], [b0].[Id], [b0].[Ad]
+FROM (
+    SELECT TOP(@__p_0) [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+23.12.2025 17:52:57 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 17:52:57 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameId], [t].[Tarih], [t].[Tutar]
+FROM [dbo].[Tahakkuk] AS [t]
+ORDER BY [t].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+23.12.2025 17:52:58 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [t].[Id], [t].[BeyannameId], [t].[Tarih], [t].[Tutar]
+FROM [dbo].[Tahakkuk] AS [t]
+ORDER BY [t].[Id] DESC
+23.12.2025 17:52:58 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 17:52:58 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [o].[Id], [o].[OdemeTarihi], [o].[TahakkukId], [o].[Tutar]
+FROM [dbo].[Odeme] AS [o]
+ORDER BY [o].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+23.12.2025 17:53:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Mukellef] AS [m]
+23.12.2025 17:53:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+23.12.2025 17:53:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 17:53:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 17:53:01 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Key] AS [Durum], COUNT(*) AS [Cnt]
+FROM (
+    SELECT COALESCE([b].[Durum], N'Bilinmiyor') AS [Key]
+    FROM [dbo].[Beyanname] AS [b]
+) AS [t]
+GROUP BY [t].[Key]
+ORDER BY COUNT(*) DESC
+23.12.2025 17:53:01 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COALESCE(SUM([t].[Tutar]), 0.0)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 17:53:01 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COALESCE(SUM([o].[Tutar]), 0.0)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 17:53:01 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [o].[OdemeTarihi] AS [Tarih], [o].[Tutar]
+FROM [dbo].[Odeme] AS [o]
+WHERE [o].[OdemeTarihi] IS NOT NULL
+23.12.2025 17:53:03 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [m].[Ad], [b0].[Ad], [t].[Yil], COALESCE([t].[Donem], N''), COALESCE([t].[Durum], N''), CASE
+    WHEN [t].[SonGondermeTarihi] IS NOT NULL THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END, [t].[SonGondermeTarihi]
+FROM (
+    SELECT TOP(@__p_0) [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+23.12.2025 18:08:18 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+23.12.2025 18:08:18 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+23.12.2025 18:08:18 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+23.12.2025 18:08:18 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+23.12.2025 18:08:18 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+23.12.2025 18:08:19 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-23 18:08:19
+23.12.2025 18:08:21 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (11ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [k].[Id], [k].[AdSoyad], [k].[CreatedAt], [k].[Email], [k].[IsAdmin], [k].[KullaniciAdi], [k].[SifreHash]
+FROM [dbo].[Kullanicilar] AS [k]
+ORDER BY [k].[KullaniciAdi]
+23.12.2025 18:08:21 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Mukellef] AS [m]
+23.12.2025 18:08:21 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+ORDER BY [m].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+23.12.2025 18:08:53 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (13ms) [Parameters=[@p0='?' (Size = 300), @p1='?' (DbType = Int32), @p2='?' (Size = 60), @p3='?' (Size = 40), @p4='?' (Size = 40)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [dbo].[Mukellef] ([Ad], [KullaniciId], [Telefon], [Tip], [VergiNo])
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT [Id]
+FROM [dbo].[Mukellef]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();
+23.12.2025 18:08:53 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Mukellef] AS [m]
+23.12.2025 18:08:53 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+ORDER BY [m].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+23.12.2025 18:09:16 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (6ms) [Parameters=[@p2='?' (DbType = Int32), @p0='?' (Size = 60), @p1='?' (Size = 40)], CommandType='Text', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [dbo].[Mukellef] SET [Telefon] = @p0, [VergiNo] = @p1
+WHERE [Id] = @p2;
+SELECT @@ROWCOUNT;
+23.12.2025 18:09:16 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Mukellef] AS [m]
+23.12.2025 18:09:16 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+ORDER BY [m].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+23.12.2025 18:09:24 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+ORDER BY [m].[Id] DESC
+23.12.2025 18:09:24 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [b].[Id], [b].[Ad]
+FROM [dbo].[BeyannameTipi] AS [b]
+ORDER BY [b].[Id] DESC
+23.12.2025 18:09:24 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[BeyannameTipi] AS [b]
+23.12.2025 18:09:24 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [b].[Id], [b].[Ad]
+FROM [dbo].[BeyannameTipi] AS [b]
+ORDER BY [b].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+23.12.2025 18:09:24 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+23.12.2025 18:09:24 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (5ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameTipiId], [t].[Donem], [t].[Durum], [t].[GondermeTarihi], [t].[MukellefId], [t].[SonGondermeTarihi], [t].[Yil], [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo], [b0].[Id], [b0].[Ad]
+FROM (
+    SELECT [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+23.12.2025 18:09:27 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Mukellef] AS [m]
+23.12.2025 18:09:27 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+23.12.2025 18:09:27 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 18:09:27 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 18:09:27 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Key] AS [Durum], COUNT(*) AS [Cnt]
+FROM (
+    SELECT COALESCE([b].[Durum], N'Bilinmiyor') AS [Key]
+    FROM [dbo].[Beyanname] AS [b]
+) AS [t]
+GROUP BY [t].[Key]
+ORDER BY COUNT(*) DESC
+23.12.2025 18:09:27 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COALESCE(SUM([t].[Tutar]), 0.0)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 18:09:27 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COALESCE(SUM([o].[Tutar]), 0.0)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 18:09:27 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [o].[OdemeTarihi] AS [Tarih], [o].[Tutar]
+FROM [dbo].[Odeme] AS [o]
+WHERE [o].[OdemeTarihi] IS NOT NULL
+23.12.2025 18:09:33 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Mukellef] AS [m]
+23.12.2025 18:09:33 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+23.12.2025 18:09:33 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 18:09:33 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 18:09:33 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Key] AS [Durum], COUNT(*) AS [Cnt]
+FROM (
+    SELECT COALESCE([b].[Durum], N'Bilinmiyor') AS [Key]
+    FROM [dbo].[Beyanname] AS [b]
+) AS [t]
+GROUP BY [t].[Key]
+ORDER BY COUNT(*) DESC
+23.12.2025 18:09:33 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COALESCE(SUM([t].[Tutar]), 0.0)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 18:09:33 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COALESCE(SUM([o].[Tutar]), 0.0)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 18:09:33 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [o].[OdemeTarihi] AS [Tarih], [o].[Tutar]
+FROM [dbo].[Odeme] AS [o]
+WHERE [o].[OdemeTarihi] IS NOT NULL
+23.12.2025 18:09:35 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+ORDER BY [m].[Id] DESC
+23.12.2025 18:09:35 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [b].[Id], [b].[Ad]
+FROM [dbo].[BeyannameTipi] AS [b]
+ORDER BY [b].[Id] DESC
+23.12.2025 18:09:35 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[BeyannameTipi] AS [b]
+23.12.2025 18:09:35 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [b].[Id], [b].[Ad]
+FROM [dbo].[BeyannameTipi] AS [b]
+ORDER BY [b].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+23.12.2025 18:09:35 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+23.12.2025 18:09:35 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameTipiId], [t].[Donem], [t].[Durum], [t].[GondermeTarihi], [t].[MukellefId], [t].[SonGondermeTarihi], [t].[Yil], [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo], [b0].[Id], [b0].[Ad]
+FROM (
+    SELECT [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+23.12.2025 18:09:51 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (10ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (Size = 40), @p2='?' (Size = 100), @p3='?' (DbType = Date), @p4='?' (DbType = Int32), @p5='?' (DbType = Date), @p6='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [dbo].[Beyanname] ([BeyannameTipiId], [Donem], [Durum], [GondermeTarihi], [MukellefId], [SonGondermeTarihi], [Yil])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+SELECT [Id]
+FROM [dbo].[Beyanname]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();
+23.12.2025 18:09:51 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+23.12.2025 18:09:51 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameTipiId], [t].[Donem], [t].[Durum], [t].[GondermeTarihi], [t].[MukellefId], [t].[SonGondermeTarihi], [t].[Yil], [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo], [b0].[Id], [b0].[Ad]
+FROM (
+    SELECT [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+23.12.2025 18:09:56 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Mukellef] AS [m]
+23.12.2025 18:09:56 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+23.12.2025 18:09:56 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 18:09:56 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 18:09:56 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Key] AS [Durum], COUNT(*) AS [Cnt]
+FROM (
+    SELECT COALESCE([b].[Durum], N'Bilinmiyor') AS [Key]
+    FROM [dbo].[Beyanname] AS [b]
+) AS [t]
+GROUP BY [t].[Key]
+ORDER BY COUNT(*) DESC
+23.12.2025 18:09:56 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COALESCE(SUM([t].[Tutar]), 0.0)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 18:09:56 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COALESCE(SUM([o].[Tutar]), 0.0)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 18:09:56 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [o].[OdemeTarihi] AS [Tarih], [o].[Tutar]
+FROM [dbo].[Odeme] AS [o]
+WHERE [o].[OdemeTarihi] IS NOT NULL
+23.12.2025 18:09:57 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (6ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameTipiId], [t].[Donem], [t].[Durum], [t].[GondermeTarihi], [t].[MukellefId], [t].[SonGondermeTarihi], [t].[Yil], [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo], [b0].[Id], [b0].[Ad]
+FROM (
+    SELECT TOP(@__p_0) [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+23.12.2025 18:09:57 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 18:09:57 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameId], [t].[Tarih], [t].[Tutar]
+FROM [dbo].[Tahakkuk] AS [t]
+ORDER BY [t].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+23.12.2025 18:10:03 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+ORDER BY [m].[Id] DESC
+23.12.2025 18:10:03 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [b].[Id], [b].[Ad]
+FROM [dbo].[BeyannameTipi] AS [b]
+ORDER BY [b].[Id] DESC
+23.12.2025 18:10:03 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[BeyannameTipi] AS [b]
+23.12.2025 18:10:03 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [b].[Id], [b].[Ad]
+FROM [dbo].[BeyannameTipi] AS [b]
+ORDER BY [b].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+23.12.2025 18:10:03 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+23.12.2025 18:10:03 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameTipiId], [t].[Donem], [t].[Durum], [t].[GondermeTarihi], [t].[MukellefId], [t].[SonGondermeTarihi], [t].[Yil], [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo], [b0].[Id], [b0].[Ad]
+FROM (
+    SELECT [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+23.12.2025 18:10:06 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameTipiId], [t].[Donem], [t].[Durum], [t].[GondermeTarihi], [t].[MukellefId], [t].[SonGondermeTarihi], [t].[Yil], [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo], [b0].[Id], [b0].[Ad]
+FROM (
+    SELECT TOP(@__p_0) [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+23.12.2025 18:10:06 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 18:10:06 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameId], [t].[Tarih], [t].[Tutar]
+FROM [dbo].[Tahakkuk] AS [t]
+ORDER BY [t].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+23.12.2025 18:10:19 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (11ms) [Parameters=[@__F_BeyannameId_0='?' (DbType = Int32), @__F_MinTutar_1='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @__F_Tarih_2='?' (DbType = Date)], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+WHERE [t].[BeyannameId] = @__F_BeyannameId_0 AND [t].[Tutar] >= @__F_MinTutar_1 AND [t].[Tarih] = @__F_Tarih_2
+23.12.2025 18:10:19 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[@__F_BeyannameId_0='?' (DbType = Int32), @__F_MinTutar_1='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @__F_Tarih_2='?' (DbType = Date), @__p_3='?' (DbType = Int32), @__p_4='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameId], [t].[Tarih], [t].[Tutar]
+FROM [dbo].[Tahakkuk] AS [t]
+WHERE [t].[BeyannameId] = @__F_BeyannameId_0 AND [t].[Tutar] >= @__F_MinTutar_1 AND [t].[Tarih] = @__F_Tarih_2
+ORDER BY [t].[Id] DESC
+OFFSET @__p_3 ROWS FETCH NEXT @__p_4 ROWS ONLY
+23.12.2025 18:10:48 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (8ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Date), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [dbo].[Tahakkuk] ([BeyannameId], [Tarih], [Tutar])
+VALUES (@p0, @p1, @p2);
+SELECT [Id]
+FROM [dbo].[Tahakkuk]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();
+23.12.2025 18:10:48 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[@__F_BeyannameId_0='?' (DbType = Int32), @__F_MinTutar_1='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @__F_Tarih_2='?' (DbType = Date)], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+WHERE [t].[BeyannameId] = @__F_BeyannameId_0 AND [t].[Tutar] >= @__F_MinTutar_1 AND [t].[Tarih] = @__F_Tarih_2
+23.12.2025 18:10:48 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[@__F_BeyannameId_0='?' (DbType = Int32), @__F_MinTutar_1='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @__F_Tarih_2='?' (DbType = Date), @__p_3='?' (DbType = Int32), @__p_4='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameId], [t].[Tarih], [t].[Tutar]
+FROM [dbo].[Tahakkuk] AS [t]
+WHERE [t].[BeyannameId] = @__F_BeyannameId_0 AND [t].[Tutar] >= @__F_MinTutar_1 AND [t].[Tarih] = @__F_Tarih_2
+ORDER BY [t].[Id] DESC
+OFFSET @__p_3 ROWS FETCH NEXT @__p_4 ROWS ONLY
+23.12.2025 18:10:50 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [t].[Id], [t].[BeyannameId], [t].[Tarih], [t].[Tutar]
+FROM [dbo].[Tahakkuk] AS [t]
+ORDER BY [t].[Id] DESC
+23.12.2025 18:10:50 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 18:10:50 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [o].[Id], [o].[OdemeTarihi], [o].[TahakkukId], [o].[Tutar]
+FROM [dbo].[Odeme] AS [o]
+ORDER BY [o].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+23.12.2025 18:10:55 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameTipiId], [t].[Donem], [t].[Durum], [t].[GondermeTarihi], [t].[MukellefId], [t].[SonGondermeTarihi], [t].[Yil], [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo], [b0].[Id], [b0].[Ad]
+FROM (
+    SELECT TOP(@__p_0) [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+23.12.2025 18:10:55 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 18:10:55 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameId], [t].[Tarih], [t].[Tutar]
+FROM [dbo].[Tahakkuk] AS [t]
+ORDER BY [t].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+23.12.2025 18:11:01 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__kullaniciAdi_0='?' (Size = 50)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [k].[Id], [k].[AdSoyad], [k].[CreatedAt], [k].[Email], [k].[IsAdmin], [k].[KullaniciAdi], [k].[SifreHash]
+FROM [dbo].[Kullanicilar] AS [k]
+WHERE [k].[KullaniciAdi] = @__kullaniciAdi_0
+23.12.2025 18:11:01 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-23 18:11:01
+23.12.2025 18:11:02 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[@__CurrentUserId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+WHERE [m].[KullaniciId] = @__CurrentUserId_0
+ORDER BY [m].[Id] DESC
+23.12.2025 18:11:03 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (6ms) [Parameters=[@__p_1='?' (DbType = Int32), @__CurrentUserId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t0].[Id], [t0].[BeyannameId], [t0].[Tarih], [t0].[Tutar], [t0].[Id0], [t0].[BeyannameTipiId], [t0].[Donem], [t0].[Durum], [t0].[GondermeTarihi], [t0].[MukellefId], [t0].[SonGondermeTarihi], [t0].[Yil], [t0].[Id1], [t0].[Ad], [t0].[KullaniciId], [t0].[Telefon], [t0].[Tip], [t0].[VergiNo], [b0].[Id], [b0].[Ad], [o].[Id], [o].[OdemeTarihi], [o].[TahakkukId], [o].[Tutar]
+FROM (
+    SELECT TOP(@__p_1) [t].[Id], [t].[BeyannameId], [t].[Tarih], [t].[Tutar], [b].[Id] AS [Id0], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil], [m].[Id] AS [Id1], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+    FROM [dbo].[Tahakkuk] AS [t]
+    INNER JOIN [dbo].[Beyanname] AS [b] ON [t].[BeyannameId] = [b].[Id]
+    INNER JOIN [dbo].[Mukellef] AS [m] ON [b].[MukellefId] = [m].[Id]
+    WHERE [m].[KullaniciId] = @__CurrentUserId_0
+    ORDER BY [t].[Id] DESC
+) AS [t0]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t0].[BeyannameTipiId] = [b0].[Id]
+LEFT JOIN [dbo].[Odeme] AS [o] ON [t0].[Id] = [o].[TahakkukId]
+ORDER BY [t0].[Id] DESC, [t0].[Id0], [t0].[Id1], [b0].[Id]
+23.12.2025 18:11:03 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (4ms) [Parameters=[@__p_1='?' (DbType = Int32), @__tahIds_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [o].[Id], [o].[OdemeTarihi], [o].[TahakkukId], [o].[Tutar]
+FROM [dbo].[Odeme] AS [o]
+WHERE [o].[TahakkukId] IN (
+    SELECT [t].[value]
+    FROM OPENJSON(@__tahIds_0) WITH ([value] int '$') AS [t]
+)
+ORDER BY [o].[Id] DESC
+23.12.2025 18:11:26 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (6ms) [Parameters=[@__SelectedTahakkukId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t0].[Id], [t0].[BeyannameId], [t0].[Tarih], [t0].[Tutar], [t0].[Id0], [t0].[BeyannameTipiId], [t0].[Donem], [t0].[Durum], [t0].[GondermeTarihi], [t0].[MukellefId], [t0].[SonGondermeTarihi], [t0].[Yil], [t0].[Id1], [t0].[Ad], [t0].[KullaniciId], [t0].[Telefon], [t0].[Tip], [t0].[VergiNo], [o].[Id], [o].[OdemeTarihi], [o].[TahakkukId], [o].[Tutar]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[BeyannameId], [t].[Tarih], [t].[Tutar], [b].[Id] AS [Id0], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil], [m].[Id] AS [Id1], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+    FROM [dbo].[Tahakkuk] AS [t]
+    INNER JOIN [dbo].[Beyanname] AS [b] ON [t].[BeyannameId] = [b].[Id]
+    INNER JOIN [dbo].[Mukellef] AS [m] ON [b].[MukellefId] = [m].[Id]
+    WHERE [t].[Id] = @__SelectedTahakkukId_0
+) AS [t0]
+LEFT JOIN [dbo].[Odeme] AS [o] ON [t0].[Id] = [o].[TahakkukId]
+ORDER BY [t0].[Id], [t0].[Id0], [t0].[Id1]
+23.12.2025 18:11:26 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (16ms) [Parameters=[@p0='?' (DbType = Date), @p1='?' (DbType = Int32), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [dbo].[Odeme] ([OdemeTarihi], [TahakkukId], [Tutar])
+VALUES (@p0, @p1, @p2);
+SELECT [Id]
+FROM [dbo].[Odeme]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();
+23.12.2025 18:11:26 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__CurrentUserId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t0].[Id], [t0].[BeyannameId], [t0].[Tarih], [t0].[Tutar], [t0].[Id0], [t0].[BeyannameTipiId], [t0].[Donem], [t0].[Durum], [t0].[GondermeTarihi], [t0].[MukellefId], [t0].[SonGondermeTarihi], [t0].[Yil], [t0].[Id1], [t0].[Ad], [t0].[KullaniciId], [t0].[Telefon], [t0].[Tip], [t0].[VergiNo], [b0].[Id], [b0].[Ad], [o].[Id], [o].[OdemeTarihi], [o].[TahakkukId], [o].[Tutar]
+FROM (
+    SELECT TOP(@__p_1) [t].[Id], [t].[BeyannameId], [t].[Tarih], [t].[Tutar], [b].[Id] AS [Id0], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil], [m].[Id] AS [Id1], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+    FROM [dbo].[Tahakkuk] AS [t]
+    INNER JOIN [dbo].[Beyanname] AS [b] ON [t].[BeyannameId] = [b].[Id]
+    INNER JOIN [dbo].[Mukellef] AS [m] ON [b].[MukellefId] = [m].[Id]
+    WHERE [m].[KullaniciId] = @__CurrentUserId_0
+    ORDER BY [t].[Id] DESC
+) AS [t0]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t0].[BeyannameTipiId] = [b0].[Id]
+LEFT JOIN [dbo].[Odeme] AS [o] ON [t0].[Id] = [o].[TahakkukId]
+ORDER BY [t0].[Id] DESC, [t0].[Id0], [t0].[Id1], [b0].[Id]
+23.12.2025 18:11:26 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__tahIds_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [o].[Id], [o].[OdemeTarihi], [o].[TahakkukId], [o].[Tutar]
+FROM [dbo].[Odeme] AS [o]
+WHERE [o].[TahakkukId] IN (
+    SELECT [t].[value]
+    FROM OPENJSON(@__tahIds_0) WITH ([value] int '$') AS [t]
+)
+ORDER BY [o].[Id] DESC
+23.12.2025 18:11:28 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_1='?' (DbType = Int32), @__CurrentUserId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t0].[Id], [t0].[BeyannameId], [t0].[Tarih], [t0].[Tutar], [t0].[Id0], [t0].[BeyannameTipiId], [t0].[Donem], [t0].[Durum], [t0].[GondermeTarihi], [t0].[MukellefId], [t0].[SonGondermeTarihi], [t0].[Yil], [t0].[Id1], [t0].[Ad], [t0].[KullaniciId], [t0].[Telefon], [t0].[Tip], [t0].[VergiNo], [b0].[Id], [b0].[Ad], [o].[Id], [o].[OdemeTarihi], [o].[TahakkukId], [o].[Tutar]
+FROM (
+    SELECT TOP(@__p_1) [t].[Id], [t].[BeyannameId], [t].[Tarih], [t].[Tutar], [b].[Id] AS [Id0], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil], [m].[Id] AS [Id1], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+    FROM [dbo].[Tahakkuk] AS [t]
+    INNER JOIN [dbo].[Beyanname] AS [b] ON [t].[BeyannameId] = [b].[Id]
+    INNER JOIN [dbo].[Mukellef] AS [m] ON [b].[MukellefId] = [m].[Id]
+    WHERE [m].[KullaniciId] = @__CurrentUserId_0
+    ORDER BY [t].[Id] DESC
+) AS [t0]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t0].[BeyannameTipiId] = [b0].[Id]
+LEFT JOIN [dbo].[Odeme] AS [o] ON [t0].[Id] = [o].[TahakkukId]
+ORDER BY [t0].[Id] DESC, [t0].[Id0], [t0].[Id1], [b0].[Id]
+23.12.2025 18:11:28 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__tahIds_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [o].[Id], [o].[OdemeTarihi], [o].[TahakkukId], [o].[Tutar]
+FROM [dbo].[Odeme] AS [o]
+WHERE [o].[TahakkukId] IN (
+    SELECT [t].[value]
+    FROM OPENJSON(@__tahIds_0) WITH ([value] int '$') AS [t]
+)
+ORDER BY [o].[Id] DESC
+23.12.2025 18:11:28 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_1='?' (DbType = Int32), @__CurrentUserId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t0].[Id], [t0].[BeyannameId], [t0].[Tarih], [t0].[Tutar], [t0].[Id0], [t0].[BeyannameTipiId], [t0].[Donem], [t0].[Durum], [t0].[GondermeTarihi], [t0].[MukellefId], [t0].[SonGondermeTarihi], [t0].[Yil], [t0].[Id1], [t0].[Ad], [t0].[KullaniciId], [t0].[Telefon], [t0].[Tip], [t0].[VergiNo], [b0].[Id], [b0].[Ad], [o].[Id], [o].[OdemeTarihi], [o].[TahakkukId], [o].[Tutar]
+FROM (
+    SELECT TOP(@__p_1) [t].[Id], [t].[BeyannameId], [t].[Tarih], [t].[Tutar], [b].[Id] AS [Id0], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil], [m].[Id] AS [Id1], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+    FROM [dbo].[Tahakkuk] AS [t]
+    INNER JOIN [dbo].[Beyanname] AS [b] ON [t].[BeyannameId] = [b].[Id]
+    INNER JOIN [dbo].[Mukellef] AS [m] ON [b].[MukellefId] = [m].[Id]
+    WHERE [m].[KullaniciId] = @__CurrentUserId_0
+    ORDER BY [t].[Id] DESC
+) AS [t0]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t0].[BeyannameTipiId] = [b0].[Id]
+LEFT JOIN [dbo].[Odeme] AS [o] ON [t0].[Id] = [o].[TahakkukId]
+ORDER BY [t0].[Id] DESC, [t0].[Id0], [t0].[Id1], [b0].[Id]
+23.12.2025 18:11:28 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_1='?' (DbType = Int32), @__tahIds_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [o].[Id], [o].[OdemeTarihi], [o].[TahakkukId], [o].[Tutar]
+FROM [dbo].[Odeme] AS [o]
+WHERE [o].[TahakkukId] IN (
+    SELECT [t].[value]
+    FROM OPENJSON(@__tahIds_0) WITH ([value] int '$') AS [t]
+)
+ORDER BY [o].[Id] DESC
+23.12.2025 18:11:31 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__kullaniciAdi_0='?' (Size = 50)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [k].[Id], [k].[AdSoyad], [k].[CreatedAt], [k].[Email], [k].[IsAdmin], [k].[KullaniciAdi], [k].[SifreHash]
+FROM [dbo].[Kullanicilar] AS [k]
+WHERE [k].[KullaniciAdi] = @__kullaniciAdi_0
+23.12.2025 18:11:31 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-23 18:11:31
+23.12.2025 18:11:33 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [k].[Id], [k].[AdSoyad], [k].[CreatedAt], [k].[Email], [k].[IsAdmin], [k].[KullaniciAdi], [k].[SifreHash]
+FROM [dbo].[Kullanicilar] AS [k]
+ORDER BY [k].[KullaniciAdi]
+23.12.2025 18:11:33 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Mukellef] AS [m]
+23.12.2025 18:11:33 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+ORDER BY [m].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+23.12.2025 18:11:38 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+ORDER BY [m].[Id] DESC
+23.12.2025 18:11:38 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [b].[Id], [b].[Ad]
+FROM [dbo].[BeyannameTipi] AS [b]
+ORDER BY [b].[Id] DESC
+23.12.2025 18:11:38 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[BeyannameTipi] AS [b]
+23.12.2025 18:11:38 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [b].[Id], [b].[Ad]
+FROM [dbo].[BeyannameTipi] AS [b]
+ORDER BY [b].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+23.12.2025 18:11:38 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+23.12.2025 18:11:38 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameTipiId], [t].[Donem], [t].[Durum], [t].[GondermeTarihi], [t].[MukellefId], [t].[SonGondermeTarihi], [t].[Yil], [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo], [b0].[Id], [b0].[Ad]
+FROM (
+    SELECT [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+23.12.2025 18:11:41 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameTipiId], [t].[Donem], [t].[Durum], [t].[GondermeTarihi], [t].[MukellefId], [t].[SonGondermeTarihi], [t].[Yil], [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo], [b0].[Id], [b0].[Ad]
+FROM (
+    SELECT TOP(@__p_0) [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+23.12.2025 18:11:41 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 18:11:41 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameId], [t].[Tarih], [t].[Tutar]
+FROM [dbo].[Tahakkuk] AS [t]
+ORDER BY [t].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+23.12.2025 18:11:43 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [t].[Id], [t].[BeyannameId], [t].[Tarih], [t].[Tutar]
+FROM [dbo].[Tahakkuk] AS [t]
+ORDER BY [t].[Id] DESC
+23.12.2025 18:11:43 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 18:11:43 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [o].[Id], [o].[OdemeTarihi], [o].[TahakkukId], [o].[Tutar]
+FROM [dbo].[Odeme] AS [o]
+ORDER BY [o].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+23.12.2025 18:11:46 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Mukellef] AS [m]
+23.12.2025 18:11:46 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+23.12.2025 18:11:46 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 18:11:46 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 18:11:46 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Key] AS [Durum], COUNT(*) AS [Cnt]
+FROM (
+    SELECT COALESCE([b].[Durum], N'Bilinmiyor') AS [Key]
+    FROM [dbo].[Beyanname] AS [b]
+) AS [t]
+GROUP BY [t].[Key]
+ORDER BY COUNT(*) DESC
+23.12.2025 18:11:46 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COALESCE(SUM([t].[Tutar]), 0.0)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 18:11:46 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COALESCE(SUM([o].[Tutar]), 0.0)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 18:11:46 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [o].[OdemeTarihi] AS [Tarih], [o].[Tutar]
+FROM [dbo].[Odeme] AS [o]
+WHERE [o].[OdemeTarihi] IS NOT NULL
+23.12.2025 18:11:49 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Mukellef] AS [m]
+23.12.2025 18:11:49 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+23.12.2025 18:11:49 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 18:11:49 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 18:11:49 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Key] AS [Durum], COUNT(*) AS [Cnt]
+FROM (
+    SELECT COALESCE([b].[Durum], N'Bilinmiyor') AS [Key]
+    FROM [dbo].[Beyanname] AS [b]
+) AS [t]
+GROUP BY [t].[Key]
+ORDER BY COUNT(*) DESC
+23.12.2025 18:11:49 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COALESCE(SUM([t].[Tutar]), 0.0)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 18:11:49 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COALESCE(SUM([o].[Tutar]), 0.0)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 18:11:49 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [o].[OdemeTarihi] AS [Tarih], [o].[Tutar]
+FROM [dbo].[Odeme] AS [o]
+WHERE [o].[OdemeTarihi] IS NOT NULL
+23.12.2025 18:11:51 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [m].[Ad], [b0].[Ad], [t].[Yil], COALESCE([t].[Donem], N''), COALESCE([t].[Durum], N''), CASE
+    WHEN [t].[SonGondermeTarihi] IS NOT NULL THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END, [t].[SonGondermeTarihi]
+FROM (
+    SELECT TOP(@__p_0) [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+23.12.2025 18:18:45 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+23.12.2025 18:18:45 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+23.12.2025 18:18:45 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+23.12.2025 18:18:45 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+23.12.2025 18:18:45 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+23.12.2025 18:18:46 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-23 18:18:46
+23.12.2025 20:07:31 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+23.12.2025 20:07:32 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+23.12.2025 20:07:32 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+23.12.2025 20:07:32 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+23.12.2025 20:07:32 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+23.12.2025 20:07:33 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-23 20:07:33
+23.12.2025 20:09:58 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+23.12.2025 20:09:58 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+23.12.2025 20:09:58 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+23.12.2025 20:09:58 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+23.12.2025 20:09:58 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+23.12.2025 20:09:59 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-23 20:09:59
+23.12.2025 20:10:01 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (13ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Mukellef] AS [m]
+23.12.2025 20:10:01 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+23.12.2025 20:10:01 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 20:10:01 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 20:10:01 [Warning] Microsoft.AspNetCore.Components.Server.Circuits.RemoteRenderer: Unhandled exception rendering component: Could not find 'drawBarChart' ('drawBarChart' was undefined).
+Error: Could not find 'drawBarChart' ('drawBarChart' was undefined).
+    at https://localhost:7124/_framework/blazor.web.js:1:537
+    at Array.forEach (<anonymous>)
+    at l.findFunction (https://localhost:7124/_framework/blazor.web.js:1:505)
+    at b (https://localhost:7124/_framework/blazor.web.js:1:5248)
+    at https://localhost:7124/_framework/blazor.web.js:1:3041
+    at new Promise (<anonymous>)
+    at y.beginInvokeJSFromDotNet (https://localhost:7124/_framework/blazor.web.js:1:3004)
+    at gn._invokeClientMethod (https://localhost:7124/_framework/blazor.web.js:1:62730)
+    at gn._processIncomingData (https://localhost:7124/_framework/blazor.web.js:1:60119)
+    at xn.onreceive (https://localhost:7124/_framework/blazor.web.js:1:53760)
+23.12.2025 20:10:01 [Error] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Unhandled exception in circuit 'QmiCDoabHswwJ1YFXqUPCj6w4MHjGiAkOsLI8QVMp4w'.
+23.12.2025 20:10:03 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Mukellef] AS [m]
+23.12.2025 20:10:03 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+23.12.2025 20:10:03 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 20:10:03 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 20:10:03 [Warning] Microsoft.AspNetCore.Components.Server.Circuits.RemoteRenderer: Unhandled exception rendering component: Could not find 'drawBarChart' ('drawBarChart' was undefined).
+Error: Could not find 'drawBarChart' ('drawBarChart' was undefined).
+    at https://localhost:7124/_framework/blazor.web.js:1:537
+    at Array.forEach (<anonymous>)
+    at l.findFunction (https://localhost:7124/_framework/blazor.web.js:1:505)
+    at b (https://localhost:7124/_framework/blazor.web.js:1:5248)
+    at https://localhost:7124/_framework/blazor.web.js:1:3041
+    at new Promise (<anonymous>)
+    at y.beginInvokeJSFromDotNet (https://localhost:7124/_framework/blazor.web.js:1:3004)
+    at gn._invokeClientMethod (https://localhost:7124/_framework/blazor.web.js:1:62730)
+    at gn._processIncomingData (https://localhost:7124/_framework/blazor.web.js:1:60119)
+    at xn.onreceive (https://localhost:7124/_framework/blazor.web.js:1:53760)
+23.12.2025 20:10:03 [Error] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Unhandled exception in circuit 'iqISRcwRJow5XD2ml8w9ayZVjdOMi8kIJVrtA6spb3M'.
+23.12.2025 20:10:07 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Mukellef] AS [m]
+23.12.2025 20:10:07 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+23.12.2025 20:10:07 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 20:10:07 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 20:10:07 [Warning] Microsoft.AspNetCore.Components.Server.Circuits.RemoteRenderer: Unhandled exception rendering component: Could not find 'drawBarChart' ('drawBarChart' was undefined).
+Error: Could not find 'drawBarChart' ('drawBarChart' was undefined).
+    at https://localhost:7124/_framework/blazor.web.js:1:537
+    at Array.forEach (<anonymous>)
+    at l.findFunction (https://localhost:7124/_framework/blazor.web.js:1:505)
+    at b (https://localhost:7124/_framework/blazor.web.js:1:5248)
+    at https://localhost:7124/_framework/blazor.web.js:1:3041
+    at new Promise (<anonymous>)
+    at y.beginInvokeJSFromDotNet (https://localhost:7124/_framework/blazor.web.js:1:3004)
+    at gn._invokeClientMethod (https://localhost:7124/_framework/blazor.web.js:1:62730)
+    at gn._processIncomingData (https://localhost:7124/_framework/blazor.web.js:1:60119)
+    at xn.onreceive (https://localhost:7124/_framework/blazor.web.js:1:53760)
+23.12.2025 20:10:07 [Error] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Unhandled exception in circuit 'um0GPIzF9bX_32IVKRhjrEwYxMDqKvvgiQmj8na4q0c'.
+23.12.2025 20:10:35 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+23.12.2025 20:10:35 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+23.12.2025 20:10:35 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+23.12.2025 20:10:35 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+23.12.2025 20:10:35 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+23.12.2025 20:10:36 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-23 20:10:36
+23.12.2025 20:10:40 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (14ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [m].[Ad], [b0].[Ad], [t].[Yil], COALESCE([t].[Donem], N''), COALESCE([t].[Durum], N''), CASE
+    WHEN [t].[SonGondermeTarihi] IS NOT NULL THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END, [t].[SonGondermeTarihi]
+FROM (
+    SELECT TOP(@__p_0) [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+23.12.2025 20:10:41 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Mukellef] AS [m]
+23.12.2025 20:10:41 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+23.12.2025 20:10:41 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 20:10:41 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 20:10:41 [Warning] Microsoft.AspNetCore.Components.Server.Circuits.RemoteRenderer: Unhandled exception rendering component: Could not find 'drawBarChart' ('drawBarChart' was undefined).
+Error: Could not find 'drawBarChart' ('drawBarChart' was undefined).
+    at https://localhost:7124/_framework/blazor.web.js:1:537
+    at Array.forEach (<anonymous>)
+    at l.findFunction (https://localhost:7124/_framework/blazor.web.js:1:505)
+    at b (https://localhost:7124/_framework/blazor.web.js:1:5248)
+    at https://localhost:7124/_framework/blazor.web.js:1:3041
+    at new Promise (<anonymous>)
+    at y.beginInvokeJSFromDotNet (https://localhost:7124/_framework/blazor.web.js:1:3004)
+    at gn._invokeClientMethod (https://localhost:7124/_framework/blazor.web.js:1:62730)
+    at gn._processIncomingData (https://localhost:7124/_framework/blazor.web.js:1:60119)
+    at connection.onreceive (https://localhost:7124/_framework/blazor.web.js:1:53760)
+23.12.2025 20:10:41 [Error] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Unhandled exception in circuit 'JrEr1o83qtjFSgNwsn1_EQHBo7NN3PTNolrAut32YI8'.
+23.12.2025 20:12:37 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+23.12.2025 20:12:38 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+23.12.2025 20:12:38 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+23.12.2025 20:12:38 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+23.12.2025 20:12:38 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+23.12.2025 20:12:39 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-23 20:12:39
+23.12.2025 20:12:40 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-23 20:12:40
+23.12.2025 20:12:40 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-23 20:12:40
+23.12.2025 20:12:41 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-23 20:12:41
+23.12.2025 20:12:43 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (11ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Mukellef] AS [m]
+23.12.2025 20:12:43 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+23.12.2025 20:12:43 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 20:12:43 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 20:12:43 [Warning] Microsoft.AspNetCore.Components.Server.Circuits.RemoteRenderer: Unhandled exception rendering component: Could not find 'drawBarChart' ('drawBarChart' was undefined).
+Error: Could not find 'drawBarChart' ('drawBarChart' was undefined).
+    at https://localhost:7124/_framework/blazor.web.js:1:537
+    at Array.forEach (<anonymous>)
+    at l.findFunction (https://localhost:7124/_framework/blazor.web.js:1:505)
+    at b (https://localhost:7124/_framework/blazor.web.js:1:5248)
+    at https://localhost:7124/_framework/blazor.web.js:1:3041
+    at new Promise (<anonymous>)
+    at y.beginInvokeJSFromDotNet (https://localhost:7124/_framework/blazor.web.js:1:3004)
+    at gn._invokeClientMethod (https://localhost:7124/_framework/blazor.web.js:1:62730)
+    at gn._processIncomingData (https://localhost:7124/_framework/blazor.web.js:1:60119)
+    at connection.onreceive (https://localhost:7124/_framework/blazor.web.js:1:53760)
+23.12.2025 20:12:43 [Error] Microsoft.AspNetCore.Components.Server.Circuits.CircuitHost: Unhandled exception in circuit '2Yvu_idMBOoF1wMnaA0NlWWJPXx0qRDp7Te7QmeV1uw'.
+23.12.2025 20:14:08 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+23.12.2025 20:14:08 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+23.12.2025 20:14:08 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+23.12.2025 20:14:08 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+23.12.2025 20:14:08 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+23.12.2025 20:14:08 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-23 20:14:08
+23.12.2025 20:14:10 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (12ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Mukellef] AS [m]
+23.12.2025 20:14:10 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+23.12.2025 20:14:10 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 20:14:10 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 20:14:10 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Key] AS [Durum], COUNT(*) AS [Cnt]
+FROM (
+    SELECT COALESCE([b].[Durum], N'Bilinmiyor') AS [Key]
+    FROM [dbo].[Beyanname] AS [b]
+) AS [t]
+GROUP BY [t].[Key]
+ORDER BY COUNT(*) DESC
+23.12.2025 20:14:10 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COALESCE(SUM([t].[Tutar]), 0.0)
+FROM [dbo].[Tahakkuk] AS [t]
+23.12.2025 20:14:10 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COALESCE(SUM([o].[Tutar]), 0.0)
+FROM [dbo].[Odeme] AS [o]
+23.12.2025 20:14:10 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [o].[OdemeTarihi] AS [Tarih], [o].[Tutar]
+FROM [dbo].[Odeme] AS [o]
+WHERE [o].[OdemeTarihi] IS NOT NULL
+23.12.2025 23:35:56 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+23.12.2025 23:35:56 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+23.12.2025 23:35:56 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+23.12.2025 23:35:56 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+23.12.2025 23:35:56 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+23.12.2025 23:35:57 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-23 23:35:57
+24.12.2025 00:21:52 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+24.12.2025 00:21:52 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+24.12.2025 00:21:53 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+24.12.2025 00:21:53 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+24.12.2025 00:21:53 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+24.12.2025 00:21:53 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-24 00:21:53
+24.12.2025 14:48:26 [Information] Microsoft.Hosting.Lifetime: Now listening on: https://localhost:7124
+24.12.2025 14:48:26 [Information] Microsoft.Hosting.Lifetime: Now listening on: http://localhost:5112
+24.12.2025 14:48:26 [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+24.12.2025 14:48:26 [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+24.12.2025 14:48:26 [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\ASUS\Desktop\SAT242516026
+24.12.2025 14:48:27 [Information] SAT242516026.Components.Pages.Home: Log Home Test : 2025-12-24 14:48:27
+24.12.2025 14:48:33 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (16ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [m].[Ad], [b0].[Ad], [t].[Yil], COALESCE([t].[Donem], N''), COALESCE([t].[Durum], N''), CASE
+    WHEN [t].[SonGondermeTarihi] IS NOT NULL THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END, [t].[SonGondermeTarihi]
+FROM (
+    SELECT TOP(@__p_0) [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+24.12.2025 14:48:36 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (8ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Mukellef] AS [m]
+24.12.2025 14:48:36 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+24.12.2025 14:48:36 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+24.12.2025 14:48:36 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (7ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Odeme] AS [o]
+24.12.2025 14:48:36 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (7ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Key] AS [Durum], COUNT(*) AS [Cnt]
+FROM (
+    SELECT COALESCE([b].[Durum], N'Bilinmiyor') AS [Key]
+    FROM [dbo].[Beyanname] AS [b]
+) AS [t]
+GROUP BY [t].[Key]
+ORDER BY COUNT(*) DESC
+24.12.2025 14:48:36 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COALESCE(SUM([t].[Tutar]), 0.0)
+FROM [dbo].[Tahakkuk] AS [t]
+24.12.2025 14:48:36 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COALESCE(SUM([o].[Tutar]), 0.0)
+FROM [dbo].[Odeme] AS [o]
+24.12.2025 14:48:36 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [o].[OdemeTarihi] AS [Tarih], [o].[Tutar]
+FROM [dbo].[Odeme] AS [o]
+WHERE [o].[OdemeTarihi] IS NOT NULL
+24.12.2025 14:48:44 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (5ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [t].[Id], [t].[BeyannameId], [t].[Tarih], [t].[Tutar]
+FROM [dbo].[Tahakkuk] AS [t]
+ORDER BY [t].[Id] DESC
+24.12.2025 14:48:44 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Odeme] AS [o]
+24.12.2025 14:48:44 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (7ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [o].[Id], [o].[OdemeTarihi], [o].[TahakkukId], [o].[Tutar]
+FROM [dbo].[Odeme] AS [o]
+ORDER BY [o].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+24.12.2025 14:48:46 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (5ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameTipiId], [t].[Donem], [t].[Durum], [t].[GondermeTarihi], [t].[MukellefId], [t].[SonGondermeTarihi], [t].[Yil], [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo], [b0].[Id], [b0].[Ad]
+FROM (
+    SELECT TOP(@__p_0) [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+24.12.2025 14:48:46 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Tahakkuk] AS [t]
+24.12.2025 14:48:46 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameId], [t].[Tarih], [t].[Tutar]
+FROM [dbo].[Tahakkuk] AS [t]
+ORDER BY [t].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+24.12.2025 14:48:47 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+ORDER BY [m].[Id] DESC
+24.12.2025 14:48:47 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [b].[Id], [b].[Ad]
+FROM [dbo].[BeyannameTipi] AS [b]
+ORDER BY [b].[Id] DESC
+24.12.2025 14:48:47 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[BeyannameTipi] AS [b]
+24.12.2025 14:48:47 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [b].[Id], [b].[Ad]
+FROM [dbo].[BeyannameTipi] AS [b]
+ORDER BY [b].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+24.12.2025 14:48:47 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Beyanname] AS [b]
+24.12.2025 14:48:47 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[BeyannameTipiId], [t].[Donem], [t].[Durum], [t].[GondermeTarihi], [t].[MukellefId], [t].[SonGondermeTarihi], [t].[Yil], [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo], [b0].[Id], [b0].[Ad]
+FROM (
+    SELECT [b].[Id], [b].[BeyannameTipiId], [b].[Donem], [b].[Durum], [b].[GondermeTarihi], [b].[MukellefId], [b].[SonGondermeTarihi], [b].[Yil]
+    FROM [dbo].[Beyanname] AS [b]
+    ORDER BY [b].[Id] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [dbo].[Mukellef] AS [m] ON [t].[MukellefId] = [m].[Id]
+INNER JOIN [dbo].[BeyannameTipi] AS [b0] ON [t].[BeyannameTipiId] = [b0].[Id]
+ORDER BY [t].[Id] DESC
+24.12.2025 14:48:47 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (7ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [k].[Id], [k].[AdSoyad], [k].[CreatedAt], [k].[Email], [k].[IsAdmin], [k].[KullaniciAdi], [k].[SifreHash]
+FROM [dbo].[Kullanicilar] AS [k]
+ORDER BY [k].[KullaniciAdi]
+24.12.2025 14:48:47 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [dbo].[Mukellef] AS [m]
+24.12.2025 14:48:47 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [m].[Id], [m].[Ad], [m].[KullaniciId], [m].[Telefon], [m].[Tip], [m].[VergiNo]
+FROM [dbo].[Mukellef] AS [m]
+ORDER BY [m].[Id] DESC
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY

@@ -1,13 +1,11 @@
 namespace SAT242516026.Models.Extensions;
 
-// Diðer klasördeki Attribute'larý kullanabilmek için using ekliyoruz
 using SAT242516026.Models.Attributes;
 
 public static class Extensions_Enum
 {
     public static string Color<T>(this T value)
     {
-        // ... (Metodun içi dosyasýndakiyle ayný) ...
         var result = value.ToString();
 
         try
@@ -31,7 +29,6 @@ public static class Extensions_Enum
 
     public static string Title<T>(this T value)
     {
-        // ... (Metodun içi dosyasýndakiyle ayný) ...
         var result = value.ToString();
 
         try
