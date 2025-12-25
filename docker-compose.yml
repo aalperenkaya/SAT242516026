@@ -8,7 +8,7 @@ services:
       - "8091:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - "ConnectionStrings__DefaultConnection=${DB_CONNECTION_A}"
+      - ConnectionStrings__DefaultConnection=${DB_CONNECTION_A}
       - SITE=A
     restart: unless-stopped
 
@@ -19,7 +19,7 @@ services:
       - "8092:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - "ConnectionStrings__DefaultConnection=${DB_CONNECTION_B}"
+      - ConnectionStrings__DefaultConnection=${DB_CONNECTION_B}
       - SITE=B
     restart: unless-stopped
 
@@ -30,6 +30,6 @@ services:
       - "8093:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      -"ConnectionStrings__DefaultConnection=${DB_CONNECTION_C}"
+      - ConnectionStrings__DefaultConnection=${DB_CONNECTION_C}
       - SITE=C
     restart: unless-stopped
