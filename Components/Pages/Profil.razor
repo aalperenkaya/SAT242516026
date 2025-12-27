@@ -1,7 +1,12 @@
 ﻿@page "/profil"
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]
-@inject SAT242516026.Models.Services.AuthService Auth
-@inject SAT242516026.Models.DbContexts.MyDbModel_Context Db
+
+@using SAT242516026.Data
+@using SAT242516026.Models.Services
+@using SAT242516026.Models.DbContexts
+
+@inject AuthService Auth
+@inject MyDbModel_Context Db
 
 <h3>Profil</h3>
 
@@ -18,11 +23,11 @@ else
         <div><b>Rol:</b> @(_me.IsAdmin ? "Admin" : "Kullanıcı")</div>
     </div>
 
-    <a class="btn btn-outline-danger mt-3" href="/cikis">Çıkış</a>
+    <a class="btn btn-outline-danger mt-3" href="/auth/logout">Çıkış</a>
 }
 
 @code {
-    private SAT242516026.Models.DbContexts.Kullanici? _me;
+    private Kullanici? _me;
 
     protected override async Task OnInitializedAsync()
     {

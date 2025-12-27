@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using SAT242516026.Models.DbContexts;
+using SAT242516026.Data;
 
 namespace SAT242516026.Models.Services;
 

@@ -1,6 +1,8 @@
 ﻿namespace SAT242516026.Models.Attributes;
 
-public class SortableAttribute(bool value) : Attribute
+[AttributeUsage(AttributeTargets.Property)]
+public sealed class SortableAttribute : Attribute
 {
-    public bool Value { get; set; } = value;
+    public bool Enabled { get; }
+    public SortableAttribute(bool enabled) => Enabled = enabled;
 }

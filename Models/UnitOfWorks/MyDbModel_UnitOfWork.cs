@@ -1,108 +1,148 @@
-namespace SAT242516026.Models.UnitOfWorks;
-
-using System.Data;
+ï»¿using System.Data;
 using Microsoft.EntityFrameworkCore;
 using SAT242516026.Models.Extensions;
 using SAT242516026.Models.MyDbModels;
 
-public interface IMyDbModel_UnitOfWork
-{
-    Task Execute<T>(IMyDbModel<T> myDbModel, string spName = "", bool isPagination = true)
-        where T : class, new();
-}
 
-public sealed class MyDbModel_UnitOfWork<TDbContext>(TDbContext context) : IMyDbModel_UnitOfWork where TDbContext : DbContext
+namespace SAT242516026.Models.UnitOfWorks;
+
+public sealed class MyDbModel_UnitOfWork<TDbContext>(TDbContext context)
+    : IMyDbModel_UnitOfWork where TDbContext : DbContext
 {
     private readonly DbContext _context = context;
 
-    public async Task Execute<T>(IMyDbModel<T> myDbModel,
-        string spName = "",
-        bool isPagination = true)
+    public async Task Execute<T>(IMyDbModel<T> myDbModel, string spName, bool isPagination = true)
         where T : class, new()
     {
-        // ... (Metodun içi dosyasýndakiyle ayný) ...
         var con = _context.Database.GetDbConnection();
-        var connectionState = con.State;
+        var initialState = con.State;
 
         try
         {
-            if (connectionState != ConnectionState.Open)
-                con.Open();
+            if (initialState != ConnectionState.Open)
+                await con.OpenAsync();
 
-            using (var cmd = con.CreateCommand())
+            using var cmd = con.CreateCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = spName;
+            cmd.Parameters.Clear();
+
+            // Pagination TVP
+            if (isPagination)
             {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = spName;
-
-                var pageno = myDbModel.Parameters.PageNumber;
-                var pagesize = myDbModel.Parameters.PageSize;
-
-                var total_record_count = 0;
-                var total_page_count = 0;
-
-                var orderby = myDbModel.Parameters.OrderBy;
-
-                var _params = myDbModel.Parameters.Params;
-
-                var where = myDbModel.Parameters.Where;
-
-                cmd.Parameters.Clear();
-
-                if (isPagination)
+                var pagination = new Dictionary<string, string>
                 {
-                    var pagination = new Dictionary<string, string>
-                    {
-                        { "PageNumber", pageno.ToString() },
-                        { "PageSize", pagesize.ToString() },
-                        { "OrderBy", orderby },
-                    };
-                    cmd.Parameters.Add(pagination.ToSqlParameter_Table_Type_Dictionary("pagination"));
-                }
+                    { "PageNumber", myDbModel.Parameters.PageNumber.ToString() },
+                    { "PageSize", myDbModel.Parameters.PageSize.ToString() },
+                    { "OrderBy", string.IsNullOrWhiteSpace(myDbModel.Parameters.OrderBy) ? "Id desc" : myDbModel.Parameters.OrderBy },
+                };
 
-                if (where?.Any() == true)
-                    cmd.Parameters.Add(where.ToSqlParameter_Table_Type_Dictionary("where"));
-
-                if (_params?.Any() == true)
-                    foreach (var param in _params)
-                        cmd.Parameters.Add(param.Value.ToSqlParameter_Data_Type(param.Key));
-
-                //get
-                var table = new DataTable();
-
-                table.Load(await cmd.ExecuteReaderAsync());
-
-                if (isPagination && table.Rows.Count > 0)
-                {
-                    // TotalRecordCount sütununun varlýðýný kontrol et
-                    if (table.Columns.Contains("TotalRecordCount"))
-                    {
-                        total_record_count = (int)table.Rows[0]["TotalRecordCount"];
-                    }
-                }
-
-                var items = table.DataTableToList<T>();
-
-                total_page_count = (int)Math.Ceiling((decimal)total_record_count / pagesize);
-
-                if (pageno > total_page_count)
-                    pageno = total_page_count;
-                else if (pageno <= 0)
-                    pageno = 1;
-
-                myDbModel.Parameters.TotalRecordCount = total_record_count;
-
-                myDbModel.Parameters.PageNumber = pageno;
-
-                myDbModel.Items = items;
+                cmd.Parameters.Add(pagination.ToSqlParameter_Table_Type_Dictionary("pagination"));
             }
+
+            // Where TVP (boÅŸ da olsa gÃ¶nder)
+            var whereDict = myDbModel.Parameters.Where ?? new Dictionary<string, string>();
+            cmd.Parameters.Add(whereDict.ToSqlParameter_Table_Type_Dictionary("where"));
+
+            // Extra params (scalar)
+            if (myDbModel.Parameters.Params?.Any() == true)
+            {
+                foreach (var p in myDbModel.Parameters.Params)
+                    cmd.Parameters.Add(p.Value.ToSqlParameter_Data_Type(p.Key));
+            }
+
+            using var reader = await cmd.ExecuteReaderAsync();
+
+            // 1) Items
+            var dtItems = new DataTable();
+            dtItems.Load(reader);
+            var items = dtItems.DataTableToList<T>().ToList();
+
+            // 2) Meta
+            int totalRecordCount = 0;
+            int totalPageCount = 1;
+            int pageNumber = myDbModel.Parameters.PageNumber;
+            int pageSize = myDbModel.Parameters.PageSize;
+
+            if (isPagination && await reader.NextResultAsync())
+            {
+                var dtMeta = new DataTable();
+                dtMeta.Load(reader);
+
+                if (dtMeta.Rows.Count > 0)
+                {
+                    var row = dtMeta.Rows[0];
+
+                    if (dtMeta.Columns.Contains("TotalRecordCount"))
+                        totalRecordCount = Convert.ToInt32(row["TotalRecordCount"]);
+
+                    if (dtMeta.Columns.Contains("TotalPageCount"))
+                        totalPageCount = Convert.ToInt32(row["TotalPageCount"]);
+
+                    if (dtMeta.Columns.Contains("PageNumber"))
+                        pageNumber = Convert.ToInt32(row["PageNumber"]);
+
+                    if (dtMeta.Columns.Contains("PageSize"))
+                        pageSize = Convert.ToInt32(row["PageSize"]);
+                }
+            }
+
+            // clamp
+            if (totalPageCount <= 0) totalPageCount = 1;
+            if (pageNumber <= 0) pageNumber = 1;
+            if (pageNumber > totalPageCount) pageNumber = totalPageCount;
+
+            myDbModel.Parameters.TotalRecordCount = totalRecordCount;
+            myDbModel.Parameters.TotalPageCount = totalPageCount;
+            myDbModel.Parameters.PageNumber = pageNumber;
+            myDbModel.Parameters.PageSize = pageSize;
+
+            myDbModel.Items = items;
+            myDbModel.Message = null;
         }
         catch (Exception ex)
         {
-            myDbModel.Message = $"{spName}: {ex.Message}";
+            myDbModel.Message = $"{spName}: {ex.InnerException?.Message ?? ex.Message}";
+            myDbModel.Items = new List<T>();
+            myDbModel.Parameters.TotalRecordCount = 0;
+            myDbModel.Parameters.TotalPageCount = 1;
+            myDbModel.Parameters.PageNumber = 1;
         }
         finally
         {
-            if (connectionState != ConnectionState.Closed)
+            if (initialState != ConnectionState.Open)
+                con.Close();
+        }
+    }
+
+    public async Task<List<T>> SetItems<T>(string spName, params (string Key, object? Value)[] parameters)
+        where T : class, new()
+    {
+        var con = _context.Database.GetDbConnection();
+        var initialState = con.State;
+
+        try
+        {
+            if (initialState != ConnectionState.Open)
+                await con.OpenAsync();
+
+            using var cmd = con.CreateCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = spName;
+            cmd.Parameters.Clear();
+
+            foreach (var (key, value) in parameters)
+                cmd.Parameters.Add(value.ToSqlParameter_Data_Type(key));
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            var dt = new DataTable();
+            dt.Load(reader);
+
+            return dt.DataTableToList<T>().ToList();
+        }
+        finally
+        {
+            if (initialState != ConnectionState.Open)
                 con.Close();
         }
     }

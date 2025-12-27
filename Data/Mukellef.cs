@@ -7,8 +7,9 @@ public class Mukellef
     public string? VergiNo { get; set; }
     public string? Tip { get; set; }
     public string? Telefon { get; set; }
+
     public int KullaniciId { get; set; }
+    public Kullanici? Kullanici { get; set; }
 
     public ICollection<Beyanname> Beyannameler { get; set; } = new List<Beyanname>();
 }
-

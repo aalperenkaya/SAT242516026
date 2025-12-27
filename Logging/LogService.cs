@@ -5,40 +5,60 @@ using System.Text.RegularExpressions;
 
 namespace SAT242516026.Logging;
 
-public class LogService(string filePath, Func<IDbConnection> connectionFactory)
+public sealed class LogService(string filePath, Func<IDbConnection> connectionFactory)
 {
     public async Task<List<LogEntry>> GetFileLogsAsync()
     {
         var logs = new List<LogEntry>();
-        if (!File.Exists(filePath))
-            return logs;
 
-        var lines = await File.ReadAllLinesAsync(filePath);
-        var regex = new Regex(@"^(?<date>[\d\-T:\.Z ]+) \[(?<level>\w+)\] (?<category>[^:]+): (?<message>.*)$");
-
-        foreach (var line in lines)
+        try
         {
-            var match = regex.Match(line);
-            if (match.Success)
+            if (!File.Exists(filePath))
+                return logs;
+
+            var lines = await File.ReadAllLinesAsync(filePath);
+
+            // "2025-12-27 11:22:33 [Information] Category: msg"
+            var regex = new Regex(
+                @"^(?<date>[\d\-: ]+)\s\[(?<level>[^\]]+)\]\s(?<category>[^:]+):\s(?<message>.*)$",
+                RegexOptions.Compiled);
+
+            foreach (var line in lines)
             {
+                var m = regex.Match(line);
+                if (!m.Success) continue;
+
+                _ = DateTime.TryParse(
+                    m.Groups["date"].Value,
+                    CultureInfo.CurrentCulture,
+                    DateTimeStyles.AssumeLocal,
+                    out var dt);
+
                 logs.Add(new LogEntry
                 {
-                    Timestamp = DateTime.TryParse(
-                        match.Groups["date"].Value,
-                        CultureInfo.CurrentCulture,
-                        DateTimeStyles.AssumeLocal,
-                        out var dt
-                    ) ? dt : DateTime.UtcNow,
-                    Level = match.Groups["level"].Value,
-                    Category = match.Groups["category"].Value,
-                    Message = match.Groups["message"].Value,
+                    Timestamp = dt == default ? DateTime.Now : dt,
+                    Level = m.Groups["level"].Value,
+                    Category = m.Groups["category"].Value,
+                    Message = m.Groups["message"].Value,
                     Source = "File"
                 });
             }
-        }
 
-        logs.Sort((a, b) => b.Timestamp.CompareTo(a.Timestamp));
-        return logs;
+            logs.Sort((a, b) => b.Timestamp.CompareTo(a.Timestamp));
+            return logs;
+        }
+        catch (Exception ex)
+        {
+            logs.Add(new LogEntry
+            {
+                Timestamp = DateTime.Now,
+                Level = "Error",
+                Category = "LogService",
+                Message = $"File log okunamadı: {ex.Message}",
+                Source = "System"
+            });
+            return logs;
+        }
     }
 
     public async Task<List<LogEntry>> GetDbLogsAsync()
@@ -47,50 +67,52 @@ public class LogService(string filePath, Func<IDbConnection> connectionFactory)
 
         try
         {
-            await using var connection = (SqlConnection)connectionFactory();
-            if (connection.State != ConnectionState.Open)
-                await connection.OpenAsync();
+            await using var con = (SqlConnection)connectionFactory();
+            if (con.State != ConnectionState.Open)
+                await con.OpenAsync();
 
-            var command = connection.CreateCommand();
-            command.CommandText = "SELECT Timestamp, Level, Category, Message, Exception FROM Logs ORDER BY Timestamp DESC";
+            await using var cmd = con.CreateCommand();
+            cmd.CommandText =
+                @"SELECT [Timestamp],[Level],[Category],[Message],[Exception]
+                  FROM dbo.Logs
+                  ORDER BY [Timestamp] DESC";
 
-            await using var reader = await command.ExecuteReaderAsync();
+            await using var reader = await cmd.ExecuteReaderAsync();
             while (await reader.ReadAsync())
             {
                 logs.Add(new LogEntry
                 {
                     Timestamp = reader.GetDateTime(0),
-                    Level = reader.GetString(1),
+                    Level = reader.IsDBNull(1) ? null : reader.GetString(1),
                     Category = reader.IsDBNull(2) ? null : reader.GetString(2),
                     Message = reader.IsDBNull(3) ? null : reader.GetString(3),
                     Exception = reader.IsDBNull(4) ? null : reader.GetString(4),
                     Source = "Database"
                 });
             }
+
+            return logs;
         }
         catch (Exception ex)
         {
             logs.Add(new LogEntry
             {
-                Timestamp = DateTime.UtcNow,
+                Timestamp = DateTime.Now,
                 Level = "Error",
+                Category = "LogService",
                 Message = $"Veritabanı logları okunamadı: {ex.Message}",
                 Source = "System"
             });
-        }
 
-        return logs;
+            return logs;
+        }
     }
 
     public async Task<List<LogEntry>> GetLogsAsync()
     {
-        var fileLogs = await GetFileLogsAsync();
-        var dbLogs = await GetDbLogsAsync();
-
         var combined = new List<LogEntry>();
-        combined.AddRange(fileLogs);
-        combined.AddRange(dbLogs);
-
+        combined.AddRange(await GetFileLogsAsync());
+        combined.AddRange(await GetDbLogsAsync());
         combined.Sort((a, b) => b.Timestamp.CompareTo(a.Timestamp));
         return combined;
     }

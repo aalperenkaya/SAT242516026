@@ -12,10 +12,11 @@ public static class MyDbModel_Extension
 
         foreach (var p in typeof(E).GetProperties().Where(x => x.GetIndexParameters().Length == 0))
         {
-            if (!p.Sortable()) continue;
+            if (!p.IsSortable()) continue;
 
-            dict.Add($"{p.LocalizedDescription()} ↑", $"{p.Name} asc");
-            dict.Add($"{p.LocalizedDescription()} ↓", $"{p.Name} desc");
+            var label = p.LocalizedDescriptionOrName();
+            dict.Add($"{label} ↑", $"{p.Name} asc");
+            dict.Add($"{label} ↓", $"{p.Name} desc");
         }
 
         if (dict.Count == 0)

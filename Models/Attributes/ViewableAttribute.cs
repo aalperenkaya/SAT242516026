@@ -1,6 +1,8 @@
 ﻿namespace SAT242516026.Models.Attributes;
 
-public class ViewableAttribute(bool value) : Attribute
+[AttributeUsage(AttributeTargets.Property)]
+public sealed class ViewableAttribute : Attribute
 {
-    public bool Value { get; set; } = value;
+    public bool Enabled { get; }
+    public ViewableAttribute(bool enabled) => Enabled = enabled;
 }

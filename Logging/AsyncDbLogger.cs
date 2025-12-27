@@ -1,12 +1,23 @@
-﻿namespace SAT242516026.Logging;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Data;
 
-public class AsyncDbLogger(string categoryName, Func<IDbConnection> connectionFactory) : ILogger
+namespace SAT242516026.Logging;
+
+public sealed class AsyncDbLogger : ILogger
 {
-    public IDisposable? BeginScope<TState>(TState state) => null;
+    private readonly string _categoryName;
+    private readonly Func<IDbConnection> _connectionFactory;
+
+    public AsyncDbLogger(string categoryName, Func<IDbConnection> connectionFactory)
+    {
+        _categoryName = categoryName ?? "Unknown";
+        _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
+    }
+
+    public IDisposable? BeginScope<TState>(TState state) where TState : notnull => null;
+
     public bool IsEnabled(LogLevel logLevel) => true;
 
     public async void Log<TState>(
@@ -16,39 +27,61 @@ public class AsyncDbLogger(string categoryName, Func<IDbConnection> connectionFa
         Exception? exception,
         Func<TState, Exception?, string> formatter)
     {
-        if (!IsEnabled(logLevel))
-            return;
+        if (!IsEnabled(logLevel)) return;
 
         try
         {
-            await using var connection = (SqlConnection)connectionFactory();
-            if (connection.State != ConnectionState.Open)
-                await connection.OpenAsync();
+            var msg = SafeFormat(state, exception, formatter);
 
-            await using var command = connection.CreateCommand();
-            command.CommandText =
-                @"INSERT INTO Logs (Timestamp, Level, Category, Message, Exception)
-                  VALUES (@Timestamp, @Level, @Category, @Message, @Exception)";
+            await using var con = (SqlConnection)_connectionFactory();
+            if (con.State != ConnectionState.Open) await con.OpenAsync().ConfigureAwait(false);
 
-            command.Parameters.Add(new SqlParameter("@Timestamp", DateTime.Now));
-            command.Parameters.Add(new SqlParameter("@Level", logLevel.ToString()));
-            command.Parameters.Add(new SqlParameter("@Category", categoryName ?? (object)DBNull.Value));
-            command.Parameters.Add(new SqlParameter("@Message", formatter(state, exception) ?? (object)DBNull.Value));
-            command.Parameters.Add(new SqlParameter("@Exception", exception?.ToString() ?? (object)DBNull.Value));
+            await using var cmd = con.CreateCommand();
+            cmd.CommandText =
+                @"INSERT INTO dbo.Logs ([Timestamp],[Level],[Category],[Message],[Exception])
+                  VALUES (@Timestamp,@Level,@Category,@Message,@Exception)";
 
-            await command.ExecuteNonQueryAsync();
+            cmd.Parameters.Add(new SqlParameter("@Timestamp", DateTime.Now));
+            cmd.Parameters.Add(new SqlParameter("@Level", logLevel.ToString()));
+            cmd.Parameters.Add(new SqlParameter("@Category", (object?)_categoryName ?? DBNull.Value));
+            cmd.Parameters.Add(new SqlParameter("@Message", (object?)msg ?? DBNull.Value));
+            cmd.Parameters.Add(new SqlParameter("@Exception", (object?)exception?.ToString() ?? DBNull.Value));
+
+            await cmd.ExecuteNonQueryAsync().ConfigureAwait(false);
         }
-        catch (Exception ex)
+        catch
         {
-            System.Diagnostics.Debug.WriteLine($"AsyncDbLogger error: {ex.Message}");
+            // yut
         }
+    }
+
+    private static string SafeFormat<TState>(
+        TState state,
+        Exception? ex,
+        Func<TState, Exception?, string>? formatter)
+    {
+        try
+        {
+            if (formatter is not null)
+                return formatter(state, ex) ?? "";
+        }
+        catch { }
+
+        return state?.ToString() ?? "";
     }
 }
 
-public class AsyncDbLoggerProvider(Func<IDbConnection> connectionFactory) : ILoggerProvider
+public sealed class AsyncDbLoggerProvider : ILoggerProvider
 {
+    private readonly Func<IDbConnection> _connectionFactory;
+
+    public AsyncDbLoggerProvider(Func<IDbConnection> connectionFactory)
+    {
+        _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
+    }
+
     public ILogger CreateLogger(string categoryName)
-        => new AsyncDbLogger(categoryName, connectionFactory);
+        => new AsyncDbLogger(categoryName, _connectionFactory);
 
     public void Dispose() { }
 }

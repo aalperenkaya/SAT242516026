@@ -1,145 +1,120 @@
-﻿@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
-@page "/logs-1"
-@inject Logging.LogService LogService
+﻿@page "/logs-1"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+@inject SAT242516026.Logging.LogService LogService
 
-<div class="page-scroll">
+<h3 class="mb-3">Log İzleme Merkezi</h3>
 
-    <h3 class="mb-3">Log İzleme Merkezi</h3>
+@if (!string.IsNullOrWhiteSpace(Message))
+{
+    <div class="alert alert-warning">@Message</div>
+}
 
-    <div class="row g-3">
-
-        <!-- FILE LOGS -->
-        <div class="col-12">
-            <div class="d-flex align-items-center justify-content-between mb-2">
-                <h4 class="text-primary mb-0">📄 Dosya Logları (File Logs)</h4>
-                <button class="btn btn-sm btn-outline-secondary" @onclick="Reload">Yenile</button>
-            </div>
-
-            <div class="table-responsive table-box">
-                <table class="table table-sm table-bordered table-striped mb-0">
-                    <thead class="table-dark sticky-top">
-                        <tr>
-                            <th style="width:90px;">Kaynak</th>
-                            <th style="width:190px;">Zaman</th>
-                            <th style="width:120px;">Seviye</th>
-                            <th style="width:260px;">Kategori</th>
-                            <th>Mesaj</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (fileLogs?.Any() == true)
-                        {
-                            @foreach (var log in fileLogs)
-                            {
-                                <tr>
-                                    <td>File</td>
-                                    <td>@log.Timestamp</td>
-                                    <td>
-                                        <span class="badge bg-@(GetBadgeColor(log.Level))">@log.Level</span>
-                                    </td>
-                                    <td>@log.Category</td>
-                                    <td class="text-break">@log.Message</td>
-                                </tr>
-                            }
-                        }
-                        else
-                        {
-                            <tr>
-                                <td colspan="5" class="text-center py-3">Henüz dosya logu yok.</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- DB LOGS -->
-        <div class="col-12">
-            <div class="d-flex align-items-center justify-content-between mb-2 mt-2">
-                <h4 class="text-success mb-0">🗄️ Veritabanı Logları (DB Logs)</h4>
-                <button class="btn btn-sm btn-outline-secondary" @onclick="Reload">Yenile</button>
-            </div>
-
-            <div class="table-responsive table-box">
-                <table class="table table-sm table-bordered table-striped mb-0">
-                    <thead class="table-dark sticky-top">
-                        <tr>
-                            <th style="width:90px;">Kaynak</th>
-                            <th style="width:190px;">Zaman</th>
-                            <th style="width:120px;">Seviye</th>
-                            <th style="width:260px;">Kategori</th>
-                            <th>Mesaj</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (dbLogs?.Any() == true)
-                        {
-                            @foreach (var log in dbLogs)
-                            {
-                                <tr>
-                                    <td>DB</td>
-                                    <td>@log.Timestamp</td>
-                                    <td>
-                                        <span class="badge bg-@(GetBadgeColor(log.Level))">@log.Level</span>
-                                    </td>
-                                    <td>@log.Category</td>
-                                    <td class="text-break">@log.Message</td>
-                                </tr>
-                            }
-                        }
-                        else
-                        {
-                            <tr>
-                                <td colspan="5" class="text-center py-3">Henüz veritabanı logu yok.</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-    </div>
+<div class="d-flex gap-2 mb-3">
+    <button class="btn btn-sm btn-outline-secondary" @onclick="Reload" disabled="@IsLoading">
+        @(IsLoading ? "Yükleniyor..." : "Yenile")
+    </button>
 </div>
 
-<style>
-    .table-box {
-        max-height: 420px;
-        overflow-y: auto;
-        border-radius: .5rem;
-        border: 1px solid rgba(0,0,0,.08);
-    }
-</style>
+<h4 class="text-primary">📄 Dosya Logları</h4>
+<div class="table-responsive mb-4" style="max-height:420px; overflow:auto;">
+    <table class="table table-sm table-bordered table-striped mb-0">
+        <thead class="table-dark sticky-top">
+            <tr>
+                <th style="width:90px;">Source</th>
+                <th style="width:190px;">Timestamp</th>
+                <th style="width:120px;">Level</th>
+                <th style="width:260px;">Category</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (fileLogs.Count == 0)
+            {
+                <tr><td colspan="5" class="text-center py-3">Dosya logu yok.</td></tr>
+            }
+            else
+            {
+                @foreach (var log in fileLogs)
+                {
+                    <tr>
+                        <td>@log.Source</td>
+                        <td>@log.Timestamp</td>
+                        <td>@log.Level</td>
+                        <td>@log.Category</td>
+                        <td class="text-break">@log.Message</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<h4 class="text-success">🗄️ Veritabanı Logları</h4>
+<div class="table-responsive" style="max-height:420px; overflow:auto;">
+    <table class="table table-sm table-bordered table-striped mb-0">
+        <thead class="table-dark sticky-top">
+            <tr>
+                <th style="width:90px;">Source</th>
+                <th style="width:190px;">Timestamp</th>
+                <th style="width:120px;">Level</th>
+                <th style="width:260px;">Category</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (dbLogs.Count == 0)
+            {
+                <tr><td colspan="5" class="text-center py-3">DB logu yok.</td></tr>
+            }
+            else
+            {
+                @foreach (var log in dbLogs)
+                {
+                    <tr>
+                        <td>@log.Source</td>
+                        <td>@log.Timestamp</td>
+                        <td>@log.Level</td>
+                        <td>@log.Category</td>
+                        <td class="text-break">@log.Message</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
 
 @code {
-    private List<Logging.LogEntry> fileLogs = new();
-    private List<Logging.LogEntry> dbLogs = new();
+    private List<SAT242516026.Logging.LogEntry> fileLogs = new();
+    private List<SAT242516026.Logging.LogEntry> dbLogs = new();
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    private bool IsLoading;
+    private string? Message;
+
+    protected override async Task OnInitializedAsync()
     {
-        if (firstRender)
-        {
-            await LoadLogs();
-            StateHasChanged();
-        }
+        await Reload();
     }
 
     private async Task Reload()
     {
-        await LoadLogs();
-    }
+        if (IsLoading) return;
 
-    private async Task LoadLogs()
-    {
-        fileLogs = await LogService.GetFileLogsAsync();
-        dbLogs = await LogService.GetDbLogsAsync();
-    }
+        IsLoading = true;
+        Message = null;
 
-    private string GetBadgeColor(string? level) => level switch
-    {
-        "Information" => "info",
-        "Warning" => "warning",
-        "Error" => "danger",
-        "Critical" => "dark",
-        _ => "secondary"
-    };
+        try
+        {
+            fileLogs = await LogService.GetFileLogsAsync();
+            dbLogs = await LogService.GetDbLogsAsync();
+        }
+        catch (Exception ex)
+        {
+            Message = ex.Message;
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
 }
+

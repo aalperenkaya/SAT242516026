@@ -1,144 +1,146 @@
-﻿@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
-@page "/admin/odemeler"
+﻿@page "/admin/odemeler"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
 
-@using SAT242516026.Data
-@using SAT242516026.Models.DbContexts
-@using Microsoft.EntityFrameworkCore
-@inject MyDbModel_Context Db
+@using System.Globalization
+@using System.Text.Json
+@using SAT242516026.Models.MyDbModels
+@inject IMyDbModel_Provider Provider
+@inject IJSRuntime JS
 
-<div class="page-scroll">
-    <h3 class="mb-3">Admin - Ödemeler</h3>
+<h3 class="mb-3">Admin - Ödemeler</h3>
 
-    @if (!string.IsNullOrWhiteSpace(Message))
-    {
-        <div class="alert alert-info">@Message</div>
-    }
+@if (!string.IsNullOrWhiteSpace(_msg))
+{
+    <div class="alert alert-info">@_msg</div>
+}
 
-    <!-- FILTER + SORT + PAGINATION -->
-    <div class="card mb-3">
-        <div class="card-header fw-bold">Filtre / Sıralama / Sayfalama</div>
-        <div class="card-body">
-            <div class="row g-2 align-items-end">
-
-                <div class="col-md-3">
-                    <label class="form-label">TahakkukId</label>
-                    <input type="number" class="form-control" @bind="F_TahakkukId" />
-                </div>
-
-                <div class="col-md-3">
-                    <label class="form-label">Min Tutar</label>
-                    <input type="number" step="0.01" class="form-control" @bind="F_MinTutar" />
-                </div>
-
-                <div class="col-md-3">
-                    <label class="form-label">Max Tutar</label>
-                    <input type="number" step="0.01" class="form-control" @bind="F_MaxTutar" />
-                </div>
-
-                <div class="col-md-3">
-                    <label class="form-label">Ödeme Tarihi</label>
-                    <input type="date" class="form-control" @bind="F_OdemeTarihi" />
-                </div>
-
-                <div class="col-md-6">
-                    <label class="form-label">Sırala</label>
-                    <select class="form-select" @bind="OrderBy">
-                        @foreach (var ob in OrderByItems)
-                        {
-                            <option value="@ob.Value">@ob.Key</option>
-                        }
-                    </select>
-                </div>
-
-                <div class="col-md-2">
-                    <label class="form-label">Boyut</label>
-                    <select class="form-select" @bind="PageSize">
-                        @foreach (var ps in new[] { 5, 10, 20, 50, 100 })
-                        {
-                            <option value="@ps">@ps</option>
-                        }
-                    </select>
-                </div>
-
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-primary w-100" @onclick="ApplyQuery">Uygula</button>
-                </div>
-
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-outline-danger w-100" @onclick="ResetQuery">Sıfırla</button>
-                </div>
+<div class="card mb-3">
+    <div class="card-header fw-bold">Filtre / Sıralama / Sayfalama</div>
+    <div class="card-body">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label">TahakkukId</label>
+                <input type="number" class="form-control" @bind="_fTahakkukId" />
             </div>
 
-            <div class="d-flex justify-content-between align-items-center mt-3">
-                <div class="small text-muted">
-                    @($"{(TotalRecordCount == 0 ? 0 : (PageNumber - 1) * PageSize + 1)} - {Math.Min(TotalRecordCount, PageNumber * PageSize)} / {TotalRecordCount}")
-                </div>
+            <div class="col-md-3">
+                <label class="form-label">Min Tutar</label>
+                <input type="number" step="0.01" class="form-control" @bind="_fMin" />
+            </div>
 
-                <div class="btn-group">
-                    <button type="button" class="btn btn-outline-secondary" @onclick="FirstPage" disabled="@(PageNumber<=1)">&lt;&lt;</button>
-                    <button type="button" class="btn btn-outline-secondary" @onclick="PrevPage" disabled="@(PageNumber<=1)">&lt;</button>
-                    <button type="button" class="btn btn-outline-secondary" disabled>@PageNumber / @TotalPageCount</button>
-                    <button type="button" class="btn btn-outline-secondary" @onclick="NextPage" disabled="@(PageNumber>=TotalPageCount)">&gt;</button>
-                    <button type="button" class="btn btn-outline-secondary" @onclick="LastPage" disabled="@(PageNumber>=TotalPageCount)">&gt;&gt;</button>
-                </div>
+            <div class="col-md-3">
+                <label class="form-label">Max Tutar</label>
+                <input type="number" step="0.01" class="form-control" @bind="_fMax" />
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Ödeme Tarihi</label>
+                <input type="date" class="form-control" @bind="_fTarih" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Sırala</label>
+                <select class="form-select" @bind="_orderBy">
+                    <option value="Id desc">Id ↓</option>
+                    <option value="Id asc">Id ↑</option>
+                    <option value="Tutar desc">Tutar ↓</option>
+                    <option value="Tutar asc">Tutar ↑</option>
+                    <option value="OdemeTarihi desc">Tarih ↓</option>
+                    <option value="OdemeTarihi asc">Tarih ↑</option>
+                    <option value="TahakkukId desc">TahakkukId ↓</option>
+                    <option value="TahakkukId asc">TahakkukId ↑</option>
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label">Boyut</label>
+                <select class="form-select" @bind="_pageSize">
+                    @foreach (var ps in new[] { 5, 10, 20, 50, 100 })
+                    {
+                        <option value="@ps">@ps</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary w-100" @onclick="Apply">Uygula</button>
+            </div>
+
+            <div class="col-md-2">
+                <button type="button" class="btn btn-outline-danger w-100" @onclick="Reset">Sıfırla</button>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <div class="small text-muted">
+                @($"{(_db?.Parameters.TotalRecordCount ?? 0)} kayıt | Sayfa: {_pageNumber}/{_db?.Parameters.TotalPageCount ?? 1}")
+            </div>
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-outline-secondary" @onclick="First" disabled="@(_pageNumber<=1)">&lt;&lt;</button>
+                <button type="button" class="btn btn-outline-secondary" @onclick="Prev" disabled="@(_pageNumber<=1)">&lt;</button>
+                <button type="button" class="btn btn-outline-secondary" disabled>@_pageNumber / @(_db?.Parameters.TotalPageCount ?? 1)</button>
+                <button type="button" class="btn btn-outline-secondary" @onclick="Next" disabled="@(_db is null || _pageNumber>=_db.Parameters.TotalPageCount)">&gt;</button>
+                <button type="button" class="btn btn-outline-secondary" @onclick="Last" disabled="@(_db is null || _pageNumber>=_db.Parameters.TotalPageCount)">&gt;&gt;</button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- CRUD -->
-    <div class="card mb-5">
-        <div class="card-header fw-bold">Ödeme (Ekle / Güncelle)</div>
-        <div class="card-body">
-            <div class="row g-2 align-items-end">
-
-                <div class="col-md-5">
-                    <label class="form-label">Tahakkuk*</label>
-                    <select class="form-select" @bind="od.TahakkukId">
-                        <option value="0">Seç...</option>
-                        @foreach (var t in tahakkuklarLookup)
-                        {
-                            <option value="@t.Id">#@t.Id - @t.Tutar</option>
-                        }
-                    </select>
-                </div>
-
-                <div class="col-md-3">
-                    <label class="form-label">Tutar*</label>
-                    <input type="number" step="0.01" class="form-control" @bind="od.Tutar" />
-                </div>
-
-                <div class="col-md-2">
-                    <label class="form-label">Ödeme Tarihi</label>
-                    <input type="date" class="form-control" @bind="od.OdemeTarihi" />
-                </div>
-
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-success w-100" @onclick="SaveOdeme">
-                        @(EditId is null ? "Ekle" : "Güncelle")
-                    </button>
-
-                    @if (EditId is not null)
+<div class="card mb-5">
+    <div class="card-header fw-bold">Ödeme (Ekle / Güncelle)</div>
+    <div class="card-body">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-5">
+                <label class="form-label">Tahakkuk*</label>
+                <select class="form-select" @bind="_form.TahakkukId">
+                    <option value="0">Seç...</option>
+                    @foreach (var t in _tahakkukLookup)
                     {
-                        <button type="button" class="btn btn-outline-secondary w-100 mt-2" @onclick="CancelEdit">İptal</button>
+                        <option value="@t.Id">#@t.Id - @t.Tutar</option>
                     }
-                </div>
+                </select>
             </div>
 
-            <hr />
+            <div class="col-md-3">
+                <label class="form-label">Tutar*</label>
+                <input type="number" step="0.01" class="form-control" @bind="_form.Tutar" />
+            </div>
 
-            <div class="table-responsive main-scroll">
-                <table class="table table-sm table-striped align-middle mb-0">
-                    <thead style="position: sticky; top: 0; background: white; z-index: 2;">
-                        <tr>
-                            <th style="width:80px;">Id</th>
-                            <th style="width:120px;">TahakkukId</th>
-                            <th>Tutar</th>
-                            <th>Ödeme Tarihi</th>
-                            <th style="width:190px;"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var o in odemeler)
+            <div class="col-md-2">
+                <label class="form-label">Ödeme Tarihi</label>
+                <input type="date" class="form-control" @bind="_form.OdemeTarihi" />
+            </div>
+
+            <div class="col-md-2">
+                <button type="button" class="btn btn-success w-100" @onclick="Save">
+                    @(_editId is null ? "Ekle" : "Güncelle")
+                </button>
+
+                @if (_editId is not null)
+                {
+                    <button type="button" class="btn btn-outline-secondary w-100 mt-2" @onclick="Cancel">İptal</button>
+                }
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="table-responsive">
+            <table class="table table-sm table-striped align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th style="width:80px;">Id</th>
+                        <th style="width:120px;">TahakkukId</th>
+                        <th>Tutar</th>
+                        <th>Ödeme Tarihi</th>
+                        <th style="width:190px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if ((_db?.Items?.Count ?? 0) > 0)
+                    {
+                        @foreach (var o in _db!.Items!)
                         {
                             <tr>
                                 <td>@o.Id</td>
@@ -147,220 +149,190 @@
                                 <td>@(o.OdemeTarihi?.ToString("yyyy-MM-dd") ?? "-")</td>
                                 <td class="text-end">
                                     <button type="button" class="btn btn-sm btn-outline-primary me-2" @onclick="() => StartEdit(o)">Güncelle</button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger" @onclick="() => DeleteOdeme(o.Id)">Sil</button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" @onclick="() => Delete(o.Id)">Sil</button>
                                 </td>
                             </tr>
                         }
-
-                        @if (odemeler.Count == 0)
-                        {
-                            <tr><td colspan="5" class="text-center text-muted py-3">Henüz ödeme yok.</td></tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-
+                    }
+                    else
+                    {
+                        <tr><td colspan="5" class="text-center text-muted py-3">Henüz ödeme yok.</td></tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
 
 @code {
-    string? Message;
+    private const string SP_LIST = "Sp_Odemeler";
+    private const string SP_AUR = "sp_Odeme_Add_Update_Remove";
+    private const string SP_TLK = "Sp_TahakkukLookup";
 
-    // Dropdown lookup
-    List<Tahakkuk> tahakkuklarLookup = new();
+    private string? _msg;
 
-    // List
-    List<Odeme> odemeler = new();
-
-    // Form
-    Odeme od = new() { Tutar = 0m };
-    int? EditId;
-
-    // Filter
-    int? F_TahakkukId;
-    decimal? F_MinTutar;
-    decimal? F_MaxTutar;
-    DateTime? F_OdemeTarihi;
-
-    // Paging + Sort
-    string OrderBy = "Id desc";
-    int PageSize = 10;
-    int PageNumber = 1;
-
-    int TotalRecordCount;
-    int TotalPageCount => PageSize <= 0 ? 1 : Math.Max(1, (int)Math.Ceiling(TotalRecordCount / (double)PageSize));
-
-    Dictionary<string, string> OrderByItems = new()
+    public class OdemeRow
     {
-        { "Id ↓", "Id desc" },
-        { "Id ↑", "Id asc" },
-        { "Tutar ↓", "Tutar desc" },
-        { "Tutar ↑", "Tutar asc" },
-        { "Tarih ↓", "OdemeTarihi desc" },
-        { "Tarih ↑", "OdemeTarihi asc" },
-        { "TahakkukId ↓", "TahakkukId desc" },
-        { "TahakkukId ↑", "TahakkukId asc" },
-    };
+        public int Id { get; set; }
+        public int TahakkukId { get; set; }
+        public decimal Tutar { get; set; }
+        public DateTime? OdemeTarihi { get; set; }
+    }
+
+    public class TahakkukLookupRow
+    {
+        public int Id { get; set; }
+        public decimal Tutar { get; set; }
+    }
+
+    private IMyDbModel<OdemeRow>? _db;
+    private List<TahakkukLookupRow> _tahakkukLookup = new();
+
+    private int? _fTahakkukId;
+    private decimal? _fMin;
+    private decimal? _fMax;
+    private DateTime? _fTarih;
+
+    private string _orderBy = "Id desc";
+    private int _pageSize = 10;
+    private int _pageNumber = 1;
+
+    private int? _editId;
+    private OdemeRow _form = new() { Tutar = 0m };
 
     protected override async Task OnInitializedAsync()
     {
-        await RefreshLookups();
-        await RefreshList();
-    }
-
-    async Task RefreshLookups()
-    {
-        tahakkuklarLookup = await Db.Tahakkuk
-            .OrderByDescending(x => x.Id)
-            .Take(500)
-            .AsNoTracking()
-            .ToListAsync();
-    }
-
-    async Task RefreshList()
-    {
-        try
-        {
-            IQueryable<Odeme> q = Db.Odeme.AsNoTracking();
-
-            if (F_TahakkukId is not null && F_TahakkukId > 0)
-                q = q.Where(x => x.TahakkukId == F_TahakkukId.Value);
-
-            if (F_MinTutar is not null)
-                q = q.Where(x => x.Tutar >= F_MinTutar.Value);
-
-            if (F_MaxTutar is not null)
-                q = q.Where(x => x.Tutar <= F_MaxTutar.Value);
-
-            if (F_OdemeTarihi is not null)
-                q = q.Where(x => x.OdemeTarihi == F_OdemeTarihi.Value);
-
-            TotalRecordCount = await q.CountAsync();
-
-            if (PageNumber < 1) PageNumber = 1;
-            if (PageNumber > TotalPageCount) PageNumber = TotalPageCount;
-
-            q = OrderBy switch
-            {
-                "Id asc" => q.OrderBy(x => x.Id),
-                "Id desc" => q.OrderByDescending(x => x.Id),
-                "Tutar asc" => q.OrderBy(x => x.Tutar),
-                "Tutar desc" => q.OrderByDescending(x => x.Tutar),
-                "OdemeTarihi asc" => q.OrderBy(x => x.OdemeTarihi),
-                "OdemeTarihi desc" => q.OrderByDescending(x => x.OdemeTarihi),
-                "TahakkukId asc" => q.OrderBy(x => x.TahakkukId),
-                "TahakkukId desc" => q.OrderByDescending(x => x.TahakkukId),
-                _ => q.OrderByDescending(x => x.Id)
-            };
-
-            odemeler = await q
-                .Skip((PageNumber - 1) * PageSize)
-                .Take(PageSize)
-                .ToListAsync();
-
-            Message = null;
-        }
-        catch (Exception ex)
-        {
-            Message = ex.InnerException?.Message ?? ex.Message;
-        }
-
-        StateHasChanged();
-    }
-
-    async Task ApplyQuery()
-    {
-        PageNumber = 1;
-        await RefreshList();
-    }
-
-    async Task ResetQuery()
-    {
-        F_TahakkukId = null;
-        F_MinTutar = null;
-        F_MaxTutar = null;
-        F_OdemeTarihi = null;
-
-        OrderBy = "Id desc";
-        PageSize = 10;
-        PageNumber = 1;
-
-        await RefreshList();
-    }
-
-    async Task FirstPage() { PageNumber = 1; await RefreshList(); }
-    async Task LastPage() { PageNumber = TotalPageCount; await RefreshList(); }
-    async Task PrevPage() { if (PageNumber > 1) PageNumber--; await RefreshList(); }
-    async Task NextPage() { if (PageNumber < TotalPageCount) PageNumber++; await RefreshList(); }
-
-    void StartEdit(Odeme o)
-    {
-        EditId = o.Id;
-        od = new() { TahakkukId = o.TahakkukId, Tutar = o.Tutar, OdemeTarihi = o.OdemeTarihi };
-        Message = "Düzenleme modunda.";
-    }
-
-    void CancelEdit()
-    {
-        EditId = null;
-        od = new() { Tutar = 0m };
-        Message = "İptal edildi.";
-    }
-
-    async Task SaveOdeme()
-    {
-        if (od.TahakkukId <= 0) { Message = "Tahakkuk seç."; return; }
-        if (od.Tutar < 0) { Message = "Tutar negatif olamaz."; return; }
+        _db = Provider.Create<OdemeRow>();
 
         try
         {
-            if (EditId is null)
-            {
-                Db.Odeme.Add(od);
-                await Db.SaveChangesAsync();
-                Message = "Eklendi.";
-            }
-            else
-            {
-                var entity = await Db.Odeme.FindAsync(EditId.Value);
-                if (entity is null) { Message = "Bulunamadı."; return; }
-
-                entity.TahakkukId = od.TahakkukId;
-                entity.Tutar = od.Tutar;
-                entity.OdemeTarihi = od.OdemeTarihi;
-
-                await Db.SaveChangesAsync();
-                Message = "Güncellendi.";
-                EditId = null;
-            }
-
-            od = new() { Tutar = 0m };
-            await RefreshList();
+            await LoadLookup(); // <-- burada Sp_TahakkukLookup lazım
+            await Load();
         }
         catch (Exception ex)
         {
-            Message = ex.InnerException?.Message ?? ex.Message;
+            _msg = ex.InnerException?.Message ?? ex.Message;
         }
     }
 
-    async Task DeleteOdeme(int id)
+    private async Task LoadLookup()
     {
-        try
-        {
-            var entity = await Db.Odeme.FindAsync(id);
-            if (entity is null) { Message = "Bulunamadı."; return; }
+        // Eğer SP yoksa burada patlar
+        _tahakkukLookup = await Provider.SetItems<TahakkukLookupRow>(SP_TLK);
+    }
 
-            Db.Odeme.Remove(entity);
-            await Db.SaveChangesAsync();
-            Message = "Silindi.";
+    private async Task Load()
+    {
+        if (_db is null) return;
 
-            if (EditId == id) { EditId = null; od = new() { Tutar = 0m }; }
-            await RefreshList();
-        }
-        catch (Exception ex)
+        _db.Parameters.PageNumber = _pageNumber;
+        _db.Parameters.PageSize = _pageSize;
+        _db.Parameters.OrderBy = _orderBy;
+
+        var where = new Dictionary<string, string>();
+
+        if (_fTahakkukId is > 0) where["TahakkukId"] = _fTahakkukId.Value.ToString();
+        if (_fMin is not null) where["MinTutar"] = _fMin.Value.ToString(CultureInfo.InvariantCulture);
+        if (_fMax is not null) where["MaxTutar"] = _fMax.Value.ToString(CultureInfo.InvariantCulture);
+        if (_fTarih is not null) where["OdemeTarihi"] = _fTarih.Value.ToString("yyyy-MM-dd");
+
+        _db.Parameters.Where = where.Count == 0 ? null : where;
+
+        await Provider.Execute(_db, SP_LIST, isPagination: true);
+
+        _pageNumber = _db.Parameters.PageNumber;
+        _msg = _db.Message ?? _msg;
+    }
+
+    private async Task Apply() { _pageNumber = 1; await Load(); }
+
+    private async Task Reset()
+    {
+        _fTahakkukId = null;
+        _fMin = null;
+        _fMax = null;
+        _fTarih = null;
+
+        _orderBy = "Id desc";
+        _pageSize = 10;
+        _pageNumber = 1;
+
+        Cancel();
+        await Load();
+    }
+
+    private async Task First() { _pageNumber = 1; await Load(); }
+    private async Task Prev() { if (_pageNumber > 1) _pageNumber--; await Load(); }
+    private async Task Next()
+    {
+        if (_db is null) return;
+        if (_pageNumber < _db.Parameters.TotalPageCount) _pageNumber++;
+        await Load();
+    }
+    private async Task Last()
+    {
+        if (_db is null) return;
+        _pageNumber = _db.Parameters.TotalPageCount;
+        await Load();
+    }
+
+    private void StartEdit(OdemeRow o)
+    {
+        _editId = o.Id;
+        _form = new OdemeRow { Id = o.Id, TahakkukId = o.TahakkukId, Tutar = o.Tutar, OdemeTarihi = o.OdemeTarihi };
+        _msg = "Düzenleme modunda.";
+    }
+
+    private void Cancel()
+    {
+        _editId = null;
+        _form = new OdemeRow { Tutar = 0m };
+    }
+
+    private async Task Save()
+    {
+        if (_form.TahakkukId <= 0) { await JS.InvokeVoidAsync("alert", "Tahakkuk seç."); return; }
+        if (_form.Tutar < 0) { await JS.InvokeVoidAsync("alert", "Tutar negatif olamaz."); return; }
+
+        var op = _editId is null ? "add" : "update";
+
+        var payload = new
         {
-            Message = ex.InnerException?.Message ?? ex.Message;
-        }
+            Id = _editId ?? 0,
+            TahakkukId = _form.TahakkukId,
+            Tutar = _form.Tutar,
+            OdemeTarihi = _form.OdemeTarihi?.ToString("yyyy-MM-dd")
+        };
+
+        var json = JsonSerializer.Serialize(payload);
+
+        var r = await Provider.SetItems<MyDbModel_Result_KeyValue<string, bool>>(
+            SP_AUR,
+            ("operation", op),
+            ("jsonvalues", json)
+        );
+
+        var one = r.FirstOrDefault();
+        await JS.InvokeVoidAsync("alert", $"{one?.Key} : {one?.Value}");
+
+        Cancel();
+        await Load();
+    }
+
+    private async Task Delete(int id)
+    {
+        var json = JsonSerializer.Serialize(new { Id = id });
+
+        var r = await Provider.SetItems<MyDbModel_Result_KeyValue<string, bool>>(
+            SP_AUR,
+            ("operation", "remove"),
+            ("jsonvalues", json)
+        );
+
+        var one = r.FirstOrDefault();
+        await JS.InvokeVoidAsync("alert", $"{one?.Key} : {one?.Value}");
+
+        if (_editId == id) Cancel();
+        await Load();
     }
 }

@@ -1,17 +1,16 @@
-﻿@attribute [Microsoft.AspNetCore.Authorization.Authorize]
-@page "/user/beyannamelerim"
-@using SAT242516026.Data
-@using SAT242516026.Models.DbContexts
-@using Microsoft.EntityFrameworkCore
-@using Microsoft.AspNetCore.Components.Authorization
+﻿@page "/user/beyannamelerim"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
 
-@inject MyDbModel_Context Db
+@using SAT242516026.Models.MyDbModels
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims
+@inject IMyDbModel_Provider Provider
 
 <h3 class="mb-3">Benim Beyannamelerim</h3>
 
-@if (!string.IsNullOrWhiteSpace(Message))
+@if (!string.IsNullOrWhiteSpace(_msg))
 {
-    <div class="alert alert-info">@Message</div>
+    <div class="alert alert-info">@_msg</div>
 }
 
 <table class="table table-sm table-striped">
@@ -26,43 +25,67 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var b in items)
+        @if ((_db?.Items?.Count ?? 0) == 0)
         {
-            <tr>
-                <td>@b.Id</td>
-                <td>@b.Mukellef?.Ad</td>
-                <td>@b.BeyannameTipi?.Ad</td>
-                <td>@b.Yil</td>
-                <td>@b.Donem</td>
-                <td>@b.Durum</td>
-            </tr>
+            <tr><td colspan="6" class="text-muted text-center py-3">Kayıt yok.</td></tr>
+        }
+        else
+        {
+            @foreach (var b in _db!.Items!)
+            {
+                <tr>
+                    <td>@b.Id</td>
+                    <td>@(b.MukellefAd ?? "-")</td>
+                    <td>@(b.BeyannameTipiAd ?? "-")</td>
+                    <td>@b.Yil</td>
+                    <td>@(b.Donem ?? "-")</td>
+                    <td>@(b.Durum ?? "-")</td>
+                </tr>
+            }
         }
     </tbody>
 </table>
 
 @code {
     [CascadingParameter] private Task<AuthenticationState> AuthStateTask { get; set; } = default!;
-    string? Message;
-    int CurrentUserId;
 
-    List<Beyanname> items = new();
+    private const string SP = "Sp_User_Beyannamelerim";
+
+    string? _msg;
+    int _uid;
+
+    public class BeyanRow
+    {
+        public int Id { get; set; }
+        public string? MukellefAd { get; set; }
+        public string? BeyannameTipiAd { get; set; }
+        public int Yil { get; set; }
+        public string? Donem { get; set; }
+        public string? Durum { get; set; }
+    }
+
+    IMyDbModel<BeyanRow>? _db;
 
     protected override async Task OnInitializedAsync()
     {
-        var auth = await AuthStateTask;
-        var idStr = auth.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-        if (!int.TryParse(idStr, out CurrentUserId)) CurrentUserId = 0;
+        _db = Provider.Create<BeyanRow>();
 
-        try
+        var auth = await AuthStateTask;
+        var idStr = auth.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        _ = int.TryParse(idStr, out _uid);
+
+        if (_uid <= 0)
         {
-            items = await Db.Beyanname
-                .Include(x => x.Mukellef)
-                .Include(x => x.BeyannameTipi)
-                .Where(x => x.Mukellef.KullaniciId == CurrentUserId)
-                .OrderByDescending(x => x.Id)
-                .AsNoTracking()
-                .ToListAsync();
+            _msg = "Oturum yok. Tekrar giriş yap.";
+            return;
         }
-        catch (Exception ex) { Message = ex.Message; }
+
+        _db.Parameters.PageNumber = 1;
+        _db.Parameters.PageSize = 200;
+        _db.Parameters.OrderBy = "Id desc";
+        _db.Parameters.Where = new Dictionary<string, string> { ["CurrentUserId"] = _uid.ToString() };
+
+        await Provider.Execute(_db, SP, isPagination: true);
+        _msg = _db.Message;
     }
 }

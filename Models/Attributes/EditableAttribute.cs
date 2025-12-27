@@ -1,6 +1,8 @@
 ﻿namespace SAT242516026.Models.Attributes;
 
-public class EditableAttribute(bool value) : Attribute
+[AttributeUsage(AttributeTargets.Property)]
+public sealed class EditableAttribute : Attribute
 {
-    public bool Value { get; set; } = value;
+    public bool Enabled { get; }
+    public EditableAttribute(bool enabled) => Enabled = enabled;
 }

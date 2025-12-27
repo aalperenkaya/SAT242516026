@@ -1,61 +1,32 @@
-namespace SAT242516026.Models.Extensions;
-
 using System.Data;
 using System.Reflection;
 
-public static class Extensions_DataTable
+namespace SAT242516026.Models.Extensions;
+
+public static class Exttensions_DataTable
 {
-    public static IEnumerable<T> DataTableToList<T>(this DataTable table) where T : class
+    public static IEnumerable<T> DataTableToList<T>(this DataTable dt) where T : class, new()
     {
-        var list = new List<T>();
-        try
-        {
-            var columnsNames = new List<string>();
-            foreach (DataColumn DataColumn in table.Columns)
-                columnsNames.Add(DataColumn.ColumnName);
+        var props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+            .Where(p => p.CanWrite)
+            .ToArray();
 
-            list = table.AsEnumerable().ToList()
-                .ConvertAll(row => GetObject<T>(row, columnsNames));
-        }
-        catch (Exception)
+        foreach (DataRow row in dt.Rows)
         {
-            // ...
-        }
+            var obj = new T();
 
-        return list;
-    }
-
-    public static T GetObject<T>(this DataRow row, List<string> columnsName) where T : class
-    {
-        T obj = (T)Activator.CreateInstance(typeof(T));
-        try
-        {
-            PropertyInfo[] Properties = typeof(T).GetProperties();
-            foreach (PropertyInfo objProperty in Properties)
+            foreach (var p in props)
             {
-                string columnname = columnsName.Find(name => name.ToLower() == objProperty.Name.ToLower());
-                if (!string.IsNullOrEmpty(columnname))
-                {
-                    object dbValue = row[columnname];
-                    if (dbValue != DBNull.Value)
-                    {
-                        if (Nullable.GetUnderlyingType(objProperty.PropertyType) != null)
-                            objProperty.SetValue(obj,
-                                Convert.ChangeType(dbValue,
-                                    Type.GetType(Nullable.GetUnderlyingType(objProperty.PropertyType).ToString())),
-                                null);
-                        else
-                            objProperty.SetValue(obj,
-                                Convert.ChangeType(dbValue, Type.GetType(objProperty.PropertyType.ToString())), null);
-                    }
-                }
-            }
-        }
-        catch (Exception)
-        {
-            // ...
-        }
+                if (!dt.Columns.Contains(p.Name)) continue;
 
-        return obj;
+                var val = row[p.Name];
+                if (val == DBNull.Value) continue;
+
+                var t = Nullable.GetUnderlyingType(p.PropertyType) ?? p.PropertyType;
+                p.SetValue(obj, Convert.ChangeType(val, t));
+            }
+
+            yield return obj;
+        }
     }
 }

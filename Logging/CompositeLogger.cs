@@ -1,9 +1,11 @@
-﻿namespace SAT242516026.Logging;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
-public class CompositeLogger(IEnumerable<ILogger> loggers) : ILogger
+namespace SAT242516026.Logging;
+
+public sealed class CompositeLogger(IEnumerable<ILogger> loggers) : ILogger
 {
-    public IDisposable? BeginScope<TState>(TState state) => null;
+    public IDisposable? BeginScope<TState>(TState state) where TState : notnull => null;
+
     public bool IsEnabled(LogLevel logLevel) => true;
 
     public void Log<TState>(
@@ -27,7 +29,7 @@ public class CompositeLogger(IEnumerable<ILogger> loggers) : ILogger
     }
 }
 
-public class CompositeLoggerProvider : ILoggerProvider
+public sealed class CompositeLoggerProvider : ILoggerProvider
 {
     private readonly List<ILoggerProvider> _providers = new();
 
@@ -39,11 +41,11 @@ public class CompositeLoggerProvider : ILoggerProvider
 
     public ILogger CreateLogger(string categoryName)
     {
-        var loggers = new List<ILogger>();
-        foreach (var provider in _providers)
-            loggers.Add(provider.CreateLogger(categoryName));
+        var list = new List<ILogger>();
+        foreach (var p in _providers)
+            list.Add(p.CreateLogger(categoryName));
 
-        return new CompositeLogger(loggers);
+        return new CompositeLogger(list);
     }
 
     public void Dispose()

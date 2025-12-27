@@ -1,12 +1,11 @@
-﻿namespace SAT242516026.Logging
+﻿namespace SAT242516026.Logging;
+
+public sealed class LogEntry
 {
-    public class LogEntry
-    {
-        public DateTime Timestamp { get; set; }
-        public string? Level { get; set; }
-        public string? Category { get; set; }
-        public string? Message { get; set; }
-        public string? Exception { get; set; }
-        public string Source { get; set; } = "Unknown";
-    }
+    public DateTime Timestamp { get; set; }
+    public string? Level { get; set; }
+    public string? Category { get; set; }
+    public string? Message { get; set; }
+    public string? Exception { get; set; }
+    public string Source { get; set; } = "Unknown";
 }

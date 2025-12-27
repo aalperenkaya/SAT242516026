@@ -9,37 +9,50 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 using SAT242516026.Components;
+using SAT242516026.Data;
 using SAT242516026.Logging;
 using SAT242516026.Models.DbContexts;
-using SAT242516026.Models.Services;
-
-using SAT242516026.Models.Attributes;
 using SAT242516026.Models.Extensions;
-using SAT242516026.Models.Enums;
-using SAT242516026.Data;
+using SAT242516026.Models.MyDbModels;
+using SAT242516026.Models.Services;
+using SAT242516026.Models.UnitOfWorks;
 
 var builder = WebApplication.CreateBuilder(args);
 
-#region LOGGER (FILE + DB)
+#region LOGGER
 Directory.CreateDirectory("Logs");
 
-var logFilePath = Path.Combine("Logs", "app-log.txt");
-
-var compositeLoggerProvider = new CompositeLoggerProvider()
-    .AddProvider(new AsyncFileLoggerProvider(logFilePath))
-    .AddProvider(new AsyncDbLoggerProvider(() =>
-        new SqlConnection(builder.Configuration.GetConnectionString("DefaultConnection"))
+var compositeLoggerProvider = new SAT242516026.Logging.CompositeLoggerProvider()
+    .AddProvider(new SAT242516026.Logging.AsyncFileLoggerProvider("Logs/app-log.txt"))
+    .AddProvider(new SAT242516026.Logging.AsyncDbLoggerProvider(() =>
+        new Microsoft.Data.SqlClient.SqlConnection(
+            builder.Configuration.GetConnectionString("DefaultConnection")
+        )
     ));
 
 builder.Logging.ClearProviders();
 builder.Logging.AddProvider(compositeLoggerProvider);
 
-builder.Services.AddLogging();
-
-builder.Services.AddSingleton(new LogService(
-    filePath: logFilePath,
-    connectionFactory: () => new SqlConnection(builder.Configuration.GetConnectionString("DefaultConnection"))
+builder.Services.AddSingleton(new SAT242516026.Logging.LogService(
+    filePath: "Logs/app-log.txt",
+    connectionFactory: () => new Microsoft.Data.SqlClient.SqlConnection(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    )
 ));
+#endregion
+
+#region DB CONTEXTS
+builder.Services.AddDbContext<ApplicationDbContext>(opt =>
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddDbContext<MyDbModel_Context>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+#endregion
+
+#region ✅ MYDBMODEL DI
+builder.Services.AddScoped(typeof(IMyDbModel<>), typeof(MyDbModel<>));
+builder.Services.AddScoped<IMyDbModel_Provider, MyDbModel_Provider>();
+builder.Services.AddScoped<IMyDbModel_UnitOfWork, MyDbModel_UnitOfWork<MyDbModel_Context>>();
 #endregion
 
 #region BLAZOR
@@ -70,11 +83,6 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 });
 #endregion
 
-#region DB
-builder.Services.AddDbContext<MyDbModel_Context>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-#endregion
-
 #region AUTH (COOKIE + CLAIMS)
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -91,28 +99,19 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
     });
 
-// Admin rolü zaten ClaimTypes.Role ile veriliyor
 builder.Services.AddAuthorization();
-
-// Register sayfası
 builder.Services.AddScoped<AuthService>();
 #endregion
 
 var app = builder.Build();
+
+#region MIGRATION
 using (var scope = app.Services.CreateScope())
 {
-    try
-    {
-        var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
-        db.Database.Migrate();
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine("Migration error:");
-        Console.WriteLine(ex.ToString());
-    }
+    var db = scope.ServiceProvider.GetRequiredService<MyDbModel_Context>();
+    db.Database.Migrate();
 }
+#endregion
 
 if (!app.Environment.IsDevelopment())
 {
@@ -131,110 +130,83 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Form POST logout için lazım
 app.UseAntiforgery();
 
 #region AUTH ENDPOINTS
 
-// REGISTER
 app.MapPost("/auth/register", async (HttpContext http, MyDbModel_Context db) =>
 {
-    try
+    var form = await http.Request.ReadFormAsync();
+
+    var kullaniciAdi = (form["kullaniciAdi"].ToString() ?? "").Trim();
+    var sifre = (form["sifre"].ToString() ?? "");
+    var adSoyad = (form["adSoyad"].ToString() ?? "").Trim();
+    var email = (form["email"].ToString() ?? "").Trim();
+
+    if (kullaniciAdi.Length < 3) return Results.Redirect("/kayit?err=kullanici_adi_kisa");
+    if (string.IsNullOrWhiteSpace(sifre) || sifre.Length < 4) return Results.Redirect("/kayit?err=sifre_kisa");
+
+    var exists = await db.Kullanicilar.AnyAsync(x => x.KullaniciAdi == kullaniciAdi);
+    if (exists) return Results.Redirect("/kayit?err=kullanici_adi_alinmis");
+
+    var user = new Kullanici
     {
-        var form = await http.Request.ReadFormAsync();
+        KullaniciAdi = kullaniciAdi,
+        SifreHash = sifre, // düz şifre (senin isteğin)
+        AdSoyad = string.IsNullOrWhiteSpace(adSoyad) ? null : adSoyad,
+        Email = string.IsNullOrWhiteSpace(email) ? null : email,
+        IsAdmin = false
+    };
 
-        var kullaniciAdi = (form["kullaniciAdi"].ToString() ?? "").Trim();
-        var sifre = (form["sifre"].ToString() ?? "");
-        var adSoyad = (form["adSoyad"].ToString() ?? "").Trim();
-        var email = (form["email"].ToString() ?? "").Trim();
+    db.Kullanicilar.Add(user);
+    await db.SaveChangesAsync();
 
-        if (kullaniciAdi.Length < 3)
-            return Results.Redirect("/kayit?err=kullanici_adi_kisa");
-
-        if (string.IsNullOrWhiteSpace(sifre) || sifre.Length < 4)
-            return Results.Redirect("/kayit?err=sifre_kisa");
-
-        var exists = await db.Kullanicilar.AnyAsync(x => x.KullaniciAdi == kullaniciAdi);
-        if (exists)
-            return Results.Redirect("/kayit?err=kullanici_adi_alinmis");
-
-        var user = new Kullanici
-        {
-            KullaniciAdi = kullaniciAdi,
-            SifreHash = sifre,
-            AdSoyad = string.IsNullOrWhiteSpace(adSoyad) ? null : adSoyad,
-            Email = string.IsNullOrWhiteSpace(email) ? null : email,
-            IsAdmin = false
-        };
-
-        db.Kullanicilar.Add(user);
-        await db.SaveChangesAsync();
-
-        var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Name, user.KullaniciAdi),
-            new Claim("IsAdmin", "0"),
-        };
-
-        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        await http.SignInAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme,
-            new ClaimsPrincipal(identity),
-            new AuthenticationProperties { IsPersistent = true });
-
-        return Results.Redirect("/user/beyannamelerim");
-    }
-    catch (Exception ex)
+    var claims = new List<Claim>
     {
-        return Results.Redirect("/kayit?err=" + Uri.EscapeDataString(ex.Message));
-    }
-})
-.DisableAntiforgery();
+        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+        new Claim(ClaimTypes.Name, user.KullaniciAdi),
+        new Claim(ClaimTypes.Role, user.IsAdmin ? "Admin" : "User"),
+        new Claim("IsAdmin", user.IsAdmin ? "1" : "0"),
+    };
+
+    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+    await http.SignInAsync(
+        CookieAuthenticationDefaults.AuthenticationScheme,
+        new ClaimsPrincipal(identity),
+        new AuthenticationProperties { IsPersistent = true });
+
+    return Results.Redirect("/");
+}).DisableAntiforgery();
 
 app.MapPost("/auth/login", async (HttpContext http, MyDbModel_Context db) =>
 {
-    try
+    var form = await http.Request.ReadFormAsync();
+
+    var kullaniciAdi = (form["kullaniciAdi"].ToString() ?? "").Trim();
+    var sifre = (form["sifre"].ToString() ?? "");
+
+    var user = await db.Kullanicilar.FirstOrDefaultAsync(x => x.KullaniciAdi == kullaniciAdi);
+    if (user is null || user.SifreHash != sifre)
+        return Results.Redirect("/giris?err=bad_login");
+
+    var claims = new List<Claim>
     {
-        var form = await http.Request.ReadFormAsync();
+        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+        new Claim(ClaimTypes.Name, user.KullaniciAdi),
+        new Claim(ClaimTypes.Role, user.IsAdmin ? "Admin" : "User"),
+        new Claim("IsAdmin", user.IsAdmin ? "1" : "0"),
+    };
 
-        var kullaniciAdi = (form["kullaniciAdi"].ToString() ?? "").Trim();
-        var sifre = (form["sifre"].ToString() ?? "");
+    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-        var user = await db.Kullanicilar.FirstOrDefaultAsync(x => x.KullaniciAdi == kullaniciAdi);
-        if (user == null || user.SifreHash != sifre)
-            return Results.Redirect("/giris?err=bad_login");
+    await http.SignInAsync(
+        CookieAuthenticationDefaults.AuthenticationScheme,
+        new ClaimsPrincipal(identity),
+        new AuthenticationProperties { IsPersistent = true });
 
-        var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Name, user.KullaniciAdi),
-            new Claim("IsAdmin", user.IsAdmin ? "1" : "0"),
-        };
-
-        if (user.IsAdmin)
-            claims.Add(new Claim(ClaimTypes.Role, "Admin"));
-
-        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        await http.SignInAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme,
-            new ClaimsPrincipal(identity),
-            new AuthenticationProperties { IsPersistent = true });
-
-        return Results.Redirect("/");
-    }
-    catch (Exception ex)
-    {
-        return Results.Redirect("/giris?err=" + Uri.EscapeDataString(ex.Message));
-    }
-})
-.DisableAntiforgery();
-
-app.MapPost("/auth/logout", async (HttpContext http) =>
-{
-    await http.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-    return Results.Redirect("/giris");
-});
+    return Results.Redirect("/");
+}).DisableAntiforgery();
 
 app.MapGet("/auth/logout", async (HttpContext http) =>
 {
@@ -246,9 +218,5 @@ app.MapGet("/auth/logout", async (HttpContext http) =>
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
-
-
-
-
 
 app.Run();

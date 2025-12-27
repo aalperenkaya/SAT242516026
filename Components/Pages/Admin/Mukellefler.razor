@@ -1,26 +1,29 @@
-﻿@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
-@page "/admin/mukellefler"
+﻿@page "/admin/mukellefler"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
 
-@using SAT242516026.Data
-@using SAT242516026.Models.DbContexts
-@using Microsoft.EntityFrameworkCore
-
-@inject MyDbModel_Context Db
+@using System.Text.Json
+@using SAT242516026.Models.Enums
+@using SAT242516026.Models.MyDbModels
+@inject IMyDbModel_Provider Provider
 
 <h3 class="mb-3">Admin - Mükellefler</h3>
-<hr />
 
-@if (!string.IsNullOrWhiteSpace(Message))
+@if (!string.IsNullOrWhiteSpace(_notice))
 {
-    <div class="alert alert-info">@Message</div>
+    <div class="alert alert-@_noticeType">@_notice</div>
 }
 
-<!-- ====== FILTER + SORT + PAGINATION ====== -->
+@if (_db is null)
+{
+    <div>Yükleniyor...</div>
+    return;
+}
+
 <div class="card mb-3">
     <div class="card-header fw-bold">Filtre / Sıralama / Sayfalama</div>
     <div class="card-body">
         <div class="row g-2 align-items-end">
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <label class="form-label">Ad</label>
                 <input class="form-control" @bind="F_Ad" @bind:event="oninput" />
             </div>
@@ -62,18 +65,15 @@
             </div>
         </div>
 
-
         <div class="d-flex justify-content-between align-items-center mt-3">
-            <div class="small text-muted">
-                @($"{(TotalRecordCount == 0 ? 0 : (PageNumber - 1) * PageSize + 1)} - {Math.Min(TotalRecordCount, PageNumber * PageSize)} / {TotalRecordCount}")
-            </div>
+            <div class="small text-muted">@_rangeText</div>
 
             <div class="btn-group">
-                <button type="button" class="btn btn-outline-secondary" @onclick="FirstPage" disabled="@(PageNumber<=1)">&lt;&lt;</button>
-                <button type="button" class="btn btn-outline-secondary" @onclick="PrevPage" disabled="@(PageNumber<=1)">&lt;</button>
-                <button type="button" class="btn btn-outline-secondary" disabled>@PageNumber / @TotalPageCount</button>
-                <button type="button" class="btn btn-outline-secondary" @onclick="NextPage" disabled="@(PageNumber>=TotalPageCount)">&gt;</button>
-                <button type="button" class="btn btn-outline-secondary" @onclick="LastPage" disabled="@(PageNumber>=TotalPageCount)">&gt;&gt;</button>
+                <button type="button" class="btn btn-outline-secondary" @onclick="FirstPage" disabled="@(_db.Parameters.PageNumber<=1)">&lt;&lt;</button>
+                <button type="button" class="btn btn-outline-secondary" @onclick="PrevPage" disabled="@(_db.Parameters.PageNumber<=1)">&lt;</button>
+                <button type="button" class="btn btn-outline-secondary" disabled>@_db.Parameters.PageNumber / @_db.Parameters.TotalPageCount</button>
+                <button type="button" class="btn btn-outline-secondary" @onclick="NextPage" disabled="@(_db.Parameters.PageNumber>=_db.Parameters.TotalPageCount)">&gt;</button>
+                <button type="button" class="btn btn-outline-secondary" @onclick="LastPage" disabled="@(_db.Parameters.PageNumber>=_db.Parameters.TotalPageCount)">&gt;&gt;</button>
             </div>
 
             <button type="button" class="btn btn-outline-danger" @onclick="ResetQuery">Sıfırla</button>
@@ -81,7 +81,6 @@
     </div>
 </div>
 
-<!-- ====== CRUD FORM ====== -->
 <div class="card mb-4">
     <div class="card-header fw-bold">Mükellef (Ekle / Güncelle)</div>
     <div class="card-body">
@@ -89,29 +88,29 @@
 
             <div class="col-md-4">
                 <label class="form-label">Ad*</label>
-                <input class="form-control" @bind="mk.Ad" />
+                <input class="form-control" @bind="_model.Ad" />
             </div>
 
             <div class="col-md-2">
                 <label class="form-label">VergiNo</label>
-                <input class="form-control" @bind="mk.VergiNo" />
+                <input class="form-control" @bind="_model.VergiNo" />
             </div>
 
             <div class="col-md-2">
                 <label class="form-label">Tip</label>
-                <input class="form-control" @bind="mk.Tip" placeholder="Gerçek/Tüzel" />
+                <input class="form-control" @bind="_model.Tip" placeholder="Gerçek/Tüzel" />
             </div>
 
             <div class="col-md-2">
                 <label class="form-label">Telefon</label>
-                <input class="form-control" @bind="mk.Telefon" />
+                <input class="form-control" @bind="_model.Telefon" />
             </div>
 
             <div class="col-md-2">
                 <label class="form-label">Kullanıcı*</label>
-                <select class="form-select" @bind="mk.KullaniciId">
+                <select class="form-select" @bind="_model.KullaniciId">
                     <option value="0">Seç...</option>
-                    @foreach (var u in kullanicilar)
+                    @foreach (var u in _users)
                     {
                         <option value="@u.Id">@u.KullaniciAdi (@u.Id)</option>
                     }
@@ -119,11 +118,11 @@
             </div>
 
             <div class="col-md-2 mt-2">
-                <button type="button" class="btn btn-success w-100" @onclick="SaveMukellef">
-                    @(EditMukellefId is null ? "Ekle" : "Güncelle")
+                <button type="button" class="btn btn-success w-100" @onclick="Save">
+                    @(_operation == Operations.Add ? "Ekle" : "Güncelle")
                 </button>
 
-                @if (EditMukellefId is not null)
+                @if (_operation != Operations.Add)
                 {
                     <button type="button" class="btn btn-outline-secondary w-100 mt-2" @onclick="CancelEdit">İptal</button>
                 }
@@ -132,22 +131,21 @@
 
         <hr />
 
-        <!-- ✅ SCROLL -->
         <div class="table-responsive main-scroll">
-            <table class="table table-sm table-striped align-middle">
+            <table class="table table-sm table-striped align-middle mb-0">
                 <thead style="position: sticky; top: 0; background: white; z-index: 2;">
                     <tr>
                         <th style="width:80px;">Id</th>
                         <th>Ad</th>
-                        <th style="width:120px;">VergiNo</th>
-                        <th style="width:100px;">Tip</th>
-                        <th style="width:120px;">Telefon</th>
-                        <th style="width:140px;">KullanıcıId</th>
+                        <th style="width:140px;">VergiNo</th>
+                        <th style="width:120px;">Tip</th>
+                        <th style="width:140px;">Telefon</th>
+                        <th style="width:120px;">KullaniciId</th>
                         <th style="width:190px;"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var m in mukellefler)
+                    @foreach (var m in _db.Items ?? new())
                     {
                         <tr>
                             <td>@m.Id</td>
@@ -158,9 +156,14 @@
                             <td>@m.KullaniciId</td>
                             <td class="text-end">
                                 <button type="button" class="btn btn-sm btn-outline-primary me-2" @onclick="() => StartEdit(m)">Güncelle</button>
-                                <button type="button" class="btn btn-sm btn-outline-danger" @onclick="() => DeleteMukellef(m.Id)">Sil</button>
+                                <button type="button" class="btn btn-sm btn-outline-danger" @onclick="() => Delete(m.Id)">Sil</button>
                             </td>
                         </tr>
+                    }
+
+                    @if ((_db.Items?.Count ?? 0) == 0)
+                    {
+                        <tr><td colspan="7" class="text-center text-muted py-3">Kayıt yok.</td></tr>
                     }
                 </tbody>
             </table>
@@ -170,27 +173,30 @@
 </div>
 
 @code {
-    string? Message;
+    private const string SP_LIST = "Sp_Mukellefler";
+    private const string SP_AUR = "sp_Mukellef_Add_Update_Remove";
+    private const string SP_USERS = "Sp_Kullanicilar_Lookup";
 
-    List<Kullanici> kullanicilar = new();
-    List<Mukellef> mukellefler = new();
+    IMyDbModel<MukellefRow>? _db;
 
-    Mukellef mk = new();
-    int? EditMukellefId;
+    string? _notice;
+    string _noticeType = "info";
+    void Notice(string msg, string type = "info") { _notice = msg; _noticeType = type; }
 
-    // Filter
+    private Operations _operation = Operations.Add;
+    private MukellefRow _model = new();
+
+    private List<UserLookupRow> _users = new();
+
     string? F_Ad;
     string? F_VergiNo;
     string? F_Tip;
     string? F_Telefon;
 
-    // Pagination + Sort
     string OrderBy = "Id desc";
     int PageSize = 10;
-    int PageNumber = 1;
 
-    int TotalRecordCount;
-    int TotalPageCount => PageSize <= 0 ? 1 : Math.Max(1, (int)Math.Ceiling(TotalRecordCount / (double)PageSize));
+    string _rangeText = "0 - 0 / 0";
 
     Dictionary<string, string> OrderByItems = new()
     {
@@ -204,177 +210,187 @@
         { "Tip ↓", "Tip desc" },
         { "Telefon ↑", "Telefon asc" },
         { "Telefon ↓", "Telefon desc" },
+        { "KullaniciId ↑", "KullaniciId asc" },
+        { "KullaniciId ↓", "KullaniciId desc" },
     };
+
+    public class MukellefRow
+    {
+        public int Id { get; set; }
+        public string Ad { get; set; } = "";
+        public string? VergiNo { get; set; }
+        public string? Tip { get; set; }
+        public string? Telefon { get; set; }
+        public int KullaniciId { get; set; }
+    }
+
+    public class UserLookupRow
+    {
+        public int Id { get; set; }
+        public string KullaniciAdi { get; set; } = "";
+    }
 
     protected override async Task OnInitializedAsync()
     {
-        await RefreshUsers();
-        await RefreshList();
+        _db = Provider.Create<MukellefRow>();
+
+        await LoadUsers();
+
+        _db.Parameters.PageNumber = 1;
+        _db.Parameters.PageSize = PageSize;
+        _db.Parameters.OrderBy = OrderBy;
+
+        await Load();
     }
 
-    async Task RefreshUsers()
-    {
-        kullanicilar = await Db.Kullanicilar
-            .OrderBy(x => x.KullaniciAdi)
-            .AsNoTracking()
-            .ToListAsync();
-    }
-
-    async Task RefreshList()
+    async Task LoadUsers()
     {
         try
         {
-            IQueryable<Mukellef> q = Db.Mukellef.AsNoTracking(); // DbSet adın farklıysa düzelt!
-
-            if (!string.IsNullOrWhiteSpace(F_Ad))
-                q = q.Where(x => x.Ad.Contains(F_Ad));
-
-            if (!string.IsNullOrWhiteSpace(F_VergiNo))
-                q = q.Where(x => (x.VergiNo ?? "").Contains(F_VergiNo));
-
-            if (!string.IsNullOrWhiteSpace(F_Tip))
-                q = q.Where(x => (x.Tip ?? "").Contains(F_Tip));
-
-            if (!string.IsNullOrWhiteSpace(F_Telefon))
-                q = q.Where(x => (x.Telefon ?? "").Contains(F_Telefon));
-
-            TotalRecordCount = await q.CountAsync();
-
-            if (PageNumber < 1) PageNumber = 1;
-            if (PageNumber > TotalPageCount) PageNumber = TotalPageCount;
-
-            q = OrderBy switch
-            {
-                "Id asc" => q.OrderBy(x => x.Id),
-                "Id desc" => q.OrderByDescending(x => x.Id),
-                "Ad asc" => q.OrderBy(x => x.Ad),
-                "Ad desc" => q.OrderByDescending(x => x.Ad),
-                "VergiNo asc" => q.OrderBy(x => x.VergiNo),
-                "VergiNo desc" => q.OrderByDescending(x => x.VergiNo),
-                "Tip asc" => q.OrderBy(x => x.Tip),
-                "Tip desc" => q.OrderByDescending(x => x.Tip),
-                "Telefon asc" => q.OrderBy(x => x.Telefon),
-                "Telefon desc" => q.OrderByDescending(x => x.Telefon),
-                _ => q.OrderByDescending(x => x.Id)
-            };
-
-            mukellefler = await q
-                .Skip((PageNumber - 1) * PageSize)
-                .Take(PageSize)
-                .ToListAsync();
-
-            Message = null;
+            _users = await Provider.SetItems<UserLookupRow>(SP_USERS);
         }
         catch (Exception ex)
         {
-            Message = ex.InnerException?.Message ?? ex.Message;
+            _users = new();
+            Notice("Kullanıcı listesi alınamadı: " + (ex.InnerException?.Message ?? ex.Message), "warning");
         }
-
-        StateHasChanged();
     }
 
-    async Task ApplyQuery()
+    void RefreshRangeText()
     {
-        PageNumber = 1;
-        await RefreshList();
+        var total = _db?.Parameters.TotalRecordCount ?? 0;
+        var page = _db?.Parameters.PageNumber ?? 1;
+        var size = _db?.Parameters.PageSize ?? 10;
+
+        if (total <= 0) { _rangeText = "0 - 0 / 0"; return; }
+
+        var start = (page - 1) * size + 1;
+        var end = Math.Min(total, page * size);
+        _rangeText = $"{start} - {end} / {total}";
     }
 
-    async Task ResetQuery()
+    private async Task Load()
     {
+        if (_db is null) return;
+
+        _db.Parameters.PageSize = PageSize;
+        _db.Parameters.OrderBy = OrderBy;
+
+        var where = new Dictionary<string, string>();
+        if (!string.IsNullOrWhiteSpace(F_Ad)) where["Ad"] = F_Ad.Trim();
+        if (!string.IsNullOrWhiteSpace(F_VergiNo)) where["VergiNo"] = F_VergiNo.Trim();
+        if (!string.IsNullOrWhiteSpace(F_Tip)) where["Tip"] = F_Tip.Trim();
+        if (!string.IsNullOrWhiteSpace(F_Telefon)) where["Telefon"] = F_Telefon.Trim();
+
+        _db.Parameters.Where = where.Count == 0 ? null : where;
+
+        await Provider.Execute(_db, SP_LIST, isPagination: true);
+
+        if (!string.IsNullOrWhiteSpace(_db.Message))
+            Notice(_db.Message!, "warning");
+
+        if (_db.Parameters.TotalPageCount <= 0) _db.Parameters.TotalPageCount = 1;
+        if (_db.Parameters.PageNumber < 1) _db.Parameters.PageNumber = 1;
+        if (_db.Parameters.PageNumber > _db.Parameters.TotalPageCount) _db.Parameters.PageNumber = _db.Parameters.TotalPageCount;
+
+        RefreshRangeText();
+    }
+
+    private async Task ApplyQuery()
+    {
+        if (_db is null) return;
+        _db.Parameters.PageNumber = 1;
+        await Load();
+    }
+
+    private async Task ResetQuery()
+    {
+        if (_db is null) return;
+
         F_Ad = F_VergiNo = F_Tip = F_Telefon = null;
         OrderBy = "Id desc";
         PageSize = 10;
-        PageNumber = 1;
-        await RefreshList();
+
+        _db.Parameters.PageNumber = 1;
+        await Load();
     }
 
-    async Task FirstPage() { PageNumber = 1; await RefreshList(); }
-    async Task LastPage() { PageNumber = TotalPageCount; await RefreshList(); }
-    async Task PrevPage() { if (PageNumber > 1) PageNumber--; await RefreshList(); }
-    async Task NextPage() { if (PageNumber < TotalPageCount) PageNumber++; await RefreshList(); }
+    private async Task FirstPage() { if (_db is null) return; _db.Parameters.PageNumber = 1; await Load(); }
+    private async Task LastPage() { if (_db is null) return; _db.Parameters.PageNumber = _db.Parameters.TotalPageCount; await Load(); }
+    private async Task PrevPage() { if (_db is null) return; if (_db.Parameters.PageNumber > 1) _db.Parameters.PageNumber--; await Load(); }
+    private async Task NextPage() { if (_db is null) return; if (_db.Parameters.PageNumber < _db.Parameters.TotalPageCount) _db.Parameters.PageNumber++; await Load(); }
 
-    void StartEdit(Mukellef m)
+    private void StartEdit(MukellefRow m)
     {
-        EditMukellefId = m.Id;
-        mk = new Mukellef
+        _operation = Operations.Update;
+        _model = new MukellefRow
             {
+                Id = m.Id,
                 Ad = m.Ad,
                 VergiNo = m.VergiNo,
                 Tip = m.Tip,
                 Telefon = m.Telefon,
                 KullaniciId = m.KullaniciId
             };
-        Message = "Düzenleme modunda.";
+        Notice("Düzenleme modunda.", "info");
     }
 
-    void CancelEdit()
+    private void CancelEdit()
     {
-        EditMukellefId = null;
-        mk = new Mukellef();
-        Message = "İptal edildi.";
+        _operation = Operations.Add;
+        _model = new MukellefRow();
+        Notice("İptal edildi.", "info");
     }
 
-
-    async Task SaveMukellef()
+    private async Task Save()
     {
-        if (string.IsNullOrWhiteSpace(mk.Ad)) { Message = "Ad zorunlu."; return; }
-        if (mk.KullaniciId <= 0) { Message = "Kullanıcı seç."; return; }
+        _notice = null;
 
-        try
+        if (string.IsNullOrWhiteSpace(_model.Ad))
         {
-            if (EditMukellefId is null)
-            {
-                Db.Mukellef.Add(mk);
-                await Db.SaveChangesAsync();
-                Message = "Eklendi.";
-            }
-            else
-            {
-                var entity = await Db.Mukellef.FindAsync(EditMukellefId.Value);
-                if (entity is null) { Message = "Bulunamadı."; return; }
-
-                entity.Ad = mk.Ad;
-                entity.VergiNo = mk.VergiNo;
-                entity.Tip = mk.Tip;
-                entity.Telefon = mk.Telefon;
-                entity.KullaniciId = mk.KullaniciId;
-
-                await Db.SaveChangesAsync();
-                Message = "Güncellendi.";
-                EditMukellefId = null;
-            }
-
-            mk = new Mukellef();
-            await RefreshList();
+            Notice("Ad zorunlu.", "warning");
+            return;
         }
-        catch (Exception ex)
+        if (_model.KullaniciId <= 0)
         {
-            Message = ex.InnerException?.Message ?? ex.Message;
+            Notice("Kullanıcı seç.", "warning");
+            return;
         }
+
+        var json = JsonSerializer.Serialize(_model);
+        var op = _operation == Operations.Add ? "add" : "update";
+
+        var result = await Provider.SetItems<MyDbModel_Result_KeyValue<string, bool>>(
+            SP_AUR,
+            ("@operation", op),
+            ("@jsonvalues", json)
+        );
+
+        var r = result.FirstOrDefault();
+        if (r?.Value == true) Notice(r.Key ?? "İşlem başarılı", "success");
+        else Notice(r?.Key ?? "İşlem başarısız", "danger");
+
+        CancelEdit();
+        await Load();
     }
 
-    async Task DeleteMukellef(int id)
+    private async Task Delete(int id)
     {
-        try
-        {
-            var entity = await Db.Mukellef.FindAsync(id);
-            if (entity is null) { Message = "Bulunamadı."; return; }
+        _notice = null;
 
-            Db.Mukellef.Remove(entity);
-            await Db.SaveChangesAsync();
-            Message = "Silindi.";
+        var json = JsonSerializer.Serialize(new { Id = id });
 
-            if (EditMukellefId == id)
-            {
-                EditMukellefId = null;
-                mk = new Mukellef();
-            }
+        var result = await Provider.SetItems<MyDbModel_Result_KeyValue<string, bool>>(
+            SP_AUR,
+            ("@operation", "remove"),
+            ("@jsonvalues", json)
+        );
 
-            await RefreshList();
-        }
-        catch (Exception ex)
-        {
-            Message = ex.InnerException?.Message ?? ex.Message;
-        }
+        var r = result.FirstOrDefault();
+        if (r?.Value == true) Notice(r.Key ?? "Silindi", "success");
+        else Notice(r?.Key ?? "Silinemedi", "danger");
+
+        if (_model.Id == id) CancelEdit();
+        await Load();
     }
 }

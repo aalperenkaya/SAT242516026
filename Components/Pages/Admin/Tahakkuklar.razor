@@ -1,20 +1,24 @@
-﻿@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
-@page "/admin/tahakkuklar"
+﻿@page "/admin/tahakkuklar"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
 
 @using SAT242516026.Data
-@using SAT242516026.Models.DbContexts
-@using Microsoft.EntityFrameworkCore
-@inject MyDbModel_Context Db
+@using SAT242516026.Models.Enums
+@using SAT242516026.Models.MyDbModels
+@using System.Globalization
+@using System.Text.Json
+
+@inject IMyDbModel<Tahakkuk> _db
+@inject IMyDbModel_Provider _provider
+@inject IJSRuntime JS
 
 <h3 class="mb-3">Admin - Tahakkuklar</h3>
 <hr />
 
-@if (!string.IsNullOrWhiteSpace(Message))
+@if (!string.IsNullOrWhiteSpace(_db.Message))
 {
-    <div class="alert alert-info">@Message</div>
+    <div class="alert alert-info">@_db.Message</div>
 }
 
-<!-- ====== FILTER + SORT + PAGINATION ====== -->
 <div class="card mb-3">
     <div class="card-header fw-bold">Filtre / Sıralama / Sayfalama</div>
     <div class="card-body">
@@ -67,15 +71,17 @@
 
         <div class="d-flex justify-content-between align-items-center mt-3">
             <div class="small text-muted">
-                @($"{(TotalRecordCount == 0 ? 0 : (PageNumber - 1) * PageSize + 1)} - {Math.Min(TotalRecordCount, PageNumber * PageSize)} / {TotalRecordCount}")
+                @($"{(_db.Parameters.TotalRecordCount == 0 ? 0 : (_db.Parameters.PageNumber - 1) * _db.Parameters.PageSize + 1)} - {Math.Min(_db.Parameters.TotalRecordCount, _db.Parameters.PageNumber * _db.Parameters.PageSize)} / {_db.Parameters.TotalRecordCount}")
             </div>
 
             <div class="btn-group">
-                <button type="button" class="btn btn-outline-secondary" @onclick="FirstPage" disabled="@(PageNumber<=1)">&lt;&lt;</button>
-                <button type="button" class="btn btn-outline-secondary" @onclick="PrevPage" disabled="@(PageNumber<=1)">&lt;</button>
-                <button type="button" class="btn btn-outline-secondary" disabled>@PageNumber / @TotalPageCount</button>
-                <button type="button" class="btn btn-outline-secondary" @onclick="NextPage" disabled="@(PageNumber>=TotalPageCount)">&gt;</button>
-                <button type="button" class="btn btn-outline-secondary" @onclick="LastPage" disabled="@(PageNumber>=TotalPageCount)">&gt;&gt;</button>
+                <button type="button" class="btn btn-outline-secondary" @onclick="FirstPage" disabled="@(_db.Parameters.PageNumber<=1)">&lt;&lt;</button>
+                <button type="button" class="btn btn-outline-secondary" @onclick="PrevPage" disabled="@(_db.Parameters.PageNumber<=1)">&lt;</button>
+                <button type="button" class="btn btn-outline-secondary" disabled>
+                    @_db.Parameters.PageNumber / @_db.Parameters.TotalPageCount
+                </button>
+                <button type="button" class="btn btn-outline-secondary" @onclick="NextPage" disabled="@(_db.Parameters.PageNumber>=_db.Parameters.TotalPageCount)">&gt;</button>
+                <button type="button" class="btn btn-outline-secondary" @onclick="LastPage" disabled="@(_db.Parameters.PageNumber>=_db.Parameters.TotalPageCount)">&gt;&gt;</button>
             </div>
 
             <button type="button" class="btn btn-outline-danger" @onclick="ResetQuery">Sıfırla</button>
@@ -83,39 +89,32 @@
     </div>
 </div>
 
-<!-- ====== CRUD ====== -->
 <div class="card mb-4">
     <div class="card-header fw-bold">Tahakkuk (Ekle / Güncelle)</div>
     <div class="card-body">
         <div class="row g-2 align-items-end">
 
             <div class="col-md-5">
-                <label class="form-label">Beyanname*</label>
-                <select class="form-select" @bind="th.BeyannameId">
-                    <option value="0">Seç...</option>
-                    @foreach (var b in beyannameler)
-                    {
-                        <option value="@b.Id">#@b.Id - @b.Mukellef?.Ad - @b.BeyannameTipi?.Ad (@b.Yil)</option>
-                    }
-                </select>
+                <label class="form-label">BeyannameId*</label>
+                <input type="number" class="form-control" @bind="_model.BeyannameId" />
             </div>
 
             <div class="col-md-3">
                 <label class="form-label">Tutar*</label>
-                <input type="number" step="0.01" class="form-control" @bind="th.Tutar" />
+                <input type="number" step="0.01" class="form-control" @bind="_model.Tutar" />
             </div>
 
             <div class="col-md-2">
                 <label class="form-label">Tarih</label>
-                <input type="date" class="form-control" @bind="th.Tarih" />
+                <input type="date" class="form-control" @bind="_model.Tarih" />
             </div>
 
             <div class="col-md-2">
-                <button type="button" class="btn btn-success w-100" @onclick="SaveTahakkuk">
-                    @(EditId is null ? "Ekle" : "Güncelle")
+                <button type="button" class="btn btn-success w-100" @onclick="Save">
+                    @(_operation == Operations.Add ? "Ekle" : "Güncelle")
                 </button>
 
-                @if (EditId is not null)
+                @if (_operation != Operations.Add)
                 {
                     <button type="button" class="btn btn-outline-secondary w-100 mt-2" @onclick="CancelEdit">İptal</button>
                 }
@@ -124,9 +123,9 @@
 
         <hr />
 
-        <div class="table-responsive main-scroll">
+        <div class="table-responsive">
             <table class="table table-sm table-striped align-middle mb-0">
-                <thead style="position: sticky; top: 0; background: white; z-index: 2;">
+                <thead>
                     <tr>
                         <th style="width:80px;">Id</th>
                         <th style="width:120px;">BeyannameId</th>
@@ -136,7 +135,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var t in tahakkuklar)
+                    @foreach (var t in _db.Items)
                     {
                         <tr>
                             <td>@t.Id</td>
@@ -144,13 +143,19 @@
                             <td>@t.Tutar</td>
                             <td>@(t.Tarih?.ToString("yyyy-MM-dd") ?? "-")</td>
                             <td class="text-end">
-                                <button type="button" class="btn btn-sm btn-outline-primary me-2" @onclick="() => StartEdit(t)">Güncelle</button>
-                                <button type="button" class="btn btn-sm btn-outline-danger" @onclick="() => DeleteTahakkuk(t.Id)">Sil</button>
+                                <button type="button" class="btn btn-sm btn-outline-primary me-2"
+                                        @onclick="() => StartEdit(t)">
+                                    Güncelle
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                        @onclick="() => Delete(t.Id)">
+                                    Sil
+                                </button>
                             </td>
                         </tr>
                     }
 
-                    @if (tahakkuklar.Count == 0)
+                    @if (_db.Items.Count == 0)
                     {
                         <tr><td colspan="5" class="text-center text-muted py-3">Kayıt yok.</td></tr>
                     }
@@ -161,31 +166,19 @@
 </div>
 
 @code {
-    string? Message;
+    private readonly string _spList = "Sp_Tahakkuklar";
+    private readonly string _spAur = "sp_Tahakkuk_Add_Update_Remove";
 
-    // dropdown
-    List<Beyanname> beyannameler = new();
+    private Operations _operation = Operations.Add;
+    private Tahakkuk _model = new() { Tutar = 0m };
 
-    // list
-    List<Tahakkuk> tahakkuklar = new();
-
-    // model
-    Tahakkuk th = new() { Tutar = 0m };
-    int? EditId;
-
-    // Filters
     int? F_BeyannameId;
     decimal? F_MinTutar;
     decimal? F_MaxTutar;
     DateTime? F_Tarih;
 
-    // Paging + Sort
     string OrderBy = "Id desc";
     int PageSize = 10;
-    int PageNumber = 1;
-
-    int TotalRecordCount;
-    int TotalPageCount => PageSize <= 0 ? 1 : Math.Max(1, (int)Math.Ceiling(TotalRecordCount / (double)PageSize));
 
     Dictionary<string, string> OrderByItems = new()
     {
@@ -201,156 +194,122 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await RefreshBeyannameDropdown();
-        await RefreshList();
+        _db.Parameters.PageNumber = 1;
+        _db.Parameters.PageSize = PageSize;
+        _db.Parameters.OrderBy = OrderBy;
+
+        await Load();
     }
 
-    async Task RefreshBeyannameDropdown()
+    private async Task Load()
     {
-        beyannameler = await Db.Beyanname
-            .Include(x => x.Mukellef)
-            .Include(x => x.BeyannameTipi)
-            .OrderByDescending(x => x.Id)
-            .Take(500)
-            .AsNoTracking()
-            .ToListAsync();
+        _db.Parameters.Where = new Dictionary<string, string>();
+
+        if (F_BeyannameId is not null && F_BeyannameId > 0)
+            _db.Parameters.Where["BeyannameId"] = F_BeyannameId.Value.ToString();
+
+        if (F_MinTutar is not null)
+            _db.Parameters.Where["MinTutar"] = F_MinTutar.Value.ToString(CultureInfo.InvariantCulture);
+
+        if (F_MaxTutar is not null)
+            _db.Parameters.Where["MaxTutar"] = F_MaxTutar.Value.ToString(CultureInfo.InvariantCulture);
+
+        if (F_Tarih is not null)
+            _db.Parameters.Where["Tarih"] = F_Tarih.Value.ToString("yyyy-MM-dd");
+
+        _db.Parameters.OrderBy = OrderBy;
+        _db.Parameters.PageSize = PageSize;
+
+        await _provider.Execute(_db, _spList, isPagination: true);
     }
 
-    async Task RefreshList()
+    private async Task ApplyQuery()
     {
-        try
-        {
-            IQueryable<Tahakkuk> q = Db.Tahakkuk.AsNoTracking();
-
-            if (F_BeyannameId is not null && F_BeyannameId > 0)
-                q = q.Where(x => x.BeyannameId == F_BeyannameId);
-
-            if (F_MinTutar is not null)
-                q = q.Where(x => x.Tutar >= F_MinTutar);
-
-            if (F_MaxTutar is not null)
-                q = q.Where(x => x.Tutar <= F_MaxTutar);
-
-            if (F_Tarih is not null)
-                q = q.Where(x => x.Tarih == F_Tarih);
-
-            TotalRecordCount = await q.CountAsync();
-
-            if (PageNumber < 1) PageNumber = 1;
-            if (PageNumber > TotalPageCount) PageNumber = TotalPageCount;
-
-            q = OrderBy switch
-            {
-                "Id asc" => q.OrderBy(x => x.Id),
-                "Id desc" => q.OrderByDescending(x => x.Id),
-                "Tutar asc" => q.OrderBy(x => x.Tutar),
-                "Tutar desc" => q.OrderByDescending(x => x.Tutar),
-                "Tarih asc" => q.OrderBy(x => x.Tarih),
-                "Tarih desc" => q.OrderByDescending(x => x.Tarih),
-                "BeyannameId asc" => q.OrderBy(x => x.BeyannameId),
-                "BeyannameId desc" => q.OrderByDescending(x => x.BeyannameId),
-                _ => q.OrderByDescending(x => x.Id)
-            };
-
-            tahakkuklar = await q
-                .Skip((PageNumber - 1) * PageSize)
-                .Take(PageSize)
-                .ToListAsync();
-
-            Message = null;
-        }
-        catch (Exception ex)
-        {
-            Message = ex.InnerException?.Message ?? ex.Message;
-        }
+        _db.Parameters.PageNumber = 1;
+        await Load();
     }
 
-    async Task ApplyQuery() { PageNumber = 1; await RefreshList(); }
-
-    async Task ResetQuery()
+    private async Task ResetQuery()
     {
         F_BeyannameId = null;
         F_MinTutar = null;
         F_MaxTutar = null;
         F_Tarih = null;
+
         OrderBy = "Id desc";
         PageSize = 10;
-        PageNumber = 1;
-        await RefreshList();
+
+        _db.Parameters.PageNumber = 1;
+        await Load();
     }
 
-    async Task FirstPage() { PageNumber = 1; await RefreshList(); }
-    async Task LastPage() { PageNumber = TotalPageCount; await RefreshList(); }
-    async Task PrevPage() { if (PageNumber > 1) PageNumber--; await RefreshList(); }
-    async Task NextPage() { if (PageNumber < TotalPageCount) PageNumber++; await RefreshList(); }
+    private async Task FirstPage() { _db.Parameters.PageNumber = 1; await Load(); }
+    private async Task LastPage() { _db.Parameters.PageNumber = _db.Parameters.TotalPageCount; await Load(); }
+    private async Task PrevPage() { if (_db.Parameters.PageNumber > 1) _db.Parameters.PageNumber--; await Load(); }
+    private async Task NextPage() { if (_db.Parameters.PageNumber < _db.Parameters.TotalPageCount) _db.Parameters.PageNumber++; await Load(); }
 
-    void StartEdit(Tahakkuk t)
+    private void StartEdit(Tahakkuk t)
     {
-        EditId = t.Id;
-        th = new() { BeyannameId = t.BeyannameId, Tutar = t.Tutar, Tarih = t.Tarih };
-        Message = "Düzenleme modunda.";
-    }
-
-    void CancelEdit()
-    {
-        EditId = null;
-        th = new() { Tutar = 0m };
-        Message = "İptal edildi.";
-    }
-
-    async Task SaveTahakkuk()
-    {
-        if (th.BeyannameId <= 0) { Message = "Beyanname seç."; return; }
-        if (th.Tutar < 0) { Message = "Tutar negatif olamaz."; return; }
-
-        try
-        {
-            if (EditId is null)
-                Db.Tahakkuk.Add(th);
-            else
+        _operation = Operations.Update;
+        _model = new Tahakkuk
             {
-                var entity = await Db.Tahakkuk.FindAsync(EditId.Value);
-                if (entity is null) { Message = "Bulunamadı."; return; }
-
-                entity.BeyannameId = th.BeyannameId;
-                entity.Tutar = th.Tutar;
-                entity.Tarih = th.Tarih;
-            }
-
-            await Db.SaveChangesAsync();
-            Message = EditId is null ? "Eklendi." : "Güncellendi.";
-            EditId = null;
-            th = new() { Tutar = 0m };
-
-            await RefreshList();
-        }
-        catch (Exception ex)
-        {
-            Message = ex.InnerException?.Message ?? ex.Message;
-        }
+                Id = t.Id,
+                BeyannameId = t.BeyannameId,
+                Tutar = t.Tutar,
+                Tarih = t.Tarih
+            };
     }
 
-    async Task DeleteTahakkuk(int id)
+    private void CancelEdit()
     {
-        try
+        _operation = Operations.Add;
+        _model = new Tahakkuk { Tutar = 0m };
+    }
+
+    private async Task Save()
+    {
+        if (_model.BeyannameId <= 0)
         {
-            var hasOdeme = await Db.Odeme.AnyAsync(o => o.TahakkukId == id);
-            if (hasOdeme) { Message = "Bu tahakkuka bağlı ödeme var. Önce ödemeleri silmelisin."; return; }
-
-            var entity = await Db.Tahakkuk.FindAsync(id);
-            if (entity is null) { Message = "Bulunamadı."; return; }
-
-            Db.Tahakkuk.Remove(entity);
-            await Db.SaveChangesAsync();
-            Message = "Silindi.";
-
-            if (EditId == id) { EditId = null; th = new() { Tutar = 0m }; }
-
-            await RefreshList();
+            await JS.InvokeVoidAsync("alert", "BeyannameId gir.");
+            return;
         }
-        catch (Exception ex)
+
+        if (_model.Tutar < 0)
         {
-            Message = ex.InnerException?.Message ?? ex.Message;
+            await JS.InvokeVoidAsync("alert", "Tutar negatif olamaz.");
+            return;
         }
+
+        var json = JsonSerializer.Serialize(_model);
+        var op = _operation == Operations.Add ? "add" : "update";
+
+        var result = await _provider.SetItems<MyDbModel_Result_KeyValue<string, bool>>(
+            _spAur,
+            ("@operation", op),
+            ("@jsonvalues", json)
+        );
+
+        var r = result.FirstOrDefault();
+        await JS.InvokeVoidAsync("alert", $"{r?.Key} : {r?.Value}");
+
+        CancelEdit();
+        await Load();
+    }
+
+    private async Task Delete(int id)
+    {
+        var json = JsonSerializer.Serialize(new { Id = id });
+
+        var result = await _provider.SetItems<MyDbModel_Result_KeyValue<string, bool>>(
+            _spAur,
+            ("@operation", "remove"),
+            ("@jsonvalues", json)
+        );
+
+        var r = result.FirstOrDefault();
+        await JS.InvokeVoidAsync("alert", $"{r?.Key} : {r?.Value}");
+
+        if (_model.Id == id) CancelEdit();
+        await Load();
     }
 }

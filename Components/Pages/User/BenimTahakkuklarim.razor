@@ -1,17 +1,19 @@
-﻿@attribute [Microsoft.AspNetCore.Authorization.Authorize]
-@page "/user/tahakkuklarim"
-@using SAT242516026.Data
-@using SAT242516026.Models.DbContexts
-@using Microsoft.EntityFrameworkCore
-@using Microsoft.AspNetCore.Components.Authorization
+﻿@page "/user/tahakkuklarim"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
 
-@inject MyDbModel_Context Db
+@using SAT242516026.Data
+@using SAT242516026.Models.MyDbModels
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims
+
+@inject IMyDbModel<Tahakkuk> _db
+@inject IMyDbModel_Provider _provider
 
 <h3 class="mb-3">Benim Tahakkuklarım</h3>
 
-@if (!string.IsNullOrWhiteSpace(Message))
+@if (!string.IsNullOrWhiteSpace(_db.Message))
 {
-    <div class="alert alert-info">@Message</div>
+    <div class="alert alert-info">@_db.Message</div>
 }
 
 <table class="table table-sm table-striped">
@@ -24,13 +26,20 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var t in items)
+        @foreach (var t in _db.Items)
         {
             <tr>
                 <td>@t.Id</td>
                 <td>@t.BeyannameId</td>
-                <td>@t.Tutar.ToString("C")</td>
-                <td>@t.Tarih?.ToString("yyyy-MM-dd")</td>
+                <td>@t.Tutar</td>
+                <td>@(t.Tarih?.ToString("yyyy-MM-dd") ?? "-")</td>
+            </tr>
+        }
+
+        @if (_db.Items.Count == 0)
+        {
+            <tr>
+                <td colspan="4" class="text-center text-muted py-3">Kayıt yok.</td>
             </tr>
         }
     </tbody>
@@ -38,27 +47,28 @@
 
 @code {
     [CascadingParameter] private Task<AuthenticationState> AuthStateTask { get; set; } = default!;
-    string? Message;
-    int CurrentUserId;
-
-    List<Tahakkuk> items = new();
+    private readonly string _sp = "Sp_User_Tahakkuklarim";
 
     protected override async Task OnInitializedAsync()
     {
         var auth = await AuthStateTask;
-        var idStr = auth.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-        if (!int.TryParse(idStr, out CurrentUserId)) CurrentUserId = 0;
+        var idStr = auth.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-        try
+        if (!int.TryParse(idStr, out var userId) || userId <= 0)
         {
-            items = await Db.Tahakkuk
-                .Include(x => x.Beyanname)
-                    .ThenInclude(b => b.Mukellef)
-                .Where(x => x.Beyanname.Mukellef.KullaniciId == CurrentUserId)
-                .OrderByDescending(x => x.Id)
-                .AsNoTracking()
-                .ToListAsync();
+            _db.Message = "Kullanıcı bulunamadı / oturum yok.";
+            return;
         }
-        catch (Exception ex) { Message = ex.Message; }
+
+        _db.Parameters.PageNumber = 1;
+        _db.Parameters.PageSize = 200;
+        _db.Parameters.OrderBy = "Id desc";
+
+        _db.Parameters.Where = new Dictionary<string, string>
+        {
+            { "CurrentUserId", userId.ToString() }
+        };
+
+        await _provider.Execute(_db, _sp, isPagination: true);
     }
 }

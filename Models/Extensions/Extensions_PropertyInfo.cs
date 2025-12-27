@@ -1,44 +1,22 @@
 ﻿using System.Reflection;
-using EditableAttr = SAT242516026.Models.Attributes.EditableAttribute;
-using ViewableAttr = SAT242516026.Models.Attributes.ViewableAttribute;
-using SortableAttr = SAT242516026.Models.Attributes.SortableAttribute;
 using SAT242516026.Models.Attributes;
 
 namespace SAT242516026.Models.Extensions;
 
 public static class Extensions_PropertyInfo
 {
-    public static bool Sortable(this PropertyInfo prop)
-    {
-        if (prop.GetCustomAttribute(typeof(SortableAttr)) is SortableAttr a)
-            return a.Value;
-        return false;
-    }
+    public static bool IsEditable(this PropertyInfo p)
+        => p.GetCustomAttribute<EditableAttribute>()?.Enabled ?? false;
 
-    public static bool Editable(this PropertyInfo prop)
-    {
-        if (prop.GetCustomAttribute(typeof(EditableAttr)) is EditableAttr a)
-            return a.Value;
-        return false;
-    }
+    public static bool IsViewable(this PropertyInfo p)
+        => p.GetCustomAttribute<ViewableAttribute>()?.Enabled ?? false;
 
-    public static bool Viewable(this PropertyInfo prop)
-    {
-        if (prop.GetCustomAttribute(typeof(ViewableAttr)) is ViewableAttr a)
-            return a.Value;
-        return false;
-    }
+    public static bool IsSortable(this PropertyInfo p)
+        => p.GetCustomAttribute<SortableAttribute>()?.Enabled ?? false;
 
-    public static string LocalizedDescription(this PropertyInfo prop)
-    {
-        try
-        {
-            var a = prop.GetCustomAttribute<LocalizedDescriptionAttribute>();
-            return a?.Description ?? prop.Name;
-        }
-        catch
-        {
-            return prop.Name;
-        }
-    }
+    public static string? LocalizedDescription(this PropertyInfo p)
+        => p.GetCustomAttribute<LocalizedDescriptionAttribute>()?.Key;
+
+    public static string LocalizedDescriptionOrName(this PropertyInfo p)
+        => p.LocalizedDescription() ?? p.Name;
 }

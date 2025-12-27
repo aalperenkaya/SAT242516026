@@ -1,15 +1,18 @@
 ﻿@page "/admin/dashboard"
 @attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
 
-@using Microsoft.EntityFrameworkCore
-@using SAT242516026.Models.DbContexts
-@inject MyDbModel_Context Db
+@using SAT242516026.Models.MyDbModels
+@inject IMyDbModel_Provider Provider
 @inject IJSRuntime JS
 
 <h3 class="mb-3">Admin Dashboard</h3>
 
-<div class="row g-3">
+@if (!string.IsNullOrWhiteSpace(_msg))
+{
+    <div class="alert alert-info">@_msg</div>
+}
 
+<div class="row g-3">
     <div class="col-lg-6">
         <div class="card">
             <div class="card-header fw-bold">Kayıt Sayıları</div>
@@ -45,129 +48,113 @@
             </div>
         </div>
     </div>
-
 </div>
 
 @code {
-    bool _drawn;
+    private bool _drawn;
+    private string? _msg;
 
+    private const string SP_COUNTS = "Sp_Dashboard_Counts";
+    private const string SP_DURUM = "Sp_Dashboard_Durum";
+    private const string SP_FIN = "Sp_Dashboard_Finans";
+    private const string SP_AY = "Sp_Dashboard_OdemeAylik";
+
+    // SP kolon adlarıyla aynı olsun (mapping derdi çıkmasın)
+    public class CountRow
+    {
+        public int Mukellef { get; set; }
+        public int Beyanname { get; set; }
+        public int Tahakkuk { get; set; }
+        public int Odeme { get; set; }
+    }
+
+    public class DurumRow
+    {
+        public string Durum { get; set; } = "Bilinmiyor";
+        public int Cnt { get; set; }
+    }
+
+    public class FinRow
+    {
+        public decimal ToplamTahakkuk { get; set; }
+        public decimal ToplamOdeme { get; set; }
+    }
+
+    public class AyRow
+    {
+        public string Ay { get; set; } = "";
+        public decimal Tutar { get; set; }
+    }
+
+    // Chart.js dataset formatı
     public class ChartSeries
     {
-        public string label { get; set; } = string.Empty;
+        public string label { get; set; } = "";
         public double[] data { get; set; } = Array.Empty<double>();
-        public string backgroundColor { get; set; } = "rgba(0,127,0,0.35)";
-        public string borderColor { get; set; } = "rgba(0,127,0,1)";
-        public int borderWidth { get; set; } = 1;
+        public int borderWidth { get; set; } = 2;
         public bool fill { get; set; } = false;
         public double? tension { get; set; }
     }
-    private ChartSeries[] GetSeriesList(
-        string label,
-        IEnumerable<double> data,
-        string backgroundColor = "rgba(0,127,0,0.35)",
-        string borderColor = "rgba(0,127,0,1)",
-        int borderWidth = 1,
-        bool fill = false,
-        double? tension = null
-    )
-    {
-        return new[]
-        {
-            new ChartSeries
-            {
-                label = label,
-                data = data.ToArray(),
-                backgroundColor = backgroundColor,
-                borderColor = borderColor,
-                borderWidth = borderWidth,
-                fill = fill,
-                tension = tension
-            }
-        };
-    }
+
+    private static ChartSeries[] Series(string label, IEnumerable<double> data, bool fill = false, double? tension = null)
+        => new[] { new ChartSeries { label = label, data = data.ToArray(), fill = fill, tension = tension } };
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (!firstRender || _drawn) return;
         _drawn = true;
 
-        // 1) Kayıt sayıları
-        var mukellefCount = await Db.Mukellef.CountAsync();
-        var beyannameCount = await Db.Beyanname.CountAsync();
-        var tahakkukCount = await Db.Tahakkuk.CountAsync();
-        var odemeCount = await Db.Odeme.CountAsync();
+        try
+        {
+            // Chart.js scriptleri daha yeni yüklenmiş olabiliyor → mini bekleme
+            await Task.Delay(50);
 
-        await JS.InvokeVoidAsync(
-            "drawBarChart",
-            "chartBar1",
-            new[] { "Mükellef", "Beyanname", "Tahakkuk", "Ödeme" },
-            GetSeriesList("Toplam", new double[] {
-                mukellefCount, beyannameCount, tahakkukCount, odemeCount
-            }),
-            true, true, "x"
-        );
+            // 1) Counts
+            var counts = (await Provider.SetItems<CountRow>(SP_COUNTS)).FirstOrDefault() ?? new CountRow();
 
-        // 2) Duruma göre beyanname
-        var durumList = await Db.Beyanname
-            .GroupBy(x => x.Durum ?? "Bilinmiyor")
-            .Select(g => new { g.Key, Cnt = g.Count() })
-            .ToListAsync();
+            await JS.InvokeVoidAsync("drawBarChart",
+                "chartBar1",
+                new[] { "Mükellef", "Beyanname", "Tahakkuk", "Ödeme" },
+                Series("Toplam", new double[] { counts.Mukellef, counts.Beyanname, counts.Tahakkuk, counts.Odeme }),
+                true, true, "x"
+            );
 
-        await JS.InvokeVoidAsync(
-            "drawBarChart",
-            "chartBarDurum",
-            durumList.Select(x => x.Key).ToArray(),
-            GetSeriesList("Adet", durumList.Select(x => (double)x.Cnt)),
-            true, true, "x"
-        );
+            // 2) Durum
+            var durum = await Provider.SetItems<DurumRow>(SP_DURUM);
+            await JS.InvokeVoidAsync("drawBarChart",
+                "chartBarDurum",
+                durum.Select(x => x.Durum).ToArray(),
+                Series("Adet", durum.Select(x => (double)x.Cnt)),
+                true, true, "x"
+            );
 
-        // 3) Tahakkuk / Ödeme / Kalan
-        var toplamTahakkuk = await Db.Tahakkuk.SumAsync(x => (decimal?)x.Tutar) ?? 0;
-        var toplamOdeme = await Db.Odeme.SumAsync(x => (decimal?)x.Tutar) ?? 0;
+            // 3) Finans
+            var fin = (await Provider.SetItems<FinRow>(SP_FIN)).FirstOrDefault() ?? new FinRow();
+            var kalan = fin.ToplamTahakkuk - fin.ToplamOdeme;
 
-        await JS.InvokeVoidAsync(
-            "drawBarChart",
-            "chartBarFin",
-            new[] { "Tahakkuk", "Ödeme", "Kalan" },
-            GetSeriesList("Tutar", new double[] {
-                (double)toplamTahakkuk,
-                (double)toplamOdeme,
-                (double)(toplamTahakkuk - toplamOdeme)
-            }),
-            true, true, "x"
-        );
+            await JS.InvokeVoidAsync("drawBarChart",
+                "chartBarFin",
+                new[] { "Tahakkuk", "Ödeme", "Kalan" },
+                Series("Tutar", new double[] { (double)fin.ToplamTahakkuk, (double)fin.ToplamOdeme, (double)kalan }),
+                true, true, "x"
+            );
 
-        // 4) Aylara göre ödeme (Line)
-        var odemeler = await Db.Odeme
-            .Where(x => x.OdemeTarihi != null)
-            .Select(x => new { x.OdemeTarihi!.Value, x.Tutar })
-            .ToListAsync();
+            // 4) Aylık ödeme
+            var aylik = await Provider.SetItems<AyRow>(SP_AY);
+            await JS.InvokeVoidAsync("drawLineChart",
+                "chartLineAy",
+                aylik.Select(x => x.Ay).ToArray(),
+                Series("Ödeme", aylik.Select(x => (double)x.Tutar), fill: true, tension: 0.25),
+                true, true, true, 0.25
+            );
 
-        var now = DateTime.Now;
-        var months = Enumerable.Range(0, 12)
-            .Select(i => new DateTime(now.Year, now.Month, 1).AddMonths(-11 + i))
-            .ToList();
-
-        var map = months.ToDictionary(m => (m.Year, m.Month), _ => 0m);
-
-        foreach (var o in odemeler)
-            if (map.ContainsKey((o.Value.Year, o.Value.Month)))
-                map[(o.Value.Year, o.Value.Month)] += o.Tutar;
-
-        await JS.InvokeVoidAsync(
-            "drawLineChart",
-            "chartLineAy",
-            months.Select(m => m.ToString("MM.yyyy")).ToArray(),
-            GetSeriesList(
-                "Ödeme",
-                months.Select(m => (double)map[(m.Year, m.Month)]),
-                backgroundColor: "rgba(0,127,0,0.15)",
-                borderColor: "rgba(0,127,0,1)",
-                borderWidth: 2,
-                fill: true,
-                tension: 0.25
-            ),
-            true, true, true, 0.25
-        );
+            _msg = null;
+        }
+        catch (Exception ex)
+        {
+            _msg = ex.InnerException?.Message ?? ex.Message;
+            await JS.InvokeVoidAsync("alert", _msg);
+            await InvokeAsync(StateHasChanged);
+        }
     }
 }
