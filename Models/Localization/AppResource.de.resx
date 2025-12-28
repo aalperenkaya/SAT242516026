@@ -129,9 +129,6 @@
   <data name="Btn_Save" xml:space="preserve">
     <value>Speichern</value>
   </data>
-  <data name="Cezalar" xml:space="preserve">
-    <value>Strafen</value>
-  </data>
   <data name="Home" xml:space="preserve">
     <value>Startseite</value>
   </data>

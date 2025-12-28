@@ -129,9 +129,6 @@
   <data name="Btn_Save" xml:space="preserve">
     <value>Kaydet</value>
   </data>
-  <data name="Cezalar" xml:space="preserve">
-    <value>Cezalar</value>
-  </data>
   <data name="Home" xml:space="preserve">
     <value>Ana Sayfa</value>
   </data>

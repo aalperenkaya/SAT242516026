@@ -5,7 +5,6 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 using SAT242516026.Components;
@@ -39,15 +38,14 @@ builder.Services.AddSingleton(new SAT242516026.Logging.LogService(
 ));
 #endregion
 
-#region DB CONTEXT (SADECE CONNECTION İÇİN)
-builder.Services.AddDbContext<MyDbModel_Context>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+#region DB CONTEXT (EF YOK - SADECE CONNECTION FACTORY)
+builder.Services.AddScoped<MyDbModel_Context>();
 #endregion
 
 #region ✅ MYDBMODEL DI (HOCA PATTERN)
 builder.Services.AddScoped(typeof(IMyDbModel<>), typeof(MyDbModel<>));
 builder.Services.AddScoped<IMyDbModel_Provider, MyDbModel_Provider>();
-builder.Services.AddScoped<IMyDbModel_UnitOfWork, MyDbModel_UnitOfWork<MyDbModel_Context>>();
+builder.Services.AddScoped<IMyDbModel_UnitOfWork, MyDbModel_UnitOfWork>();
 #endregion
 
 #region BLAZOR
@@ -124,7 +122,7 @@ app.UseAntiforgery();
 const string SP_AUTH_REGISTER = "sp_Auth_Register";
 const string SP_AUTH_LOGIN = "sp_Auth_Login";
 
-async Task SignInAsync(HttpContext http, AuthUserRow user)
+static async Task SignInAsync(HttpContext http, AuthUserRow user)
 {
     var claims = new List<Claim>
     {
@@ -157,7 +155,7 @@ app.MapPost("/auth/register", async (HttpContext http, IMyDbModel_Provider provi
     var json = JsonSerializer.Serialize(new
     {
         KullaniciAdi = kullaniciAdi,
-        Sifre = sifre, // düz şifre (senin isteğin)
+        Sifre = sifre,
         AdSoyad = string.IsNullOrWhiteSpace(adSoyad) ? null : adSoyad,
         Email = string.IsNullOrWhiteSpace(email) ? null : email
     });
@@ -214,8 +212,6 @@ app.MapRazorComponents<App>()
 
 app.Run();
 
-
-// ✅ TOP-LEVEL KURAL: TYPE'lar EN ALTA
 public sealed class AuthUserRow
 {
     public int Id { get; set; }

@@ -1,15 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Data;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace SAT242516026.Models.DbContexts;
 
-public class MyDbModel_Context : DbContext
+public sealed class MyDbModel_Context
 {
-    public MyDbModel_Context(DbContextOptions<MyDbModel_Context> options)
-        : base(options) { }
+    private readonly string _connectionString;
 
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public MyDbModel_Context(IConfiguration configuration)
     {
-      
+        _connectionString =
+            configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException("DefaultConnection bulunamadı (appsettings.json).");
     }
+
+    public IDbConnection CreateConnection()
+        => new SqlConnection(_connectionString);
 }
+

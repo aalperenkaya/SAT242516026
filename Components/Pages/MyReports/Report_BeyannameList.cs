@@ -4,7 +4,6 @@ using QuestPDF.Infrastructure;
 
 namespace SAT242516026.Models.MyReports;
 
-// PDF'e basacağımız satır modeli
 public class BeyannameRow
 {
     public int Id { get; set; }
@@ -33,78 +32,85 @@ public class Report_BeyannameList
             container.Page(page =>
             {
                 page.Size(PageSizes.A4);
-                page.Margin(35);
+                page.Margin(50);
 
-                page.Header().Column(col =>
+                page.Header()
+                    .Text("Beyanname List")
+                    .FontSize(20)
+                    .Bold();
+
+                page.Content().Column(col =>
                 {
                     col.Item().Row(row =>
                     {
                         if (imageData is not null)
-                        {
-                            row.ConstantColumn(90).Image(imageData).FitArea();
-                            row.ConstantColumn(15);
-                        }
+                            row.ConstantColumn(100).Image(imageData).FitArea();
+                        else
+                            row.ConstantColumn(100);
+
+                        row.ConstantColumn(20);
 
                         row.RelativeColumn().Column(c =>
                         {
                             c.Item().Text("SAT242516026 - Beyanname Raporu").FontSize(16).Bold();
-                            c.Item().Text($"Tarih: {DateTime.Now:dd.MM.yyyy HH:mm}").FontSize(10);
+                            c.Item().Text($"DateTime: {DateTime.Now:dd.MM.yyyy HH:mm}").FontSize(10);
                             c.Item().Text($"Toplam kayıt: {rows.Count}").FontSize(10);
                         });
                     });
 
-                    col.Item().PaddingTop(10).LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
-                });
+                    col.Item().PaddingTop(20);
 
-                page.Content().PaddingTop(10).Table(table =>
-                {
-                    table.ColumnsDefinition(columns =>
+                    col.Item().Table(table =>
                     {
-                        columns.ConstantColumn(40);   // Id
-                        columns.RelativeColumn(3);    // Mukellef
-                        columns.RelativeColumn(2);    // Tip
-                        columns.ConstantColumn(45);   // Yıl
-                        columns.RelativeColumn(1);    // Dönem
-                        columns.RelativeColumn(1);    // Durum
-                        columns.RelativeColumn(1);    // SonTarih
+                        table.ColumnsDefinition(columns =>
+                        {
+                            columns.ConstantColumn(40);
+                            columns.RelativeColumn(3);
+                            columns.RelativeColumn(2);
+                            columns.ConstantColumn(45);
+                            columns.RelativeColumn(1);
+                            columns.RelativeColumn(1);
+                            columns.RelativeColumn(1);
+                        });
+
+                        table.Header(header =>
+                        {
+                            header.Cell().Element(CellStyle).Text("Id").Bold();
+                            header.Cell().Element(CellStyle).Text("Mükellef").Bold();
+                            header.Cell().Element(CellStyle).Text("Tip").Bold();
+                            header.Cell().Element(CellStyle).Text("Yıl").Bold();
+                            header.Cell().Element(CellStyle).Text("Dönem").Bold();
+                            header.Cell().Element(CellStyle).Text("Durum").Bold();
+                            header.Cell().Element(CellStyle).Text("Son Tarih").Bold();
+                        });
+
+                        foreach (var r in rows)
+                        {
+                            table.Cell().Element(CellStyle).Text(r.Id.ToString());
+                            table.Cell().Element(CellStyle).Text(r.MukellefAd);
+                            table.Cell().Element(CellStyle).Text(r.TipAd);
+                            table.Cell().Element(CellStyle).Text(r.Yil.ToString());
+                            table.Cell().Element(CellStyle).Text(r.Donem);
+                            table.Cell().Element(CellStyle).Text(r.Durum);
+                            table.Cell().Element(CellStyle).Text(r.SonTarih);
+                        }
                     });
-
-                    table.Header(header =>
-                    {
-                        header.Cell().Element(CellStyle).Text("Id").Bold();
-                        header.Cell().Element(CellStyle).Text("Mükellef").Bold();
-                        header.Cell().Element(CellStyle).Text("Tip").Bold();
-                        header.Cell().Element(CellStyle).Text("Yıl").Bold();
-                        header.Cell().Element(CellStyle).Text("Dönem").Bold();
-                        header.Cell().Element(CellStyle).Text("Durum").Bold();
-                        header.Cell().Element(CellStyle).Text("Son Tarih").Bold();
-                    });
-
-                    foreach (var r in rows)
-                    {
-                        table.Cell().Element(CellStyle).Text(r.Id.ToString());
-                        table.Cell().Element(CellStyle).Text(r.MukellefAd);
-                        table.Cell().Element(CellStyle).Text(r.TipAd);
-                        table.Cell().Element(CellStyle).Text(r.Yil.ToString());
-                        table.Cell().Element(CellStyle).Text(r.Donem);
-                        table.Cell().Element(CellStyle).Text(r.Durum);
-                        table.Cell().Element(CellStyle).Text(r.SonTarih);
-                    }
                 });
 
                 page.Footer().Row(row =>
                 {
-                    row.RelativeColumn().AlignLeft().Text("SAT242516026").FontSize(9);
-                    row.RelativeColumn().AlignCenter().Text(t =>
+                    row.RelativeColumn().AlignLeft().Text("Footer Left").FontSize(10);
+                    row.RelativeColumn().AlignCenter().Text(text =>
                     {
-                        t.Span("Sayfa: ").FontSize(9);
-                        t.CurrentPageNumber().FontSize(9).Bold();
-                        t.Span(" / ").FontSize(9);
-                        t.TotalPages().FontSize(9).Bold();
+                        text.Span("Page: ").FontSize(10);
+                        text.CurrentPageNumber().FontSize(10).Bold();
+                        text.Span(" / ").FontSize(10);
+                        text.TotalPages().FontSize(10).Bold();
                     });
-                    row.RelativeColumn().AlignRight().Text(DateTime.Now.ToString("dd.MM.yyyy")).FontSize(9);
+                    row.RelativeColumn().AlignRight().Text($"DateTime: {DateTime.Now:d}").FontSize(10);
                 });
             });
         }).GeneratePdf();
     }
 }
+
