@@ -1,21 +1,22 @@
-﻿@attribute [Microsoft.AspNetCore.Authorization.Authorize]
-@page "/user/mukelleflerim"
+﻿@page "/user/mukelleflerim"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
 
 @using SAT242516026.Models.MyDbModels
 @using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims
 @inject IMyDbModel_Provider Provider
 
 <h3 class="mb-3">Benim Mükelleflerim</h3>
+
+@if (!string.IsNullOrWhiteSpace(_msg))
+{
+    <div class="alert alert-info">@_msg</div>
+}
 
 @if (_db is null)
 {
     <div class="alert alert-info">Yükleniyor...</div>
     return;
-}
-
-@if (!string.IsNullOrWhiteSpace(_db.Message))
-{
-    <div class="alert alert-warning">@_db.Message</div>
 }
 
 <table class="table table-sm table-striped">
@@ -52,9 +53,11 @@
 @code {
     [CascadingParameter] private Task<AuthenticationState> AuthStateTask { get; set; } = default!;
 
-    private const string _sp = "Sp_User_Mukelleflerim";
+    private const string SP = "Sp_User_Mukelleflerim";
 
-    IMyDbModel<MukellefRow>? _db;
+    private IMyDbModel<MukellefRow>? _db;
+    private string? _msg;
+    private int _uid;
 
     public class MukellefRow
     {
@@ -70,19 +73,34 @@
         _db = Provider.Create<MukellefRow>();
 
         var auth = await AuthStateTask;
-        var idStr = auth.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-        _ = int.TryParse(idStr, out var uid);
+        var idStr = auth.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        _ = int.TryParse(idStr, out _uid);
+
+        if (_uid <= 0)
+        {
+            _msg = "Oturum yok. Tekrar giriş yap.";
+            return;
+        }
 
         _db.Parameters.PageNumber = 1;
-        _db.Parameters.PageSize = 50;
+        _db.Parameters.PageSize = 100;
         _db.Parameters.OrderBy = "Id desc";
+
+        await Load();
+    }
+
+    private Task Load() => GetItems();
+
+    private async Task GetItems()
+    {
+        if (_db is null) return;
 
         _db.Parameters.Where = new Dictionary<string, string>
             {
-                ["CurrentUserId"] = uid.ToString()
+                ["CurrentUserId"] = _uid.ToString()
             };
 
-        await Provider.Execute(_db, _sp, isPagination: true);
+        await Provider.Execute(_db, SP, isPagination: true);
+        _msg = _db.Message;
     }
 }
-

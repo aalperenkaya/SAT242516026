@@ -51,15 +51,18 @@
 </div>
 
 @code {
-    private bool _drawn;
     private string? _msg;
+
+    // çizim kontrolü
+    private bool _dataLoaded;
+    private bool _chartsDrawn;
 
     private const string SP_COUNTS = "Sp_Dashboard_Counts";
     private const string SP_DURUM = "Sp_Dashboard_Durum";
     private const string SP_FIN = "Sp_Dashboard_Finans";
     private const string SP_AY = "Sp_Dashboard_OdemeAylik";
 
-    // SP kolon adlarıyla aynı olsun (mapping derdi çıkmasın)
+    // SP kolon adlarıyla aynı olsun
     public class CountRow
     {
         public int Mukellef { get; set; }
@@ -99,55 +102,146 @@
     private static ChartSeries[] Series(string label, IEnumerable<double> data, bool fill = false, double? tension = null)
         => new[] { new ChartSeries { label = label, data = data.ToArray(), fill = fill, tension = tension } };
 
+    
+    private static List<ChartSeries> GetSeriesList(
+        params (string label, IEnumerable<double> data, bool fill, double? tension, int borderWidth)[] series
+    )
+    {
+        var list = new List<ChartSeries>();
+
+        foreach (var s in series)
+        {
+            list.Add(new ChartSeries
+                {
+                    label = s.label,
+                    data = s.data?.ToArray() ?? Array.Empty<double>(),
+                    fill = s.fill,
+                    tension = s.tension,
+                    borderWidth = s.borderWidth <= 0 ? 2 : s.borderWidth
+                });
+        }
+
+        if (list.Count == 0)
+            list.Add(new ChartSeries { label = "Boş", data = Array.Empty<double>(), borderWidth = 2 });
+
+        return list;
+    }
+
+    // =========================
+    // DASHBOARD STATE (veriler)
+    // =========================
+    private CountRow _counts = new();
+    private List<DurumRow> _durum = new();
+    private FinRow _fin = new();
+    private List<AyRow> _aylik = new();
+
+    private async Task GetItems()
+    {
+        try
+        {
+            _msg = null;
+
+            _counts = (await Provider.SetItems<CountRow>(SP_COUNTS)).FirstOrDefault() ?? new CountRow();
+            _durum = await Provider.SetItems<DurumRow>(SP_DURUM);
+            _fin = (await Provider.SetItems<FinRow>(SP_FIN)).FirstOrDefault() ?? new FinRow();
+            _aylik = await Provider.SetItems<AyRow>(SP_AY);
+
+            _dataLoaded = true;
+        }
+        catch (Exception ex)
+        {
+            _msg = ex.InnerException?.Message ?? ex.Message;
+            _dataLoaded = false;
+        }
+    }
+
+    private async Task Load()
+    {
+        await GetItems();
+        _chartsDrawn = false; // veri yenilendiyse yeniden çizilebilir
+        await InvokeAsync(StateHasChanged);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Load();
+    }
+
+    // ✅ UPDATED: daha sağlam OnAfterRenderAsync (hocanın isteklerini bozmadan)
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (!firstRender || _drawn) return;
-        _drawn = true;
+        // veri yoksa veya zaten çizildiyse çık
+        if (!_dataLoaded || _chartsDrawn) return;
 
         try
         {
-            // Chart.js scriptleri daha yeni yüklenmiş olabiliyor → mini bekleme
-            await Task.Delay(50);
+            // Chart.js / helper scriptleri bazen geç geliyor: kısa retry
+            var ok = false;
+            for (var i = 0; i < 6; i++)
+            {
+                await Task.Delay(80);
+
+                ok = await JS.InvokeAsync<bool>("eval",
+                    "typeof window.drawBarChart==='function' && typeof window.drawLineChart==='function'");
+
+                if (ok) break;
+            }
+
+            if (!ok)
+            {
+                _msg = "Chart.js helper fonksiyonları bulunamadı (drawBarChart/drawLineChart). wwwroot/js dosyanı ve _Host/Index script include'larını kontrol et.";
+                await JS.InvokeVoidAsync("alert", _msg);
+                return;
+            }
 
             // 1) Counts
-            var counts = (await Provider.SetItems<CountRow>(SP_COUNTS)).FirstOrDefault() ?? new CountRow();
-
             await JS.InvokeVoidAsync("drawBarChart",
                 "chartBar1",
                 new[] { "Mükellef", "Beyanname", "Tahakkuk", "Ödeme" },
-                Series("Toplam", new double[] { counts.Mukellef, counts.Beyanname, counts.Tahakkuk, counts.Odeme }),
+                GetSeriesList(
+                    ("Toplam", new double[] { _counts.Mukellef, _counts.Beyanname, _counts.Tahakkuk, _counts.Odeme }, false, null, 2)
+                ),
                 true, true, "x"
             );
 
             // 2) Durum
-            var durum = await Provider.SetItems<DurumRow>(SP_DURUM);
             await JS.InvokeVoidAsync("drawBarChart",
                 "chartBarDurum",
-                durum.Select(x => x.Durum).ToArray(),
-                Series("Adet", durum.Select(x => (double)x.Cnt)),
+                _durum.Select(x => x.Durum).ToArray(),
+                GetSeriesList(
+                    ("Adet", _durum.Select(x => (double)x.Cnt), false, null, 2)
+                ),
                 true, true, "x"
             );
 
             // 3) Finans
-            var fin = (await Provider.SetItems<FinRow>(SP_FIN)).FirstOrDefault() ?? new FinRow();
-            var kalan = fin.ToplamTahakkuk - fin.ToplamOdeme;
+            var kalan = _fin.ToplamTahakkuk - _fin.ToplamOdeme;
 
             await JS.InvokeVoidAsync("drawBarChart",
                 "chartBarFin",
                 new[] { "Tahakkuk", "Ödeme", "Kalan" },
-                Series("Tutar", new double[] { (double)fin.ToplamTahakkuk, (double)fin.ToplamOdeme, (double)kalan }),
+                GetSeriesList(
+                    ("Tutar", new double[]
+                    {
+                        (double)_fin.ToplamTahakkuk,
+                        (double)_fin.ToplamOdeme,
+                        (double)kalan
+                    }, false, null, 2)
+                ),
                 true, true, "x"
             );
 
-            // 4) Aylık ödeme
-            var aylik = await Provider.SetItems<AyRow>(SP_AY);
+            // 4) Aylık ödeme (line)
             await JS.InvokeVoidAsync("drawLineChart",
                 "chartLineAy",
-                aylik.Select(x => x.Ay).ToArray(),
-                Series("Ödeme", aylik.Select(x => (double)x.Tutar), fill: true, tension: 0.25),
+                _aylik.Select(x => x.Ay).ToArray(),
+                GetSeriesList(
+                    ("Ödeme", _aylik.Select(x => (double)x.Tutar), true, 0.25, 2)
+                ),
                 true, true, true, 0.25
             );
 
+            _chartsDrawn = true;
             _msg = null;
         }
         catch (Exception ex)

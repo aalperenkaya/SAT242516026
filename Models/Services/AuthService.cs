@@ -1,21 +1,31 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using System.Security.Claims;
+using System.Text.Json;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
-using SAT242516026.Models.DbContexts;
-using SAT242516026.Data;
+using SAT242516026.Models.MyDbModels;
 
 namespace SAT242516026.Models.Services;
 
 public class AuthService
 {
-    private readonly MyDbModel_Context _db;
+    private readonly IMyDbModel_Provider _provider;
     private readonly IHttpContextAccessor _http;
 
-    public AuthService(MyDbModel_Context db, IHttpContextAccessor http)
+    private const string SP_AUTH_REGISTER = "sp_Auth_Register";
+    private const string SP_AUTH_LOGIN = "sp_Auth_Login";
+
+    public AuthService(IMyDbModel_Provider provider, IHttpContextAccessor http)
     {
-        _db = db;
+        _provider = provider;
         _http = http;
+    }
+
+    // SP dönüş modeli
+    public class AuthUserRow
+    {
+        public int Id { get; set; }
+        public string KullaniciAdi { get; set; } = "";
+        public bool IsAdmin { get; set; }
     }
 
     public async Task<(bool ok, string? error)> RegisterAsync(string kullaniciAdi, string sifre, string? adSoyad, string? email)
@@ -25,20 +35,25 @@ public class AuthService
         if (kullaniciAdi.Length < 3) return (false, "Kullanıcı adı çok kısa.");
         if (string.IsNullOrWhiteSpace(sifre) || sifre.Length < 4) return (false, "Şifre çok kısa.");
 
-        var exists = await _db.Kullanicilar.AnyAsync(x => x.KullaniciAdi == kullaniciAdi);
-        if (exists) return (false, "Bu kullanıcı adı alınmış.");
-
-        var user = new Kullanici
+        var json = JsonSerializer.Serialize(new
         {
             KullaniciAdi = kullaniciAdi,
-            SifreHash = sifre, // düz şifre
-            AdSoyad = adSoyad,
-            Email = email,
-            IsAdmin = false
-        };
+            Sifre = sifre,
+            AdSoyad = string.IsNullOrWhiteSpace(adSoyad) ? null : adSoyad?.Trim(),
+            Email = string.IsNullOrWhiteSpace(email) ? null : email?.Trim()
+        });
 
-        _db.Kullanicilar.Add(user);
-        await _db.SaveChangesAsync();
+        var rows = await _provider.SetItems<AuthUserRow>(
+            SP_AUTH_REGISTER,
+            ("@jsonvalues", json)
+        );
+
+        var user = rows.FirstOrDefault();
+        if (user is null || user.Id <= 0) return (false, "Kayıt başarısız (kullanıcı adı alınmış olabilir).");
+
+        // İstersen kayıt sonrası otomatik login:
+        await SignInAsync(user);
+
         return (true, null);
     }
 
@@ -46,30 +61,24 @@ public class AuthService
     {
         kullaniciAdi = (kullaniciAdi ?? "").Trim();
 
-        var user = await _db.Kullanicilar.FirstOrDefaultAsync(x => x.KullaniciAdi == kullaniciAdi);
-        if (user is null) return (false, "Kullanıcı bulunamadı.");
+        if (kullaniciAdi.Length < 3) return (false, "Kullanıcı adı hatalı.");
+        if (string.IsNullOrWhiteSpace(sifre)) return (false, "Şifre boş.");
 
-        if ((user.SifreHash ?? "") != (sifre ?? ""))
-            return (false, "Şifre yanlış.");
-
-        var claims = new List<Claim>
+        var json = JsonSerializer.Serialize(new
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Name, user.KullaniciAdi),
-            new Claim("IsAdmin", user.IsAdmin ? "1" : "0"),
-        };
+            KullaniciAdi = kullaniciAdi,
+            Sifre = sifre
+        });
 
-        if (user.IsAdmin)
-            claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+        var rows = await _provider.SetItems<AuthUserRow>(
+            SP_AUTH_LOGIN,
+            ("@jsonvalues", json)
+        );
 
-        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        var principal = new ClaimsPrincipal(identity);
+        var user = rows.FirstOrDefault();
+        if (user is null || user.Id <= 0) return (false, "Kullanıcı adı/şifre yanlış.");
 
-        await _http.HttpContext!.SignInAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme,
-            principal,
-            new AuthenticationProperties { IsPersistent = true });
-
+        await SignInAsync(user);
         return (true, null);
     }
 
@@ -84,4 +93,22 @@ public class AuthService
 
     public bool IsAdmin()
         => _http.HttpContext?.User?.IsInRole("Admin") == true;
+
+    private async Task SignInAsync(AuthUserRow user)
+    {
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Name, user.KullaniciAdi),
+            new Claim(ClaimTypes.Role, user.IsAdmin ? "Admin" : "User"),
+            new Claim("IsAdmin", user.IsAdmin ? "1" : "0"),
+        };
+
+        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+        await _http.HttpContext!.SignInAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            new ClaimsPrincipal(identity),
+            new AuthenticationProperties { IsPersistent = true });
+    }
 }

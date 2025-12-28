@@ -22,12 +22,17 @@
         <div class="row g-2 align-items-end mb-3">
             <div class="col-md-3">
                 <label class="form-label">Ad (Filtre)</label>
-                <input class="form-control" @bind="_tip_fAd" @bind:event="oninput" />
+                <input class="form-control"
+                       @bind="_tip_fAd"
+                       @bind:event="oninput"
+                       @bind:after="Tip_OnChange_Filter" />
             </div>
 
             <div class="col-md-3">
                 <label class="form-label">Sırala</label>
-                <select class="form-select" @bind="_tip_orderBy">
+                <select class="form-select"
+                        @bind="_tip_orderBy"
+                        @bind:after="Tip_OnChange_OrderBy">
                     <option value="Id desc">Id ↓</option>
                     <option value="Id asc">Id ↑</option>
                     <option value="Ad asc">Ad ↑</option>
@@ -37,7 +42,9 @@
 
             <div class="col-md-2">
                 <label class="form-label">Boyut</label>
-                <select class="form-select" @bind="_tip_pageSize">
+                <select class="form-select"
+                        @bind="_tip_pageSize"
+                        @bind:after="Tip_OnChange_PageSize">
                     @foreach (var ps in new[] { 5, 10, 20, 50 })
                     {
                         <option value="@ps">@ps</option>
@@ -46,11 +53,11 @@
             </div>
 
             <div class="col-md-2">
-                <button class="btn btn-primary w-100" @onclick="TipApply">Uygula</button>
+                <button class="btn btn-primary w-100" @onclick='() => Tip_OnClick_Operation("add")'>Yeni</button>
             </div>
 
             <div class="col-md-2">
-                <button class="btn btn-outline-danger w-100" @onclick="TipReset">Sıfırla</button>
+                <button class="btn btn-outline-danger w-100" @onclick="Tip_OnClick_Filter_Reset">Sıfırla</button>
             </div>
         </div>
 
@@ -70,7 +77,7 @@
             <div class="col-md-3">
                 @if (_tip_editId is not null)
                 {
-                    <button class="btn btn-outline-secondary w-100" @onclick="TipCancel">İptal</button>
+                    <button class="btn btn-outline-secondary w-100" @onclick="Tip_OnClick_Cancel">İptal</button>
                 }
             </div>
         </div>
@@ -78,16 +85,30 @@
         <hr />
 
         <div class="d-flex justify-content-between align-items-center mb-2">
-            <div class="small text-muted">
-                @_tipRangeText
-            </div>
+            <div class="small text-muted">@_tipRangeText</div>
 
-            <div class="btn-group">
-                <button class="btn btn-outline-secondary" @onclick="TipFirst" disabled="@(_tip_pageNumber<=1)">&lt;&lt;</button>
-                <button class="btn btn-outline-secondary" @onclick="TipPrev" disabled="@(_tip_pageNumber<=1)">&lt;</button>
-                <button class="btn btn-outline-secondary" disabled>@_tip_pageNumber / @(_tipModel?.Parameters.TotalPageCount ?? 1)</button>
-                <button class="btn btn-outline-secondary" @onclick="TipNext" disabled="@(_tipModel is null || _tip_pageNumber>=_tipModel.Parameters.TotalPageCount)">&gt;</button>
-                <button class="btn btn-outline-secondary" @onclick="TipLast" disabled="@(_tipModel is null || _tip_pageNumber>=_tipModel.Parameters.TotalPageCount)">&gt;&gt;</button>
+            <div class="d-flex gap-2 align-items-center">
+                <div class="small text-muted">Sayfa</div>
+                <select class="form-select form-select-sm" style="width:120px;"
+                        @bind="_tip_pageNumber"
+                        @bind:after="Tip_OnChange_PageNumber">
+                    @{
+                        var tipTotal = _tipModel?.Parameters.TotalPageCount ?? 1;
+                        if (tipTotal < 1) tipTotal = 1;
+                        for (int p = 1; p <= tipTotal; p++)
+                        {
+                            <option value="@p">@p</option>
+                        }
+                    }
+                </select>
+
+                <div class="btn-group">
+                    <button class="btn btn-outline-secondary" @onclick="TipFirst" disabled="@(_tip_pageNumber<=1)">&lt;&lt;</button>
+                    <button class="btn btn-outline-secondary" @onclick="TipPrev" disabled="@(_tip_pageNumber<=1)">&lt;</button>
+                    <button class="btn btn-outline-secondary" disabled>@_tip_pageNumber / @(_tipModel?.Parameters.TotalPageCount ?? 1)</button>
+                    <button class="btn btn-outline-secondary" @onclick="TipNext" disabled="@(_tipModel is null || _tip_pageNumber>=_tipModel.Parameters.TotalPageCount)">&gt;</button>
+                    <button class="btn btn-outline-secondary" @onclick="TipLast" disabled="@(_tipModel is null || _tip_pageNumber>=_tipModel.Parameters.TotalPageCount)">&gt;&gt;</button>
+                </div>
             </div>
         </div>
 
@@ -109,8 +130,14 @@
                                 <td>@t.Id</td>
                                 <td>@t.Ad</td>
                                 <td class="text-end">
-                                    <button class="btn btn-sm btn-outline-primary me-2" @onclick="() => TipStartEdit(t)">Güncelle</button>
-                                    <button class="btn btn-sm btn-outline-danger" @onclick="() => TipDelete(t.Id)">Sil</button>
+                                    <button class="btn btn-sm btn-outline-primary me-2"
+                                            @onclick='() => Tip_OnClick_Operation("update", t)'>
+                                        Güncelle
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger"
+                                            @onclick='() => Tip_OnClick_Operation("remove", t)'>
+                                        Sil
+                                    </button>
                                 </td>
                             </tr>
                         }
@@ -137,27 +164,42 @@
         <div class="row g-2 align-items-end">
             <div class="col-md-2">
                 <label class="form-label">KullaniciId</label>
-                <input class="form-control" type="number" @bind="_fKullaniciId" />
+                <input class="form-control" type="number"
+                       @bind="_fKullaniciId"
+                       @bind:event="oninput"
+                       @bind:after="OnChange_Filter" />
             </div>
 
             <div class="col-md-2">
                 <label class="form-label">MukellefId</label>
-                <input class="form-control" type="number" @bind="_fMukellefId" />
+                <input class="form-control" type="number"
+                       @bind="_fMukellefId"
+                       @bind:event="oninput"
+                       @bind:after="OnChange_Filter" />
             </div>
 
             <div class="col-md-2">
                 <label class="form-label">Yıl</label>
-                <input class="form-control" type="number" @bind="_fYil" />
+                <input class="form-control" type="number"
+                       @bind="_fYil"
+                       @bind:event="oninput"
+                       @bind:after="OnChange_Filter" />
             </div>
 
             <div class="col-md-2">
                 <label class="form-label">Durum</label>
-                <input class="form-control" @bind="_fDurum" @bind:event="oninput" placeholder="Taslak / Odendi" />
+                <input class="form-control"
+                       @bind="_fDurum"
+                       @bind:event="oninput"
+                       @bind:after="OnChange_Filter"
+                       placeholder="Taslak / Odendi" />
             </div>
 
             <div class="col-md-2">
                 <label class="form-label">Sırala</label>
-                <select class="form-select" @bind="_orderBy">
+                <select class="form-select"
+                        @bind="_orderBy"
+                        @bind:after="OnChange_OrderBy">
                     <option value="Id desc">Id ↓</option>
                     <option value="Id asc">Id ↑</option>
                     <option value="Yil desc">Yıl ↓</option>
@@ -171,7 +213,9 @@
 
             <div class="col-md-1">
                 <label class="form-label">Boyut</label>
-                <select class="form-select" @bind="_pageSize">
+                <select class="form-select"
+                        @bind="_pageSize"
+                        @bind:after="OnChange_PageSize">
                     @foreach (var ps in new[] { 5, 10, 20, 50 })
                     {
                         <option value="@ps">@ps</option>
@@ -185,19 +229,33 @@
         </div>
 
         <div class="d-flex justify-content-between align-items-center mt-3">
-            <div class="small text-muted">
-                @_beyanRangeText
+            <div class="small text-muted">@_beyanRangeText</div>
+
+            <div class="d-flex gap-2 align-items-center">
+                <div class="small text-muted">Sayfa</div>
+                <select class="form-select form-select-sm" style="width:120px;"
+                        @bind="_pageNumber"
+                        @bind:after="OnChange_PageNumber">
+                    @{
+                        var total = _model?.Parameters.TotalPageCount ?? 1;
+                        if (total < 1) total = 1;
+                        for (int p = 1; p <= total; p++)
+                        {
+                            <option value="@p">@p</option>
+                        }
+                    }
+                </select>
+
+                <div class="btn-group">
+                    <button class="btn btn-outline-secondary" @onclick="First" disabled="@(_pageNumber<=1)">&lt;&lt;</button>
+                    <button class="btn btn-outline-secondary" @onclick="Prev" disabled="@(_pageNumber<=1)">&lt;</button>
+                    <button class="btn btn-outline-secondary" disabled>@_pageNumber / @(_model?.Parameters.TotalPageCount ?? 1)</button>
+                    <button class="btn btn-outline-secondary" @onclick="Next" disabled="@(_model is null || _pageNumber>=_model.Parameters.TotalPageCount)">&gt;</button>
+                    <button class="btn btn-outline-secondary" @onclick="Last" disabled="@(_model is null || _pageNumber>=_model.Parameters.TotalPageCount)">&gt;&gt;</button>
+                </div>
             </div>
 
-            <div class="btn-group">
-                <button class="btn btn-outline-secondary" @onclick="First" disabled="@(_pageNumber<=1)">&lt;&lt;</button>
-                <button class="btn btn-outline-secondary" @onclick="Prev" disabled="@(_pageNumber<=1)">&lt;</button>
-                <button class="btn btn-outline-secondary" disabled>@_pageNumber / @(_model?.Parameters.TotalPageCount ?? 1)</button>
-                <button class="btn btn-outline-secondary" @onclick="Next" disabled="@(_model is null || _pageNumber>=_model.Parameters.TotalPageCount)">&gt;</button>
-                <button class="btn btn-outline-secondary" @onclick="Last" disabled="@(_model is null || _pageNumber>=_model.Parameters.TotalPageCount)">&gt;&gt;</button>
-            </div>
-
-            <button class="btn btn-outline-danger" @onclick="Reset">Sıfırla</button>
+            <button class="btn btn-outline-danger" @onclick="OnClick_Filter_Reset">Sıfırla</button>
         </div>
 
         <hr />
@@ -236,7 +294,7 @@
 
                 @if (_editId is not null)
                 {
-                    <button class="btn btn-outline-secondary w-100 mt-2" @onclick="CancelEdit">İptal</button>
+                    <button class="btn btn-outline-secondary w-100 mt-2" @onclick="OnClick_Cancel">İptal</button>
                 }
             </div>
         </div>
@@ -271,8 +329,14 @@
                                 <td>@x.Donem</td>
                                 <td>@x.Durum</td>
                                 <td class="text-end">
-                                    <button class="btn btn-sm btn-outline-primary me-2" @onclick="() => StartEdit(x)">Güncelle</button>
-                                    <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteBeyanname(x.Id)">Sil</button>
+                                    <button class="btn btn-sm btn-outline-primary me-2"
+                                            @onclick='() => OnClick_Operation("update", x)'>
+                                        Güncelle
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger"
+                                            @onclick='() => OnClick_Operation("remove", x)'>
+                                        Sil
+                                    </button>
                                 </td>
                             </tr>
                         }
@@ -332,7 +396,6 @@
         public string? Donem { get; set; }
         public string? Durum { get; set; }
 
-        // Bu alanlar SP döndürse bile sorun olmaz; tabloda göstermiyoruz.
         public DateTime? GondermeTarihi { get; set; }
         public DateTime? SonGondermeTarihi { get; set; }
     }
@@ -362,9 +425,7 @@
         await Load();
     }
 
-    // =======================
-    // RANGE TEXT HELPERS
-    // =======================
+ 
     static string BuildRangeText(int page, int size, int total)
     {
         if (total <= 0) return "0 - 0 / 0";
@@ -376,9 +437,7 @@
         return $"{start} - {end} / {total}";
     }
 
-    // =======================
-    // TIP LIST LOAD
-    // =======================
+
     private async Task TipLoad()
     {
         if (_tipModel is null) return;
@@ -461,20 +520,13 @@
 
         var op = _tip_editId is null ? "add" : "update";
 
-        var payload = new
-        {
-            Id = _tip_editId ?? 0,
-            Ad = _tip_form.Ad!.Trim()
-        };
-
+        var payload = new { Id = _tip_editId ?? 0, Ad = _tip_form.Ad!.Trim() };
         var json = JsonSerializer.Serialize(payload);
 
         try
         {
             var r = await Provider.SetItems<MyDbModel_Result_KeyValue<string, bool>>(
-                SP_TIP_AUR,
-                ("operation", op),
-                ("jsonvalues", json)
+                SP_TIP_AUR, ("operation", op), ("jsonvalues", json)
             );
 
             var one = r.FirstOrDefault();
@@ -496,9 +548,7 @@
         try
         {
             var r = await Provider.SetItems<MyDbModel_Result_KeyValue<string, bool>>(
-                SP_TIP_AUR,
-                ("operation", "remove"),
-                ("jsonvalues", json)
+                SP_TIP_AUR, ("operation", "remove"), ("jsonvalues", json)
             );
 
             var one = r.FirstOrDefault();
@@ -525,7 +575,6 @@
         _model.Parameters.OrderBy = _orderBy;
 
         var where = new Dictionary<string, string>();
-
         if (_fKullaniciId is > 0) where["KullaniciId"] = _fKullaniciId.Value.ToString();
         if (_fMukellefId is > 0) where["MukellefId"] = _fMukellefId.Value.ToString();
         if (_fYil is > 0) where["Yil"] = _fYil.Value.ToString();
@@ -609,14 +658,12 @@
 
     private async Task SaveBeyanname()
     {
-        // Validasyonları sayfa içi mesajla veriyoruz
         if (_form.MukellefId <= 0) { _msg = "MukellefId gir."; return; }
         if (_form.BeyannameTipiId <= 0) { _msg = "BeyannameTipiId gir."; return; }
         if (_form.Yil <= 0) { _msg = "Yıl gir."; return; }
 
         var op = _editId is null ? "add" : "update";
 
-        // Update için Id json içinde olacak (hocanın AUR mantığı)
         var payload = new
         {
             Id = _editId ?? 0,
@@ -625,7 +672,6 @@
             Yil = _form.Yil,
             Donem = _form.Donem,
             Durum = _form.Durum
-            // tarihleri tabloya koymuyoruz; SP istiyorsa burada da gönderebilirsin
         };
 
         var json = JsonSerializer.Serialize(payload);
@@ -633,9 +679,7 @@
         try
         {
             var r = await Provider.SetItems<MyDbModel_Result_KeyValue<string, bool>>(
-                SP_BEYAN_AUR,
-                ("operation", op),
-                ("jsonvalues", json)
+                SP_BEYAN_AUR, ("operation", op), ("jsonvalues", json)
             );
 
             var one = r.FirstOrDefault();
@@ -657,9 +701,7 @@
         try
         {
             var r = await Provider.SetItems<MyDbModel_Result_KeyValue<string, bool>>(
-                SP_BEYAN_AUR,
-                ("operation", "remove"),
-                ("jsonvalues", json)
+                SP_BEYAN_AUR, ("operation", "remove"), ("jsonvalues", json)
             );
 
             var one = r.FirstOrDefault();
@@ -673,4 +715,135 @@
         if (_editId == id) CancelEdit();
         await Load();
     }
+
+   
+    private async Task OnChange_Filter()
+    {
+        _pageNumber = 1;
+        await Load();
+    }
+
+    private async Task OnChange_OrderBy()
+    {
+        _pageNumber = 1;
+        await Load();
+    }
+
+    private async Task OnChange_PageSize()
+    {
+        if (_pageSize <= 0) _pageSize = 10;
+        if (_pageSize > 200) _pageSize = 200;
+
+        _pageNumber = 1;
+        await Load();
+    }
+
+    private async Task OnChange_PageNumber()
+    {
+        var max = _model?.Parameters.TotalPageCount ?? 1;
+        if (max < 1) max = 1;
+
+        if (_pageNumber < 1) _pageNumber = 1;
+        if (_pageNumber > max) _pageNumber = max;
+
+        await Load();
+    }
+
+    private async Task OnClick_Operation(string operation, BeyannameRow? row = null)
+    {
+        _msg = null;
+        operation = (operation ?? "").Trim().ToLowerInvariant();
+
+        switch (operation)
+        {
+            case "add":
+                CancelEdit();
+                break;
+
+            case "update":
+            case "detail":
+                if (row is null) { _msg = "Satır seçilmedi."; return; }
+                StartEdit(row);
+                break;
+
+            case "remove":
+            case "delete":
+                if (row is null) { _msg = "Silinecek satır seçilmedi."; return; }
+                await DeleteBeyanname(row.Id);
+                break;
+
+            default:
+                _msg = $"Bilinmeyen işlem: {operation}";
+                break;
+        }
+    }
+
+    private void OnClick_Cancel() => CancelEdit();
+
+    private async Task OnClick_Filter_Reset() => await Reset();
+
+    private async Task Tip_OnChange_Filter()
+    {
+        _tip_pageNumber = 1;
+        await TipLoad();
+    }
+
+    private async Task Tip_OnChange_OrderBy()
+    {
+        _tip_pageNumber = 1;
+        await TipLoad();
+    }
+
+    private async Task Tip_OnChange_PageSize()
+    {
+        if (_tip_pageSize <= 0) _tip_pageSize = 10;
+        if (_tip_pageSize > 200) _tip_pageSize = 200;
+
+        _tip_pageNumber = 1;
+        await TipLoad();
+    }
+
+    private async Task Tip_OnChange_PageNumber()
+    {
+        var max = _tipModel?.Parameters.TotalPageCount ?? 1;
+        if (max < 1) max = 1;
+
+        if (_tip_pageNumber < 1) _tip_pageNumber = 1;
+        if (_tip_pageNumber > max) _tip_pageNumber = max;
+
+        await TipLoad();
+    }
+
+    private async Task Tip_OnClick_Operation(string operation, TipRow? row = null)
+    {
+        _msg = null;
+        operation = (operation ?? "").Trim().ToLowerInvariant();
+
+        switch (operation)
+        {
+            case "add":
+                TipCancel();
+                break;
+
+            case "update":
+            case "detail":
+                if (row is null) { _msg = "Satır seçilmedi."; return; }
+                TipStartEdit(row);
+                break;
+
+            case "remove":
+            case "delete":
+                if (row is null) { _msg = "Silinecek satır seçilmedi."; return; }
+                await TipDelete(row.Id);
+                break;
+
+            default:
+                _msg = $"Bilinmeyen işlem: {operation}";
+                break;
+        }
+    }
+
+    private void Tip_OnClick_Cancel() => TipCancel();
+
+    private async Task Tip_OnClick_Filter_Reset() => await TipReset();
 }

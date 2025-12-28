@@ -25,6 +25,6 @@ public static class MyDbModel_Extension
             dict.Add("Id ↓", "Id desc");
         }
 
-        return dict;
+        return dict;    
     }
 }

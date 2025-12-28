@@ -1,6 +1,3 @@
-// wwwroot/js/charts.js
-// Chart.js lazým.
-// CanvasId baþýna chart instance saklayýp tekrar çizimde destroy ediyoruz.
 
 window._charts = window._charts || {};
 

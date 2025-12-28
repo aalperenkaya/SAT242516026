@@ -26,27 +26,40 @@
 
             <div class="col-md-2">
                 <label class="form-label">BeyannameId</label>
-                <input type="number" class="form-control" @bind="F_BeyannameId" />
+                <input type="number" class="form-control"
+                       @bind="F_BeyannameId"
+                       @bind:event="oninput"
+                       @bind:after="OnChange_Filter" />
             </div>
 
             <div class="col-md-2">
                 <label class="form-label">Min Tutar</label>
-                <input type="number" step="0.01" class="form-control" @bind="F_MinTutar" />
+                <input type="number" step="0.01" class="form-control"
+                       @bind="F_MinTutar"
+                       @bind:event="oninput"
+                       @bind:after="OnChange_Filter" />
             </div>
 
             <div class="col-md-2">
                 <label class="form-label">Max Tutar</label>
-                <input type="number" step="0.01" class="form-control" @bind="F_MaxTutar" />
+                <input type="number" step="0.01" class="form-control"
+                       @bind="F_MaxTutar"
+                       @bind:event="oninput"
+                       @bind:after="OnChange_Filter" />
             </div>
 
             <div class="col-md-2">
                 <label class="form-label">Tarih</label>
-                <input type="date" class="form-control" @bind="F_Tarih" />
+                <input type="date" class="form-control"
+                       @bind="F_Tarih"
+                       @bind:after="OnChange_Filter" />
             </div>
 
             <div class="col-md-2">
                 <label class="form-label">Sırala</label>
-                <select class="form-select" @bind="OrderBy">
+                <select class="form-select"
+                        @bind="OrderBy"
+                        @bind:after="OnChange_OrderBy">
                     @foreach (var ob in OrderByItems)
                     {
                         <option value="@ob.Value">@ob.Key</option>
@@ -56,7 +69,9 @@
 
             <div class="col-md-1">
                 <label class="form-label">Boyut</label>
-                <select class="form-select" @bind="PageSize">
+                <select class="form-select"
+                        @bind="PageSize"
+                        @bind:after="OnChange_PageSize">
                     @foreach (var ps in new[] { 5, 10, 20, 50, 100 })
                     {
                         <option value="@ps">@ps</option>
@@ -65,7 +80,7 @@
             </div>
 
             <div class="col-md-1">
-                <button type="button" class="btn btn-primary w-100" @onclick="ApplyQuery">Uygula</button>
+                <button type="button" class="btn btn-primary w-100" @onclick="Load">Uygula</button>
             </div>
         </div>
 
@@ -74,17 +89,53 @@
                 @($"{(_db.Parameters.TotalRecordCount == 0 ? 0 : (_db.Parameters.PageNumber - 1) * _db.Parameters.PageSize + 1)} - {Math.Min(_db.Parameters.TotalRecordCount, _db.Parameters.PageNumber * _db.Parameters.PageSize)} / {_db.Parameters.TotalRecordCount}")
             </div>
 
-            <div class="btn-group">
-                <button type="button" class="btn btn-outline-secondary" @onclick="FirstPage" disabled="@(_db.Parameters.PageNumber<=1)">&lt;&lt;</button>
-                <button type="button" class="btn btn-outline-secondary" @onclick="PrevPage" disabled="@(_db.Parameters.PageNumber<=1)">&lt;</button>
-                <button type="button" class="btn btn-outline-secondary" disabled>
-                    @_db.Parameters.PageNumber / @_db.Parameters.TotalPageCount
-                </button>
-                <button type="button" class="btn btn-outline-secondary" @onclick="NextPage" disabled="@(_db.Parameters.PageNumber>=_db.Parameters.TotalPageCount)">&gt;</button>
-                <button type="button" class="btn btn-outline-secondary" @onclick="LastPage" disabled="@(_db.Parameters.PageNumber>=_db.Parameters.TotalPageCount)">&gt;&gt;</button>
+            <div class="d-flex gap-2 align-items-center">
+                <div class="small text-muted">Sayfa</div>
+                <select class="form-select form-select-sm" style="width:120px;"
+                        @bind="_db.Parameters.PageNumber"
+                        @bind:after="OnChange_PageNumber">
+                    @{
+                        var total = _db.Parameters.TotalPageCount;
+                        if (total < 1) total = 1;
+                        for (int p = 1; p <= total; p++)
+                        {
+                            <option value="@p">@p</option>
+                        }
+                    }
+                </select>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-secondary"
+                            @onclick='() => OnClick_PageNumber("first")'
+                            disabled="@(_db.Parameters.PageNumber<=1)">
+                        &lt;&lt;
+                    </button>
+
+                    <button type="button" class="btn btn-outline-secondary"
+                            @onclick='() => OnClick_PageNumber("prev")'
+                            disabled="@(_db.Parameters.PageNumber<=1)">
+                        &lt;
+                    </button>
+
+                    <button type="button" class="btn btn-outline-secondary" disabled>
+                        @_db.Parameters.PageNumber / @_db.Parameters.TotalPageCount
+                    </button>
+
+                    <button type="button" class="btn btn-outline-secondary"
+                            @onclick='() => OnClick_PageNumber("next")'
+                            disabled="@(_db.Parameters.PageNumber>=_db.Parameters.TotalPageCount)">
+                        &gt;
+                    </button>
+
+                    <button type="button" class="btn btn-outline-secondary"
+                            @onclick='() => OnClick_PageNumber("last")'
+                            disabled="@(_db.Parameters.PageNumber>=_db.Parameters.TotalPageCount)">
+                        &gt;&gt;
+                    </button>
+                </div>
             </div>
 
-            <button type="button" class="btn btn-outline-danger" @onclick="ResetQuery">Sıfırla</button>
+            <button type="button" class="btn btn-outline-danger" @onclick="OnChange_Filter_Reset">Sıfırla</button>
         </div>
     </div>
 </div>
@@ -110,13 +161,13 @@
             </div>
 
             <div class="col-md-2">
-                <button type="button" class="btn btn-success w-100" @onclick="Save">
+                <button type="button" class="btn btn-success w-100" @onclick="OnClick_Save">
                     @(_operation == Operations.Add ? "Ekle" : "Güncelle")
                 </button>
 
                 @if (_operation != Operations.Add)
                 {
-                    <button type="button" class="btn btn-outline-secondary w-100 mt-2" @onclick="CancelEdit">İptal</button>
+                    <button type="button" class="btn btn-outline-secondary w-100 mt-2" @onclick="OnClick_Cancel">İptal</button>
                 }
             </div>
         </div>
@@ -198,14 +249,17 @@
         _db.Parameters.PageSize = PageSize;
         _db.Parameters.OrderBy = OrderBy;
 
-        await Load();
+        await GetItems();
     }
 
-    private async Task Load()
+    // =========================================================
+    // ✅ İstenen: GetItems()
+    // =========================================================
+    private async Task GetItems()
     {
         _db.Parameters.Where = new Dictionary<string, string>();
 
-        if (F_BeyannameId is not null && F_BeyannameId > 0)
+        if (F_BeyannameId is > 0)
             _db.Parameters.Where["BeyannameId"] = F_BeyannameId.Value.ToString();
 
         if (F_MinTutar is not null)
@@ -217,19 +271,63 @@
         if (F_Tarih is not null)
             _db.Parameters.Where["Tarih"] = F_Tarih.Value.ToString("yyyy-MM-dd");
 
+        // boşsa null yap (hocanın tarzı)
+        if (_db.Parameters.Where.Count == 0)
+            _db.Parameters.Where = null;
+
         _db.Parameters.OrderBy = OrderBy;
         _db.Parameters.PageSize = PageSize;
 
         await _provider.Execute(_db, _spList, isPagination: true);
+
+        // güvenli sayfa düzeltme
+        if (_db.Parameters.TotalPageCount <= 0) _db.Parameters.TotalPageCount = 1;
+        if (_db.Parameters.PageNumber < 1) _db.Parameters.PageNumber = 1;
+        if (_db.Parameters.PageNumber > _db.Parameters.TotalPageCount)
+            _db.Parameters.PageNumber = _db.Parameters.TotalPageCount;
     }
 
-    private async Task ApplyQuery()
+    // =========================================================
+    // ✅ İstenen: Load()
+    // =========================================================
+    private Task Load() => GetItems();
+
+    // =========================================================
+    // ✅ İstenen: OnChange_Filter()
+    // =========================================================
+    private async Task OnChange_Filter()
     {
         _db.Parameters.PageNumber = 1;
-        await Load();
+        await GetItems();
     }
 
-    private async Task ResetQuery()
+    // =========================================================
+    // ✅ İstenen: OnChange_OrderBy()
+    // =========================================================
+    private async Task OnChange_OrderBy()
+    {
+        _db.Parameters.PageNumber = 1;
+        await GetItems();
+    }
+
+    // =========================================================
+    // ✅ İstenen: OnChange_PageSize()
+    // =========================================================
+    private async Task OnChange_PageSize()
+    {
+        if (PageSize <= 0) PageSize = 10;
+        if (PageSize > 200) PageSize = 200;
+
+        _db.Parameters.PageSize = PageSize;
+        _db.Parameters.PageNumber = 1;
+
+        await GetItems();
+    }
+
+    // =========================================================
+    // ✅ İstenen: OnChange_Filter_Reset()
+    // =========================================================
+    private async Task OnChange_Filter_Reset()
     {
         F_BeyannameId = null;
         F_MinTutar = null;
@@ -240,14 +338,55 @@
         PageSize = 10;
 
         _db.Parameters.PageNumber = 1;
-        await Load();
+        _db.Parameters.PageSize = PageSize;
+        _db.Parameters.OrderBy = OrderBy;
+
+        await GetItems();
     }
 
-    private async Task FirstPage() { _db.Parameters.PageNumber = 1; await Load(); }
-    private async Task LastPage() { _db.Parameters.PageNumber = _db.Parameters.TotalPageCount; await Load(); }
-    private async Task PrevPage() { if (_db.Parameters.PageNumber > 1) _db.Parameters.PageNumber--; await Load(); }
-    private async Task NextPage() { if (_db.Parameters.PageNumber < _db.Parameters.TotalPageCount) _db.Parameters.PageNumber++; await Load(); }
+    // =========================================================
+    // ✅ İstenen: OnChange_PageNumber()
+    // (dropdown’dan geldiğinde)
+    // =========================================================
+    private async Task OnChange_PageNumber()
+    {
+        var max = _db.Parameters.TotalPageCount;
+        if (max < 1) max = 1;
 
+        if (_db.Parameters.PageNumber < 1) _db.Parameters.PageNumber = 1;
+        if (_db.Parameters.PageNumber > max) _db.Parameters.PageNumber = max;
+
+        await GetItems();
+    }
+
+    // =========================================================
+    // Yardımcı: butonla sayfa değişimi (first/prev/next/last)
+    // =========================================================
+    private async Task OnClick_PageNumber(string action)
+    {
+        action = (action ?? "").Trim().ToLowerInvariant();
+
+        if (action == "first") _db.Parameters.PageNumber = 1;
+        else if (action == "prev" && _db.Parameters.PageNumber > 1) _db.Parameters.PageNumber--;
+        else if (action == "next" && _db.Parameters.PageNumber < _db.Parameters.TotalPageCount) _db.Parameters.PageNumber++;
+        else if (action == "last") _db.Parameters.PageNumber = _db.Parameters.TotalPageCount;
+
+        await GetItems();
+    }
+
+    // =========================================================
+    // ✅ İstenen: OnClick_Cancel()
+    // =========================================================
+    private Task OnClick_Cancel()
+    {
+        _operation = Operations.Add;
+        _model = new Tahakkuk { Tutar = 0m };
+        return Task.CompletedTask;
+    }
+
+    // =========================================================
+    // StartEdit (tabloda update butonu)
+    // =========================================================
     private void StartEdit(Tahakkuk t)
     {
         _operation = Operations.Update;
@@ -260,13 +399,15 @@
             };
     }
 
-    private void CancelEdit()
-    {
-        _operation = Operations.Add;
-        _model = new Tahakkuk { Tutar = 0m };
-    }
+    // =========================================================
+    // ✅ İstenen: OnClick_Save() -> Save düğmesi burayı çağırır
+    // =========================================================
+    private Task OnClick_Save() => OnClick_Operation();
 
-    private async Task Save()
+    // =========================================================
+    // ✅ İstenen: OnClick_Operation() -> add/update işlemi
+    // =========================================================
+    private async Task OnClick_Operation()
     {
         if (_model.BeyannameId <= 0)
         {
@@ -292,8 +433,8 @@
         var r = result.FirstOrDefault();
         await JS.InvokeVoidAsync("alert", $"{r?.Key} : {r?.Value}");
 
-        CancelEdit();
-        await Load();
+        await OnClick_Cancel();
+        await GetItems();
     }
 
     private async Task Delete(int id)
@@ -309,7 +450,7 @@
         var r = result.FirstOrDefault();
         await JS.InvokeVoidAsync("alert", $"{r?.Key} : {r?.Value}");
 
-        if (_model.Id == id) CancelEdit();
-        await Load();
+        if (_model.Id == id) await OnClick_Cancel();
+        await GetItems();
     }
 }

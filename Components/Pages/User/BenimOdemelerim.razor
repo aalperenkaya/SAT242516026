@@ -7,8 +7,6 @@
 @using System.Globalization
 @using System.Text.Json
 
-@inject IMyDbModel<UserDebtRow> DebtModel
-@inject IMyDbModel<UserOdemeRow> OdemeModel
 @inject IMyDbModel_Provider Provider
 @inject IJSRuntime JS
 
@@ -34,7 +32,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var row in DebtModel.Items)
+                @foreach (var row in (DebtModel?.Items ?? new()))
                 {
                     <tr>
                         <td>@row.TahakkukId</td>
@@ -55,7 +53,7 @@
                     </tr>
                 }
 
-                @if (DebtModel.Items.Count == 0)
+                @if ((DebtModel?.Items?.Count ?? 0) == 0)
                 {
                     <tr><td colspan="6" class="text-center text-muted py-3">Kayıt yok.</td></tr>
                 }
@@ -135,7 +133,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var o in OdemeModel.Items)
+                @foreach (var o in (OdemeModel?.Items ?? new()))
                 {
                     <tr>
                         <td>@o.Id</td>
@@ -145,7 +143,7 @@
                     </tr>
                 }
 
-                @if (OdemeModel.Items.Count == 0)
+                @if ((OdemeModel?.Items?.Count ?? 0) == 0)
                 {
                     <tr><td colspan="4" class="text-center text-muted py-3">Kayıt yok.</td></tr>
                 }
@@ -160,11 +158,12 @@
     string? Message;
     int CurrentUserId;
 
-    readonly string SpBorclar = "Sp_User_Borclarim";
-    readonly string SpOdemeler = "Sp_User_Odemelerim";
+    const string SpBorclar = "Sp_User_Borclarim";
+    const string SpOdemeler = "Sp_User_Odemelerim";
+    const string SpOdemeAdd = "Sp_Odeme_Add"; // ödeme ekleme SP
 
-    // ✅ FIX: Bu SP artık @where/@params JSON nvarchar alacak şekilde kullanılacak
-    readonly string SpOdemeAdd = "Sp_Odeme_Add";
+    IMyDbModel<UserDebtRow>? DebtModel;
+    IMyDbModel<UserOdemeRow>? OdemeModel;
 
     bool PayOpen;
     bool IsPaying;
@@ -180,6 +179,9 @@
 
     protected override async Task OnInitializedAsync()
     {
+        DebtModel = Provider.Create<UserDebtRow>();
+        OdemeModel = Provider.Create<UserOdemeRow>();
+
         await LoadUserId();
 
         DebtModel.Parameters.PageNumber = 1;
@@ -208,8 +210,8 @@
             return;
         }
 
-        DebtModel.Parameters.Where = new Dictionary<string, string> { ["CurrentUserId"] = CurrentUserId.ToString() };
-        OdemeModel.Parameters.Where = new Dictionary<string, string> { ["CurrentUserId"] = CurrentUserId.ToString() };
+        DebtModel!.Parameters.Where = new Dictionary<string, string> { ["CurrentUserId"] = CurrentUserId.ToString() };
+        OdemeModel!.Parameters.Where = new Dictionary<string, string> { ["CurrentUserId"] = CurrentUserId.ToString() };
 
         await Provider.Execute(DebtModel, SpBorclar, isPagination: true);
         await Provider.Execute(OdemeModel, SpOdemeler, isPagination: true);
@@ -262,13 +264,11 @@
             if (SelectedTahakkukId <= 0) { Message = "Tahakkuk seçimi yok."; return; }
             if (PayAmount <= 0) { Message = "Ödeme tutarı 0 olamaz."; return; }
 
-            // Fake kart doğrulama (DB’ye yazılmaz)
             if (string.IsNullOrWhiteSpace(CardName)) { Message = "Kart isim boş."; return; }
             if (OnlyDigits(CardNumber).Length < 12) { Message = "Kart numarası hatalı."; return; }
             if (!ExpOk(Exp)) { Message = "SKT hatalı. Örn: 12/27"; return; }
             if ((Cvc ?? "").Trim().Length < 3) { Message = "CVC hatalı."; return; }
 
-            // ✅ FIX: SetItems Dictionary ALMAZ -> JSON string gönderiyoruz
             var whereObj = new Dictionary<string, string> { ["CurrentUserId"] = CurrentUserId.ToString() };
             var paramsObj = new Dictionary<string, string>
                 {
@@ -279,10 +279,13 @@
             var whereJson = JsonSerializer.Serialize(whereObj);
             var paramsJson = JsonSerializer.Serialize(paramsObj);
 
+            // ⚠️ Param adları SP'ne göre:
+            // Eğer SP @where/@params bekliyorsa böyle kalsın.
+            // Eğer where/params bekliyorsa @ işaretlerini kaldır.
             var result = await Provider.SetItems<ResultKV>(
                 SpOdemeAdd,
-                ("where", whereJson),
-                ("params", paramsJson)
+                ("@where", whereJson),
+                ("@params", paramsJson)
             );
 
             var r = result.FirstOrDefault();
@@ -305,7 +308,11 @@
         }
     }
 
-    public class ResultKV { public string Key { get; set; } = ""; public bool Value { get; set; } }
+    public class ResultKV
+    {
+        public string Key { get; set; } = "";
+        public bool Value { get; set; }
+    }
 
     public class UserDebtRow
     {

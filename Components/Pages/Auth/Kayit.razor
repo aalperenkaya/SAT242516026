@@ -17,6 +17,7 @@
                     <label class="form-label">Ad Soyad</label>
                     <input class="form-control" name="adSoyad" />
                 </div>
+
                 <div class="col-md-6">
                     <label class="form-label">Email</label>
                     <input class="form-control" name="email" />
@@ -24,11 +25,12 @@
 
                 <div class="col-md-6">
                     <label class="form-label">Kullanıcı Adı*</label>
-                    <input class="form-control" name="kullaniciAdi" required />
+                    <input class="form-control" name="kullaniciAdi" required minlength="3" />
                 </div>
+
                 <div class="col-md-6">
                     <label class="form-label">Şifre*</label>
-                    <input type="password" class="form-control" name="sifre" required />
+                    <input type="password" class="form-control" name="sifre" required minlength="4" />
                 </div>
             </div>
 
@@ -49,7 +51,14 @@
         var uri = Nav.ToAbsoluteUri(Nav.Uri);
         var q = QueryHelpers.ParseQuery(uri.Query);
 
-        if (q.TryGetValue("err", out var err))
-            Error = err.ToString();
+        if (!q.TryGetValue("err", out var err)) return;
+
+        Error = err.ToString() switch
+        {
+            "kullanici_adi_kisa" => "Kullanıcı adı en az 3 karakter olmalı.",
+            "sifre_kisa" => "Şifre en az 4 karakter olmalı.",
+            "kayit_basarisiz" => "Kayıt başarısız. (Kullanıcı adı alınmış olabilir.)",
+            _ => "Kayıt başarısız."
+        };
     }
 }

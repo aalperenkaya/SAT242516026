@@ -4,6 +4,7 @@
 @using System.Globalization
 @using System.Text.Json
 @using SAT242516026.Models.MyDbModels
+
 @inject IMyDbModel_Provider Provider
 @inject IJSRuntime JS
 
@@ -20,27 +21,40 @@
         <div class="row g-2 align-items-end">
             <div class="col-md-3">
                 <label class="form-label">TahakkukId</label>
-                <input type="number" class="form-control" @bind="_fTahakkukId" />
+                <input type="number" class="form-control"
+                       @bind="_fTahakkukId"
+                       @bind:event="oninput"
+                       @bind:after="OnChange_Filter" />
             </div>
 
             <div class="col-md-3">
                 <label class="form-label">Min Tutar</label>
-                <input type="number" step="0.01" class="form-control" @bind="_fMin" />
+                <input type="number" step="0.01" class="form-control"
+                       @bind="_fMin"
+                       @bind:event="oninput"
+                       @bind:after="OnChange_Filter" />
             </div>
 
             <div class="col-md-3">
                 <label class="form-label">Max Tutar</label>
-                <input type="number" step="0.01" class="form-control" @bind="_fMax" />
+                <input type="number" step="0.01" class="form-control"
+                       @bind="_fMax"
+                       @bind:event="oninput"
+                       @bind:after="OnChange_Filter" />
             </div>
 
             <div class="col-md-3">
                 <label class="form-label">Ödeme Tarihi</label>
-                <input type="date" class="form-control" @bind="_fTarih" />
+                <input type="date" class="form-control"
+                       @bind="_fTarih"
+                       @bind:after="OnChange_Filter" />
             </div>
 
             <div class="col-md-6">
                 <label class="form-label">Sırala</label>
-                <select class="form-select" @bind="_orderBy">
+                <select class="form-select"
+                        @bind="_orderBy"
+                        @bind:after="OnChange_OrderBy">
                     <option value="Id desc">Id ↓</option>
                     <option value="Id asc">Id ↑</option>
                     <option value="Tutar desc">Tutar ↓</option>
@@ -54,7 +68,9 @@
 
             <div class="col-md-2">
                 <label class="form-label">Boyut</label>
-                <select class="form-select" @bind="_pageSize">
+                <select class="form-select"
+                        @bind="_pageSize"
+                        @bind:after="OnChange_PageSize">
                     @foreach (var ps in new[] { 5, 10, 20, 50, 100 })
                     {
                         <option value="@ps">@ps</option>
@@ -63,11 +79,11 @@
             </div>
 
             <div class="col-md-2">
-                <button type="button" class="btn btn-primary w-100" @onclick="Apply">Uygula</button>
+                <button type="button" class="btn btn-primary w-100" @onclick="Load">Uygula</button>
             </div>
 
             <div class="col-md-2">
-                <button type="button" class="btn btn-outline-danger w-100" @onclick="Reset">Sıfırla</button>
+                <button type="button" class="btn btn-outline-danger w-100" @onclick="OnChange_Filter_Reset">Sıfırla</button>
             </div>
         </div>
 
@@ -76,12 +92,46 @@
                 @($"{(_db?.Parameters.TotalRecordCount ?? 0)} kayıt | Sayfa: {_pageNumber}/{_db?.Parameters.TotalPageCount ?? 1}")
             </div>
 
-            <div class="btn-group">
-                <button type="button" class="btn btn-outline-secondary" @onclick="First" disabled="@(_pageNumber<=1)">&lt;&lt;</button>
-                <button type="button" class="btn btn-outline-secondary" @onclick="Prev" disabled="@(_pageNumber<=1)">&lt;</button>
-                <button type="button" class="btn btn-outline-secondary" disabled>@_pageNumber / @(_db?.Parameters.TotalPageCount ?? 1)</button>
-                <button type="button" class="btn btn-outline-secondary" @onclick="Next" disabled="@(_db is null || _pageNumber>=_db.Parameters.TotalPageCount)">&gt;</button>
-                <button type="button" class="btn btn-outline-secondary" @onclick="Last" disabled="@(_db is null || _pageNumber>=_db.Parameters.TotalPageCount)">&gt;&gt;</button>
+            <div class="d-flex gap-2 align-items-center">
+                <div class="small text-muted">Sayfa</div>
+                <select class="form-select form-select-sm" style="width:120px;"
+                        @bind="_pageNumber"
+                        @bind:after="OnChange_PageNumber">
+                    @{
+                        var total = _db?.Parameters.TotalPageCount ?? 1;
+                        if (total < 1) total = 1;
+                        for (int p = 1; p <= total; p++)
+                        {
+                            <option value="@p">@p</option>
+                        }
+                    }
+                </select>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-secondary"
+                            @onclick='() => OnClick_PageNumber("first")'
+                            disabled="@(_pageNumber<=1)">
+                        &lt;&lt;
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary"
+                            @onclick='() => OnClick_PageNumber("prev")'
+                            disabled="@(_pageNumber<=1)">
+                        &lt;
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" disabled>
+                        @_pageNumber / @(_db?.Parameters.TotalPageCount ?? 1)
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary"
+                            @onclick='() => OnClick_PageNumber("next")'
+                            disabled="@(_db is null || _pageNumber>=_db.Parameters.TotalPageCount)">
+                        &gt;
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary"
+                            @onclick='() => OnClick_PageNumber("last")'
+                            disabled="@(_db is null || _pageNumber>=_db.Parameters.TotalPageCount)">
+                        &gt;&gt;
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -113,13 +163,13 @@
             </div>
 
             <div class="col-md-2">
-                <button type="button" class="btn btn-success w-100" @onclick="Save">
+                <button type="button" class="btn btn-success w-100" @onclick="OnClick_Save">
                     @(_editId is null ? "Ekle" : "Güncelle")
                 </button>
 
                 @if (_editId is not null)
                 {
-                    <button type="button" class="btn btn-outline-secondary w-100 mt-2" @onclick="Cancel">İptal</button>
+                    <button type="button" class="btn btn-outline-secondary w-100 mt-2" @onclick="OnClick_Cancel">İptal</button>
                 }
             </div>
         </div>
@@ -148,8 +198,14 @@
                                 <td>@o.Tutar</td>
                                 <td>@(o.OdemeTarihi?.ToString("yyyy-MM-dd") ?? "-")</td>
                                 <td class="text-end">
-                                    <button type="button" class="btn btn-sm btn-outline-primary me-2" @onclick="() => StartEdit(o)">Güncelle</button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger" @onclick="() => Delete(o.Id)">Sil</button>
+                                    <button type="button" class="btn btn-sm btn-outline-primary me-2"
+                                            @onclick="() => StartEdit(o)">
+                                        Güncelle
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                            @onclick="() => Delete(o.Id)">
+                                        Sil
+                                    </button>
                                 </td>
                             </tr>
                         }
@@ -206,7 +262,7 @@
 
         try
         {
-            await LoadLookup(); // <-- burada Sp_TahakkukLookup lazım
+            await LoadLookup();
             await Load();
         }
         catch (Exception ex)
@@ -217,11 +273,14 @@
 
     private async Task LoadLookup()
     {
-        // Eğer SP yoksa burada patlar
+        // SP yoksa burada patlar -> zaten sen biliyorsun
         _tahakkukLookup = await Provider.SetItems<TahakkukLookupRow>(SP_TLK);
     }
 
-    private async Task Load()
+    // =========================================================
+    // ✅ İstenen: GetItems()
+    // =========================================================
+    private async Task GetItems()
     {
         if (_db is null) return;
 
@@ -240,13 +299,55 @@
 
         await Provider.Execute(_db, SP_LIST, isPagination: true);
 
+        // güvenli sayfa düzeltme
+        if (_db.Parameters.TotalPageCount <= 0) _db.Parameters.TotalPageCount = 1;
+        if (_db.Parameters.PageNumber < 1) _db.Parameters.PageNumber = 1;
+        if (_db.Parameters.PageNumber > _db.Parameters.TotalPageCount)
+            _db.Parameters.PageNumber = _db.Parameters.TotalPageCount;
+
         _pageNumber = _db.Parameters.PageNumber;
         _msg = _db.Message ?? _msg;
     }
 
-    private async Task Apply() { _pageNumber = 1; await Load(); }
+    // =========================================================
+    // ✅ İstenen: Load()
+    // =========================================================
+    private Task Load() => GetItems();
 
-    private async Task Reset()
+    // =========================================================
+    // ✅ İstenen: OnChange_Filter()
+    // =========================================================
+    private async Task OnChange_Filter()
+    {
+        _pageNumber = 1;
+        await GetItems();
+    }
+
+    // =========================================================
+    // ✅ İstenen: OnChange_OrderBy()
+    // =========================================================
+    private async Task OnChange_OrderBy()
+    {
+        _pageNumber = 1;
+        await GetItems();
+    }
+
+    // =========================================================
+    // ✅ İstenen: OnChange_PageSize()
+    // =========================================================
+    private async Task OnChange_PageSize()
+    {
+        if (_pageSize <= 0) _pageSize = 10;
+        if (_pageSize > 200) _pageSize = 200;
+
+        _pageNumber = 1;
+        await GetItems();
+    }
+
+    // =========================================================
+    // ✅ İstenen: OnChange_Filter_Reset()
+    // =========================================================
+    private async Task OnChange_Filter_Reset()
     {
         _fTahakkukId = null;
         _fMin = null;
@@ -257,39 +358,74 @@
         _pageSize = 10;
         _pageNumber = 1;
 
-        Cancel();
-        await Load();
+        OnClick_Cancel();
+        await GetItems();
     }
 
-    private async Task First() { _pageNumber = 1; await Load(); }
-    private async Task Prev() { if (_pageNumber > 1) _pageNumber--; await Load(); }
-    private async Task Next()
+    // =========================================================
+    // ✅ İstenen: OnChange_PageNumber()
+    // (dropdown)
+    // =========================================================
+    private async Task OnChange_PageNumber()
     {
-        if (_db is null) return;
-        if (_pageNumber < _db.Parameters.TotalPageCount) _pageNumber++;
-        await Load();
+        var max = _db?.Parameters.TotalPageCount ?? 1;
+        if (max < 1) max = 1;
+
+        if (_pageNumber < 1) _pageNumber = 1;
+        if (_pageNumber > max) _pageNumber = max;
+
+        await GetItems();
     }
-    private async Task Last()
+
+    // =========================================================
+    // yardımcı: butonla sayfa
+    // =========================================================
+    private async Task OnClick_PageNumber(string action)
     {
         if (_db is null) return;
-        _pageNumber = _db.Parameters.TotalPageCount;
-        await Load();
+
+        action = (action ?? "").Trim().ToLowerInvariant();
+
+        if (action == "first") _pageNumber = 1;
+        else if (action == "prev" && _pageNumber > 1) _pageNumber--;
+        else if (action == "next" && _pageNumber < _db.Parameters.TotalPageCount) _pageNumber++;
+        else if (action == "last") _pageNumber = _db.Parameters.TotalPageCount;
+
+        await GetItems();
     }
 
     private void StartEdit(OdemeRow o)
     {
         _editId = o.Id;
-        _form = new OdemeRow { Id = o.Id, TahakkukId = o.TahakkukId, Tutar = o.Tutar, OdemeTarihi = o.OdemeTarihi };
-        _msg = "Düzenleme modunda.";
+        _form = new OdemeRow
+            {
+                Id = o.Id,
+                TahakkukId = o.TahakkukId,
+                Tutar = o.Tutar,
+                OdemeTarihi = o.OdemeTarihi
+            };
+        _msg = null;
     }
 
-    private void Cancel()
+    // =========================================================
+    // ✅ İstenen: OnClick_Cancel()
+    // =========================================================
+    private void OnClick_Cancel()
     {
         _editId = null;
         _form = new OdemeRow { Tutar = 0m };
+        _msg = null;
     }
 
-    private async Task Save()
+    // =========================================================
+    // ✅ İstenen: OnClick_Save()
+    // =========================================================
+    private Task OnClick_Save() => OnClick_Operation();
+
+    // =========================================================
+    // ✅ İstenen: OnClick_Operation()
+    // =========================================================
+    private async Task OnClick_Operation()
     {
         if (_form.TahakkukId <= 0) { await JS.InvokeVoidAsync("alert", "Tahakkuk seç."); return; }
         if (_form.Tutar < 0) { await JS.InvokeVoidAsync("alert", "Tutar negatif olamaz."); return; }
@@ -315,8 +451,8 @@
         var one = r.FirstOrDefault();
         await JS.InvokeVoidAsync("alert", $"{one?.Key} : {one?.Value}");
 
-        Cancel();
-        await Load();
+        OnClick_Cancel();
+        await GetItems();
     }
 
     private async Task Delete(int id)
@@ -332,7 +468,7 @@
         var one = r.FirstOrDefault();
         await JS.InvokeVoidAsync("alert", $"{one?.Key} : {one?.Value}");
 
-        if (_editId == id) Cancel();
-        await Load();
+        if (_editId == id) OnClick_Cancel();
+        await GetItems();
     }
 }

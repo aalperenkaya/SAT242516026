@@ -1,6 +1,6 @@
 ﻿@page "/giris"
-@using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.WebUtilities
+@inject NavigationManager Nav
 
 <h3 class="mb-3">Giriş</h3>
 
@@ -14,12 +14,12 @@
         <form method="post" action="/auth/login">
             <div class="mb-3">
                 <label class="form-label">Kullanıcı Adı</label>
-                <input class="form-control" name="kullaniciAdi" />
+                <input class="form-control" name="kullaniciAdi" required />
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Şifre</label>
-                <input type="password" class="form-control" name="sifre" />
+                <input type="password" class="form-control" name="sifre" required />
             </div>
 
             <button class="btn btn-primary w-100" type="submit">Giriş Yap</button>
@@ -32,7 +32,6 @@
 </div>
 
 @code {
-    [Inject] NavigationManager Nav { get; set; } = default!;
     string? Error;
 
     protected override void OnInitialized()
@@ -40,7 +39,12 @@
         var uri = Nav.ToAbsoluteUri(Nav.Uri);
         var q = QueryHelpers.ParseQuery(uri.Query);
 
-        if (q.TryGetValue("err", out var err))
-            Error = err.ToString();
+        if (!q.TryGetValue("err", out var err)) return;
+
+        Error = err.ToString() switch
+        {
+            "bad_login" => "Kullanıcı adı veya şifre yanlış.",
+            _ => "Giriş başarısız."
+        };
     }
 }

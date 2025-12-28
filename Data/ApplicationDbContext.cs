@@ -1,49 +1,34 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Data;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace SAT242516026.Data;
 
-public class ApplicationDbContext : DbContext
+public sealed class ApplicationDbContext : IDisposable
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+    private readonly string _connectionString;
 
-    public DbSet<Kullanici> Kullanicilar => Set<Kullanici>();
-    public DbSet<Mukellef> Mukellefler => Set<Mukellef>();
-    public DbSet<Beyanname> Beyannameler => Set<Beyanname>();
-    public DbSet<BeyannameTipi> BeyannameTipleri => Set<BeyannameTipi>();
-    public DbSet<Tahakkuk> Tahakkuklar => Set<Tahakkuk>();
-    public DbSet<Odeme> Odemeler => Set<Odeme>();
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public ApplicationDbContext(IConfiguration configuration)
     {
-        base.OnModelCreating(modelBuilder);
+        // appsettings.json: ConnectionStrings:DefaultConnection
+        _connectionString = configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException("DefaultConnection bulunamadı.");
+    }
 
-        // ✅ Trigger varsa EF INSERT sırasında OUTPUT patlatır → bunu kapat
-        modelBuilder.Entity<Kullanici>()
-            .ToTable(tb => tb.UseSqlOutputClause(false));
+    public SqlConnection CreateConnection()
+        => new SqlConnection(_connectionString);
 
-        modelBuilder.Entity<Mukellef>()
-            .HasOne(x => x.Kullanici)
-            .WithMany(x => x.Mukellefler)
-            .HasForeignKey(x => x.KullaniciId);
+    public SqlCommand CreateStoredProcedure(SqlConnection conn, string spName, SqlTransaction? tx = null)
+    {
+        var cmd = conn.CreateCommand();
+        cmd.CommandText = spName;
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Transaction = tx;
+        return cmd;
+    }
 
-        modelBuilder.Entity<Beyanname>()
-            .HasOne(x => x.Mukellef)
-            .WithMany(x => x.Beyannameler)
-            .HasForeignKey(x => x.MukellefId);
-
-        modelBuilder.Entity<Beyanname>()
-            .HasOne(x => x.BeyannameTipi)
-            .WithMany(x => x.Beyannameler)
-            .HasForeignKey(x => x.BeyannameTipiId);
-
-        modelBuilder.Entity<Tahakkuk>()
-            .HasOne(x => x.Beyanname)
-            .WithMany(x => x.Tahakkuklar)
-            .HasForeignKey(x => x.BeyannameId);
-
-        modelBuilder.Entity<Odeme>()
-            .HasOne(x => x.Tahakkuk)
-            .WithMany(x => x.Odemeler)
-            .HasForeignKey(x => x.TahakkukId);
+    public void Dispose()
+    {
+   
     }
 }

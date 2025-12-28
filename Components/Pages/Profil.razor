@@ -1,14 +1,18 @@
 ﻿@page "/profil"
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]
 
-@using SAT242516026.Data
+@using SAT242516026.Models.MyDbModels
 @using SAT242516026.Models.Services
-@using SAT242516026.Models.DbContexts
 
 @inject AuthService Auth
-@inject MyDbModel_Context Db
+@inject IMyDbModel_Provider Provider
 
 <h3>Profil</h3>
+
+@if (!string.IsNullOrWhiteSpace(_msg))
+{
+    <div class="alert alert-warning">@_msg</div>
+}
 
 @if (_me is null)
 {
@@ -27,13 +31,41 @@ else
 }
 
 @code {
-    private Kullanici? _me;
+    private string? _msg;
+    private MeRow? _me;
+
+    // SP dönüş modeli (kolon adlarıyla aynı tut)
+    public class MeRow
+    {
+        public int Id { get; set; }
+        public string KullaniciAdi { get; set; } = "";
+        public string? AdSoyad { get; set; }
+        public string? Email { get; set; }
+        public bool IsAdmin { get; set; }
+    }
+
+    private const string SP_AUTH_ME = "sp_Auth_Me";
 
     protected override async Task OnInitializedAsync()
     {
         var id = Auth.GetUserId();
-        if (id is null) return;
+        if (id is null)
+        {
+            _msg = "Giriş bulunamadı.";
+            return;
+        }
 
-        _me = await Db.Kullanicilar.FindAsync(id.Value);
+        try
+        {
+            var rows = await Provider.SetItems<MeRow>(SP_AUTH_ME, ("@id", id.Value));
+            _me = rows.FirstOrDefault();
+
+            if (_me is null)
+                _msg = "Kullanıcı bulunamadı.";
+        }
+        catch (Exception ex)
+        {
+            _msg = ex.InnerException?.Message ?? ex.Message;
+        }
     }
 }
